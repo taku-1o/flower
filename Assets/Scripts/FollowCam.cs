@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class FollowCam : MonoBehaviour
 {
-    [SerializeField] private GameObject background;
+    [SerializeField] private GameObject m_background;
 
-    private GameObject flower;
+    private Flower m_flower;
 
     private void Update()
     {
@@ -15,14 +15,14 @@ public class FollowCam : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!flower) return;
+        if (!m_flower) return;
 
-        transform.position = new Vector3(flower.transform.position.x, 0, -10);
-        background.transform.position = new Vector3(flower.transform.position.x, 0, 0);
+        transform.position = new Vector3(m_flower.transform.position.x, 0, -10);
+        m_background.transform.position = new Vector3(m_flower.transform.position.x, 0, 0);
     }
 
-    public void SetFlower(GameObject obj)
+    public void SetFlower(Flower flower)
     {
-        flower = obj;
+        m_flower = flower;
     }
 }

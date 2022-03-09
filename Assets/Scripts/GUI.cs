@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class GUI : MonoBehaviour
 {
-    [SerializeField] private Image hpbar;
-    [SerializeField] private Image[] hpImages;
+    [SerializeField] private Image m_hpbar;
+    [SerializeField] private Image[] m_hpImages;
 
     public void SetHP(int maxHP, int hp)
     {
-        hpbar.fillAmount = (float)hp / maxHP;
+        m_hpbar.fillAmount = (float)hp / maxHP;
 
-        for (int i = 0; i < hpImages.Length; i++)
+        for (int i = 0; i < m_hpImages.Length; i++)
         {
-            hpImages[i].gameObject.SetActive(hp > i);
+            m_hpImages[i].gameObject.SetActive(hp > i);
         }
     }
 }
