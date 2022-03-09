@@ -1,9 +1,12 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Flower : MonoBehaviour
 {
+    /// <summary>
+    /// ステータスごとのアニメーションを管理するためのクラス
+    /// </summary>
     [System.Serializable]
     public class StateAnimations
     {
@@ -18,18 +21,28 @@ public class Flower : MonoBehaviour
         public AnimationClip[] animationClips = new AnimationClip[(int)STATES.COUNT];
     }
 
+    /* [SerializeField] */
     [SerializeField] private StateAnimations[] selectionAnimations;
     [SerializeField] private int maxHP;
-
     [SerializeField] private float speed;
+    /* [SerializeField] */
 
-    private Animator m_animator;
-    private int m_hp;
-    private int m_selection = 0;
-    private int m_nextSelection = 0;
-    private int m_state;
 
-    private float m_inputX;
+    /* Public */
+    public int m_maxHP { get { return maxHP; } }                //最大HP（SerializeField参照）
+    public int m_hp { get; private set; }                       //HP
+    public int m_selection { get; private set; } = 0;           //現在の形態
+    public int m_nextSelection { get; private set; } = 0;       //次の形態
+    /* Public */
+
+
+    /* Private */
+    private Animator m_animator;                                //アニメーション
+    private int m_state;                                        //現在のステータス
+    private float m_inputX;                                     //横入力量（Update）
+    /* Private */
+
+
 
     private void Start()
     {
@@ -84,6 +97,11 @@ public class Flower : MonoBehaviour
         
     }
 
+    public void AnimationEnded()//ループしないアニメーション用
+    {
+        SetState(StateAnimations.STATES.IDLE);
+    }
+
     private void SetState(StateAnimations.STATES states)
     {
         if (m_state == (int)states) return;
@@ -118,32 +136,12 @@ public class Flower : MonoBehaviour
 
     public void Pick(Item item)
     {
-        m_nextSelection = item.GetFlowerSelection();
+        m_nextSelection = item.m_flowerSelection;
     }
 
     public void Select()
     {
         m_selection = m_nextSelection;
         UpdateAnimation();
-    }
-
-    public int GetSelection() 
-    {
-        return m_selection;
-    }
-
-    public int GetNextSelection()
-    {
-        return m_nextSelection;
-    }
-
-    public int GetHP()
-    {
-        return m_hp;
-    }
-
-    public int GetMaxHP()
-    {
-        return maxHP;
     }
 }

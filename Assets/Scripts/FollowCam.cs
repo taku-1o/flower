@@ -1,12 +1,19 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowCam : MonoBehaviour
 {
+    /* [SerializeField] */
     [SerializeField] private GameObject m_background;
+    /* [SerializeField] */
 
-    private Flower m_flower;
+
+    /* Private */
+    private Flower m_flower;                                    //追従する対象
+    /* Private */
+
+
 
     private void Update()
     {

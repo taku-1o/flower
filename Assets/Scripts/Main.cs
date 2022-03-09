@@ -1,13 +1,20 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Main : MonoBehaviour
 {
-    [SerializeField] private GUI guiController;
-    [SerializeField] private Flower flowerPrefab;
+    /* [SerializeField] */
+    [SerializeField] private GUI guiController;                 //UI管理（インゲーム）
+    [SerializeField] private Flower flowerPrefab;               //プレイヤー（花）のPrefab
+    /* [SerializeField] */
 
-    private Flower m_flower;
+
+    /* Private */
+    private Flower m_flower;                                    //プレイヤー（花）
+    /* Private */
+
+
 
     private void Start()
     {
@@ -19,35 +26,20 @@ public class Main : MonoBehaviour
     {
         if (m_flower)
         {
-            if (Input.GetKeyDown(KeyCode.F1))
-            {
-                m_flower.Damage();
-            }
+            /* DEBUG */
+            DebugUpdate();
+            /* DEBUG */
 
-            if (Input.GetKeyDown(KeyCode.F2))
-            {
-                m_flower.Heal();
-            }
-
-            if (Input.GetKeyDown(KeyCode.F3))
-            {
-                m_flower.Pick(new Item(0));
-            }
-
-            if (Input.GetKeyDown(KeyCode.F4))
-            {
-                m_flower.Pick(new Item(1));
-            }
-
-            guiController.SetHP(m_flower.GetMaxHP(), m_flower.GetHP());
+            guiController.SetHP(m_flower.m_maxHP, m_flower.m_hp);
         }
 
-        if (m_flower.GetSelection() != m_flower.GetNextSelection())
+        if (m_flower.m_selection != m_flower.m_nextSelection)
         {
             Time.timeScale = 0;
-            int selection = m_flower.GetSelection();
+            guiController.SetItemActive(true);
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                guiController.SetItemActive(false);
                 Time.timeScale = 1;
                 m_flower.Select();
             }
@@ -58,5 +50,28 @@ public class Main : MonoBehaviour
     private void FixedUpdate()
     {
 
+    }
+
+    private void DebugUpdate() //Debug
+    {
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            m_flower.Damage();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            m_flower.Heal();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            m_flower.Pick(new Item(0));
+        }
+
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+            m_flower.Pick(new Item(1));
+        }
     }
 }
