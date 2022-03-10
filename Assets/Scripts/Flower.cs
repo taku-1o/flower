@@ -68,6 +68,8 @@ public class Flower : MonoBehaviour
     /* [SerializeField] */
     [SerializeField] private GroundCheck groundCheck;
     [SerializeField] private StateAnimations[] selectionAnimations;
+    [SerializeField] private AudioClip[] audioClips;
+    [SerializeField] private AudioSource bgmAudioSource;
     [SerializeField] private int maxHP;
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
@@ -96,6 +98,7 @@ public class Flower : MonoBehaviour
     private bool m_keyDownSpace;                                //Space入力
     private bool m_keyDownE;                                    //E入力
     private bool m_isInHealAria;                                //回復エリア内か
+    private AudioSource m_audioSource;
     /* Private */
 
 
@@ -105,6 +108,7 @@ public class Flower : MonoBehaviour
         SetState(StateAnimations.STATES.IDLE);
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
+        m_audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -189,6 +193,7 @@ public class Flower : MonoBehaviour
             {
                 SetState(StateAnimations.STATES.MOVE);
             }
+            PlaySE();
         }
     }
 
@@ -230,6 +235,47 @@ public class Flower : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Damage();
+        }
+    }
+
+    public void PlaySE()
+    {
+        if (m_state != (int)StateAnimations.STATES.MOVE)
+        {
+            if (audioClips[(int)StateAnimations.STATES.MOVE] &&
+                m_audioSource.clip == audioClips[(int)StateAnimations.STATES.MOVE])
+            {
+                m_audioSource.Stop();
+            }
+        }
+        switch (m_state)
+        {
+            case (int)StateAnimations.STATES.MOVE:
+                {
+                    if (audioClips[m_state])
+                    {
+                        if (m_audioSource.clip != audioClips[m_state] || !m_audioSource.isPlaying)
+                        {
+                            m_audioSource.clip = audioClips[m_state];
+                            m_audioSource.loop = true;
+                            m_audioSource.Play();
+                        }
+                    }
+                }
+                break;
+            case (int)StateAnimations.STATES.GET:
+            case (int)StateAnimations.STATES.JUMP:
+            case (int)StateAnimations.STATES.DAMAGE:
+            case (int)StateAnimations.STATES.GOAL:
+                {
+                    if (audioClips[m_state])
+                    {
+                        m_audioSource.clip = audioClips[m_state];
+                        m_audioSource.loop = false;
+                        m_audioSource.Play();
+                    }
+                }
+                break;
         }
     }
 

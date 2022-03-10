@@ -7,6 +7,7 @@ public class Main : MonoBehaviour
     /* [SerializeField] */
     [SerializeField] private GUI guiController;                 //UI管理（インゲーム）
     [SerializeField] private Flower flowerPrefab;               //プレイヤー（花）のPrefab
+    [SerializeField] private Vector2 initPosition;
     [SerializeField] private GameObject goalObject;             //ゴールオブジェクト
     [SerializeField] private Vector2[] goalOffset;              //ゴールアニメーションとの差
     /* [SerializeField] */
@@ -14,13 +15,14 @@ public class Main : MonoBehaviour
 
     /* Private */
     private Flower m_flower;                                    //プレイヤー（花）
+    private bool m_IsGoal;
     /* Private */
 
 
 
     private void Start()
     {
-        m_flower = Instantiate(flowerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+        m_flower = Instantiate(flowerPrefab, initPosition, Quaternion.identity);
         Camera.main.GetComponent<FollowCam>().SetFlower(m_flower);
     }
 
@@ -34,6 +36,12 @@ public class Main : MonoBehaviour
 
             if (m_flower.m_isGoal && !m_flower.m_isFinish)
             {
+                if (!m_IsGoal)
+                {
+                    m_IsGoal = true;
+                    Camera.main.GetComponent<FollowCam>().SetZoom(true);
+                }
+
                 Vector3 finishPos = goalObject.transform.position - (Vector3)goalOffset[m_flower.m_selection];
                 Vector3 diffPos = finishPos - m_flower.transform.position;
                 if (Mathf.Abs(diffPos.x) < 0.001f && Mathf.Abs(diffPos.y) < 0.001f)
