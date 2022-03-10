@@ -30,17 +30,26 @@ public class Main : MonoBehaviour
             DebugUpdate();
             /* DEBUG */
 
-            guiController.SetHP(m_flower.m_maxHP, m_flower.m_hp);
+            guiController.SetHpPer(m_flower.m_timeLife / m_flower.m_lifeTime);
+        }
+
+        if (m_flower.IsTriggerItem())
+        {
+            guiController.SetGetUIActive(true, m_flower.transform.position);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                m_flower.Pick();
+            }
+        }
+        else
+        {
+            guiController.SetGetUIActive(false);
         }
 
         if (m_flower.m_selection != m_flower.m_nextSelection)
         {
-            Time.timeScale = 0;
-            guiController.SetItemActive(true);
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (!m_flower.IsGet())
             {
-                guiController.SetItemActive(false);
-                Time.timeScale = 1;
                 m_flower.Select();
             }
             return;
@@ -72,6 +81,11 @@ public class Main : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F4))
         {
             m_flower.Pick(new Item(1));
+        }
+
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
         }
     }
 }

@@ -1,5 +1,75 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2519138740678196150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3711058760819181276}
+  - component: {fileID: 8430777964855149698}
+  - component: {fileID: 6431796037944992241}
+  m_Layer: 0
+  m_Name: GroundChack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3711058760819181276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2519138740678196150}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8003933685492871207}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &8430777964855149698
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2519138740678196150}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.4}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.4, y: 0.16}
+  m_EdgeRadius: 0
+--- !u!114 &6431796037944992241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2519138740678196150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7682d621f62a24998e73b5dbd6411a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8003933685492871205
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,7 +101,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 3711058760819181276}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -75,12 +146,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0900bac81f9ec5642b3c9833622aa1c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -99,18 +170,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.02}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 2.56, y: 2.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.4, y: 0.9}
   m_EdgeRadius: 0
 --- !u!50 &8003933685492871192
 Rigidbody2D:
@@ -145,15 +216,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f845f068c51d9c046869090cc69eefc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheck: {fileID: 6431796037944992241}
   selectionAnimations:
   - animationClips:
-    - {fileID: 7400000, guid: efc5679f075e8c44bac19d7c78e46bca, type: 2}
-    - {fileID: 7400000, guid: b95a0070f66d9c54ba030ac059394689, type: 2}
+    - {fileID: 7400000, guid: 0dee3e03ae7fd044e94890a6445686a5, type: 2}
+    - {fileID: 7400000, guid: adcb69e0611ed6b4f89b22a579378213, type: 2}
+    - {fileID: 7400000, guid: b5b8d2bf7d972fc4a975a559de72f9a6, type: 2}
+    - {fileID: 7400000, guid: b5b8d2bf7d972fc4a975a559de72f9a6, type: 2}
+    - {fileID: 7400000, guid: af5209295a1372c4789a34521c8d296d, type: 2}
+    - {fileID: 7400000, guid: 52ad6bcac4c9b3b4182894a6da4d3f62, type: 2}
+    - {fileID: 7400000, guid: b2329d16f94f53740afa598958733b04, type: 2}
+    - {fileID: 7400000, guid: 0dee3e03ae7fd044e94890a6445686a5, type: 2}
   - animationClips:
-    - {fileID: 7400000, guid: 270d22b5520cd6f4aa57dbb63dfca585, type: 2}
-    - {fileID: 7400000, guid: 083e84fcae5920e48b3ed94fb0d6f410, type: 2}
+    - {fileID: 7400000, guid: 40854450292892f4a949abdb2663d9cc, type: 2}
+    - {fileID: 7400000, guid: efa83575f971e29409861998b365f029, type: 2}
+    - {fileID: 7400000, guid: 40854450292892f4a949abdb2663d9cc, type: 2}
+    - {fileID: 7400000, guid: e10f095b24888ab429f3054756772d2b, type: 2}
+    - {fileID: 7400000, guid: 70d55148436dbfc448dd6889bb193158, type: 2}
+    - {fileID: 7400000, guid: 9b5aa6ddabd300d41bfff5a0dcfe5c44, type: 2}
+    - {fileID: 7400000, guid: efa83575f971e29409861998b365f029, type: 2}
+    - {fileID: 7400000, guid: 720cd56ad0e5a4b4ca3954ca09260331, type: 2}
   maxHP: 5
-  speed: 0.15
+  speed: 0.05
+  jumpPower: 220
+  lifeTime: 15
 --- !u!95 &4711943926410012376
 Animator:
   serializedVersion: 3

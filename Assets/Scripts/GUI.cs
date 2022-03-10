@@ -6,25 +6,26 @@ using UnityEngine.UI;
 public class GUI : MonoBehaviour
 {
     /* [SerializeField] */
-    [SerializeField] private Image m_hpbar;
-    [SerializeField] private Image[] m_hpImages;
-    [SerializeField] private Text getItemText;
+    [SerializeField] private Image m_hpImage;
+    [SerializeField] private GameObject m_getUI;
+    [SerializeField] private Vector2 m_getUIOffset;
     /* [SerializeField] */
 
 
+    private int m_prevHP = -1;
 
-    public void SetItemActive(bool active)
+    public void SetHpPer(float p)
     {
-        getItemText.gameObject.SetActive(active);
+        m_hpImage.GetComponent<Animator>().SetFloat("LifeTime", Mathf.Clamp(p, 0f, 1f));
     }
 
-    public void SetHP(int maxHP, int hp)
+    public void SetGetUIActive(bool active)
     {
-        m_hpbar.fillAmount = (float)hp / maxHP;
-
-        for (int i = 0; i < m_hpImages.Length; i++)
-        {
-            m_hpImages[i].gameObject.SetActive(hp > i);
-        }
+        SetGetUIActive(active, Vector3.zero);
+    }
+    public void SetGetUIActive(bool active, Vector3 pos)
+    {
+        m_getUI.SetActive(active);
+        m_getUI.transform.position = pos + (Vector3)m_getUIOffset;
     }
 }
