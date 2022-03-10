@@ -227,6 +227,7 @@ MonoBehaviour:
     - {fileID: 7400000, guid: 52ad6bcac4c9b3b4182894a6da4d3f62, type: 2}
     - {fileID: 7400000, guid: b2329d16f94f53740afa598958733b04, type: 2}
     - {fileID: 7400000, guid: 0dee3e03ae7fd044e94890a6445686a5, type: 2}
+    - {fileID: 7400000, guid: dc08334e7022c9c48b3511c86e3cbfaf, type: 2}
   - animationClips:
     - {fileID: 7400000, guid: 40854450292892f4a949abdb2663d9cc, type: 2}
     - {fileID: 7400000, guid: efa83575f971e29409861998b365f029, type: 2}
@@ -236,6 +237,7 @@ MonoBehaviour:
     - {fileID: 7400000, guid: 9b5aa6ddabd300d41bfff5a0dcfe5c44, type: 2}
     - {fileID: 7400000, guid: efa83575f971e29409861998b365f029, type: 2}
     - {fileID: 7400000, guid: 720cd56ad0e5a4b4ca3954ca09260331, type: 2}
+    - {fileID: 7400000, guid: d1ae6f93b12cd6b43ac4cab9020103bb, type: 2}
   maxHP: 5
   speed: 0.05
   jumpPower: 220

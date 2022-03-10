@@ -20,6 +20,7 @@ public class Flower : MonoBehaviour
             DAMAGE,
             DOWN,
             ATTACK,
+            GOAL,
 
             COUNT,
         }
@@ -80,6 +81,8 @@ public class Flower : MonoBehaviour
     public int m_maxHP { get { return maxHP; } }                //最大HP（SerializeField参照）
     public int m_selection { get; private set; } = 0;           //現在の形態
     public int m_nextSelection { get; private set; } = 0;       //次の形態
+    public bool m_isGoal { get; private set; }
+    public bool m_isFinish { get; private set; }
     /* Public */
 
 
@@ -88,10 +91,11 @@ public class Flower : MonoBehaviour
     private Animator m_animator;                                //アニメーション
     private int m_state;                                        //現在のステータス
     private float m_inputX;                                     //横入力量（Update）
-    private Item m_triggerItem = null;
-    private bool m_keyDownSpace;
-    private bool m_keyDownE;
-    private bool m_isInHealAria;
+    private float m_inputY;                                     //縦入力量（操作用）
+    private Item m_triggerItem = null;                          //取得可能なアイテム
+    private bool m_keyDownSpace;                                //Space入力
+    private bool m_keyDownE;                                    //E入力
+    private bool m_isInHealAria;                                //回復エリア内か
     /* Private */
 
 
@@ -105,6 +109,8 @@ public class Flower : MonoBehaviour
 
     private void Update()
     {
+        if (m_isGoal) return;
+
         m_inputX = Input.GetAxis("Horizontal");
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -128,27 +134,34 @@ public class Flower : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (m_isInHealAria)
+        if (!m_isGoal)
         {
-            m_timeLife -= Time.deltaTime;
-            if (m_timeLife < 0)
+            if (m_isInHealAria)
             {
-                m_timeLife = 0;
+                m_timeLife -= Time.deltaTime;
+                if (m_timeLife < 0)
+                {
+                    m_timeLife = 0;
+                }
             }
-        }
-        else if (m_timeLife < m_lifeTime)
-        {
-            m_timeLife += Time.deltaTime;
-            if (m_timeLife >= m_lifeTime)
+            else if (m_timeLife < m_lifeTime)
             {
-                m_timeLife = m_lifeTime;
-                SetState(StateAnimations.STATES.DOWN);
+                m_timeLife += Time.deltaTime;
+                if (m_timeLife >= m_lifeTime)
+                {
+                    m_timeLife = m_lifeTime;
+                    SetState(StateAnimations.STATES.DOWN);
+                }
             }
         }
 
         if (StateAnimations.IsMoveAnim(m_selection, m_state))
         {
             transform.position += new Vector3(m_inputX * speed, 0, 0);
+            if (m_isGoal)
+            {
+                transform.position += new Vector3(0, m_inputY * speed, 0);
+            }
 
             if (m_keyDownSpace && groundCheck.IsGround())
             {
@@ -181,6 +194,12 @@ public class Flower : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            m_isGoal = true;
+            m_rigidbody.bodyType = RigidbodyType2D.Kinematic;
+            m_rigidbody.velocity = Vector3.zero;
+        }
         if (collision.gameObject.CompareTag("Item"))
         {
             m_triggerItem = collision.gameObject.GetComponent<Item>();
@@ -297,5 +316,18 @@ public class Flower : MonoBehaviour
     {
         m_selection = m_nextSelection;
         SetState(StateAnimations.STATES.TRANSFORM);
+    }
+
+    public void SetInput(Vector2 vec)
+    {
+        m_inputX = vec.x;
+        m_inputY = vec.y;
+    }
+
+    public void Finish()
+    {
+        m_isFinish = true;
+        transform.localScale = Vector3.one;
+        SetState(StateAnimations.STATES.GOAL);
     }
 }

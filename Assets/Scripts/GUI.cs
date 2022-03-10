@@ -12,8 +12,6 @@ public class GUI : MonoBehaviour
     /* [SerializeField] */
 
 
-    private int m_prevHP = -1;
-
     public void SetHpPer(float p)
     {
         m_hpImage.GetComponent<Animator>().SetFloat("LifeTime", Mathf.Clamp(p, 0f, 1f));
