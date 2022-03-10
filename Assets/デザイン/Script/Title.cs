@@ -18,5 +18,9 @@ public class Title : MonoBehaviour
         {
             FadeManager.Instance.LoadScene("SampleScene", 1.0f);
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            FadeManager.Instance.LoadScene("SampleScene", 1.0f);
+        }
     }
 }

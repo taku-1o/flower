@@ -19,6 +19,10 @@ public class Retry : MonoBehaviour
         {
             FadeManager.Instance.LoadScene("Game", 1.0f);
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            FadeManager.Instance.LoadScene("Game", 1.0f);
+        }
     }
 
     public void OnClick()
