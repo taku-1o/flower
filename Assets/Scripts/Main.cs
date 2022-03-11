@@ -11,6 +11,7 @@ public class Main : MonoBehaviour
     [SerializeField] private Vector2 initPosition;
     [SerializeField] private GameObject goalObject;             //ゴールオブジェクト
     [SerializeField] private Vector2[] goalOffset;              //ゴールアニメーションとの差
+    [SerializeField] private GameObject gameOver;
     /* [SerializeField] */
 
 
@@ -26,6 +27,7 @@ public class Main : MonoBehaviour
     private void Start()
     {
         m_flower = Instantiate(flowerPrefab, initPosition, Quaternion.identity);
+        m_flower.gameObject.name = "Flower";
         Camera.main.GetComponent<FollowCam>().SetFlower(m_flower);
         m_audioSource = GetComponent<AudioSource>();
     }
@@ -113,6 +115,7 @@ public class Main : MonoBehaviour
             if (m_flower.m_limitLifeTime <= m_flower.m_timeLife)
             {
                 m_audioSource.Stop();
+                gameOver.SetActive(true);
             }
 
             if (m_flower.IsTriggerItem())

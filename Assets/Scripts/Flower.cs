@@ -94,6 +94,7 @@ public class Flower : MonoBehaviour
     private float m_inputY;                                     //縦入力量（操作用）
     private Item m_triggerItem = null;                          //取得可能なアイテム
     private bool m_keyDownSpace;                                //Space入力
+    private bool m_keyDownW;                                    //E入力
     private bool m_keyDownE;                                    //E入力
     private bool m_keyDownF;                                    //F入力
     private bool m_isInHealAria;                                //回復エリア内か
@@ -123,6 +124,15 @@ public class Flower : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space) || !Input.GetKey(KeyCode.Space))
         {
             m_keyDownSpace = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            m_keyDownW = true;
+        }
+        if (Input.GetKeyUp(KeyCode.W) || !Input.GetKey(KeyCode.W))
+        {
+            m_keyDownW = false;
         }
 
         if (Input.GetKeyDown(KeyCode.E))
@@ -175,9 +185,9 @@ public class Flower : MonoBehaviour
                 transform.position += new Vector3(0, m_inputY * speed, 0);
             }
 
-            if (m_keyDownSpace && groundCheck.IsGround())
+            if (m_keyDownW && groundCheck.IsGround())
             {
-                m_keyDownSpace = false;
+                m_keyDownW = false;
                 SetState(StateAnimations.STATES.JUMP);
             }
 
