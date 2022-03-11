@@ -194,4 +194,16 @@ public class Chase : MonoBehaviour
         // ‘ã“ü‚µ’¼‚·
         transform.localScale = scale;
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Attack"))
+        {
+            move = 0;
+            Destroy(gameObject,2.5f);
+            Animator animator = GetComponent<Animator>();
+            Debug.Log("a");
+            animator.Play("hati_Down");
+        }
+    }
 }
