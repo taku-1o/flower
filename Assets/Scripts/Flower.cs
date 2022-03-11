@@ -77,7 +77,7 @@ public class Flower : MonoBehaviour
 
 
     /* Public */
-    public float m_lifeTime { get { return lifeTime; } }        //最大生存時間（SerializeField参照）
+    public float m_limitLifeTime { get { return lifeTime; } }        //最大生存時間（SerializeField参照）
     public float m_timeLife { get; private set; }               //生存時間
     public int m_maxHP { get { return maxHP; } }                //最大HP（SerializeField参照）
     public int m_selection { get; private set; } = 0;           //現在の形態
@@ -148,12 +148,12 @@ public class Flower : MonoBehaviour
                     m_timeLife = 0;
                 }
             }
-            else if (m_timeLife < m_lifeTime)
+            else if (m_timeLife < m_limitLifeTime)
             {
                 m_timeLife += Time.deltaTime;
-                if (m_timeLife >= m_lifeTime)
+                if (m_timeLife >= m_limitLifeTime)
                 {
-                    m_timeLife = m_lifeTime;
+                    m_timeLife = m_limitLifeTime;
                     SetState(StateAnimations.STATES.DOWN);
                 }
             }
@@ -267,6 +267,7 @@ public class Flower : MonoBehaviour
             case (int)StateAnimations.STATES.JUMP:
             case (int)StateAnimations.STATES.DAMAGE:
             case (int)StateAnimations.STATES.GOAL:
+            case (int)StateAnimations.STATES.DOWN:
                 {
                     if (audioClips[m_state])
                     {
@@ -312,13 +313,13 @@ public class Flower : MonoBehaviour
 
     public void Damage()
     {
-        if (m_lifeTime <= m_timeLife) return;
+        if (m_limitLifeTime <= m_timeLife) return;
 
-        float oneHpTime = m_lifeTime / m_maxHP;
+        float oneHpTime = m_limitLifeTime / m_maxHP;
         m_timeLife += oneHpTime;
-        if (m_lifeTime <= m_timeLife)
+        if (m_limitLifeTime <= m_timeLife)
         {
-            m_timeLife = m_lifeTime;
+            m_timeLife = m_limitLifeTime;
             SetState(StateAnimations.STATES.DOWN);
         }
         else
@@ -329,7 +330,7 @@ public class Flower : MonoBehaviour
 
     public void Heal()
     {
-        float oneHpTime = m_lifeTime / m_maxHP;
+        float oneHpTime = m_limitLifeTime / m_maxHP;
         m_timeLife -= oneHpTime;
         if (m_timeLife < 0)
         {

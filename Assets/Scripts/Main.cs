@@ -41,7 +41,6 @@ public class Main : MonoBehaviour
             if (m_flower.m_isGoalEnd && !m_IsClearEnd)
             {
                 m_IsClearEnd = true;
-                SceneManager.LoadScene("GameClear");
             }
 
             if (m_flower.m_isFinish && m_audioSource.volume > 0)
@@ -68,6 +67,7 @@ public class Main : MonoBehaviour
                 {
                     m_flower.Finish();
                     goalObject.SetActive(false);
+                    MyFadeManager.Instance.LoadScene("GameClear", 1.2f, 0.6f, true);
                 }
                 else
                 {
@@ -108,7 +108,12 @@ public class Main : MonoBehaviour
                 }
             }
 
-            guiController.SetHpPer(m_flower.m_timeLife / m_flower.m_lifeTime);
+            guiController.SetHpPer(m_flower.m_timeLife / m_flower.m_limitLifeTime);
+
+            if (m_flower.m_limitLifeTime <= m_flower.m_timeLife)
+            {
+                m_audioSource.Stop();
+            }
 
             if (m_flower.IsTriggerItem())
             {
@@ -175,7 +180,7 @@ public class Main : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F7))
         {
-            MyFadeManager.Instance.LoadScene("Game", 1f, 1f, true);
+            MyFadeManager.Instance.LoadScene("Game", 1f);
         }
     }
 }

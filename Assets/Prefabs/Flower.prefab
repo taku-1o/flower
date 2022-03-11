@@ -246,10 +246,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 8300000, guid: bec4834f22b45244d8aafc4bff6e13cf, type: 3}
   - {fileID: 8300000, guid: 582388fe783159040a80517e3fbf4178, type: 3}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 4b010bb2d5da4e743bccd1f788cf07dd, type: 3}
   - {fileID: 0}
   - {fileID: 8300000, guid: 7520985216e0a124eb9be51587d27885, type: 3}
-  bgmAudioSource: {fileID: 0}
   maxHP: 5
   speed: 0.05
   jumpPower: 330
