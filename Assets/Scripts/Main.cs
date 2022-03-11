@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour
 {
     /* [SerializeField] */
-    [SerializeField] private GUI guiController;                 //UI管理（インゲーム）
+    [SerializeField] private GUIManager guiController;                 //UI管理（インゲーム）
     [SerializeField] private Flower flowerPrefab;               //プレイヤー（花）のPrefab
     [SerializeField] private Vector2 initPosition;
     [SerializeField] private GameObject goalObject;             //ゴールオブジェクト
@@ -15,7 +16,9 @@ public class Main : MonoBehaviour
 
     /* Private */
     private Flower m_flower;                                    //プレイヤー（花）
-    private bool m_IsGoal;
+    private bool m_IsClear;
+    private bool m_IsClearEnd;
+    private AudioSource m_audioSource;
     /* Private */
 
 
@@ -24,6 +27,7 @@ public class Main : MonoBehaviour
     {
         m_flower = Instantiate(flowerPrefab, initPosition, Quaternion.identity);
         Camera.main.GetComponent<FollowCam>().SetFlower(m_flower);
+        m_audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -34,11 +38,27 @@ public class Main : MonoBehaviour
             DebugUpdate();
             /* DEBUG */
 
+            if (m_flower.m_isGoalEnd && !m_IsClearEnd)
+            {
+                m_IsClearEnd = true;
+                SceneManager.LoadScene("GameClear");
+            }
+
+            if (m_flower.m_isFinish && m_audioSource.volume > 0)
+            {
+                float nVol = m_audioSource.volume - (0.9f * (Time.deltaTime / 2.0f));
+                if (nVol < 0.1f)
+                {
+                    nVol = 0;
+                }
+                m_audioSource.volume = nVol;
+            }
+
             if (m_flower.m_isGoal && !m_flower.m_isFinish)
             {
-                if (!m_IsGoal)
+                if (!m_IsClear)
                 {
-                    m_IsGoal = true;
+                    m_IsClear = true;
                     Camera.main.GetComponent<FollowCam>().SetZoom(true);
                 }
 
@@ -141,9 +161,21 @@ public class Main : MonoBehaviour
             m_flower.Pick(new Item(1));
         }
 
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            if (Time.timeScale == 0)
+            {
+                Time.timeScale = 1;
+            }
+            else
+            {
+                Time.timeScale = 0;
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.F7))
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+            MyFadeManager.Instance.LoadScene("Game", 1f, 1f, true);
         }
     }
 }

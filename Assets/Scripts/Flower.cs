@@ -69,7 +69,6 @@ public class Flower : MonoBehaviour
     [SerializeField] private GroundCheck groundCheck;
     [SerializeField] private StateAnimations[] selectionAnimations;
     [SerializeField] private AudioClip[] audioClips;
-    [SerializeField] private AudioSource bgmAudioSource;
     [SerializeField] private int maxHP;
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
@@ -85,6 +84,7 @@ public class Flower : MonoBehaviour
     public int m_nextSelection { get; private set; } = 0;       //次の形態
     public bool m_isGoal { get; private set; }
     public bool m_isFinish { get; private set; }
+    public bool m_isGoalEnd { get; private set; }
     /* Public */
 
 
@@ -287,6 +287,11 @@ public class Flower : MonoBehaviour
     public void AnimationEnded()//ループしないアニメーション用
     {
         SetState(StateAnimations.STATES.IDLE);
+    }
+
+    public void GoalEnd()
+    {
+        m_isGoalEnd = true;
     }
 
     private void SetState(StateAnimations.STATES states)
