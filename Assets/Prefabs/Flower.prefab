@@ -70,6 +70,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd7682d621f62a24998e73b5dbd6411a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2677723867918403877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4114505472719252977}
+  - component: {fileID: 5483108436152129394}
+  m_Layer: 0
+  m_Name: BaraAttack
+  m_TagString: Attack
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4114505472719252977
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2677723867918403877}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8003933685492871207}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &5483108436152129394
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2677723867918403877}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.15, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.5}
+  m_EdgeRadius: 0
 --- !u!1 &8003933685492871205
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,7 +144,7 @@ GameObject:
   - component: {fileID: 7221054201740158053}
   m_Layer: 0
   m_Name: Flower
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,6 +161,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3711058760819181276}
+  - {fileID: 4114505472719252977}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -236,7 +294,7 @@ MonoBehaviour:
     - {fileID: 7400000, guid: e10f095b24888ab429f3054756772d2b, type: 2}
     - {fileID: 7400000, guid: 70d55148436dbfc448dd6889bb193158, type: 2}
     - {fileID: 7400000, guid: 9b5aa6ddabd300d41bfff5a0dcfe5c44, type: 2}
-    - {fileID: 7400000, guid: efa83575f971e29409861998b365f029, type: 2}
+    - {fileID: 7400000, guid: 08223df2a7eb5e640b23cb60e3e0fec3, type: 2}
     - {fileID: 7400000, guid: 720cd56ad0e5a4b4ca3954ca09260331, type: 2}
     - {fileID: 7400000, guid: d1ae6f93b12cd6b43ac4cab9020103bb, type: 2}
   audioClips:

@@ -33,7 +33,6 @@ public class Flower : MonoBehaviour
                 case (int)STATES.MOVE:
                     return true;
                 case (int)STATES.GET:
-                case (int)STATES.DOWN:
                     return selection == 1;
                 case (int)STATES.TRANSFORM:
                 case (int)STATES.ATTACK:
@@ -52,7 +51,6 @@ public class Flower : MonoBehaviour
                 case (int)STATES.JUMP:
                     return true;
                 case (int)STATES.GET:
-                case (int)STATES.DOWN:
                     return selection == 1;
                 case (int)STATES.TRANSFORM:
                 case (int)STATES.ATTACK:
@@ -97,6 +95,7 @@ public class Flower : MonoBehaviour
     private Item m_triggerItem = null;                          //取得可能なアイテム
     private bool m_keyDownSpace;                                //Space入力
     private bool m_keyDownE;                                    //E入力
+    private bool m_keyDownF;                                    //F入力
     private bool m_isInHealAria;                                //回復エリア内か
     private AudioSource m_audioSource;
     /* Private */
@@ -133,6 +132,15 @@ public class Flower : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.E) || !Input.GetKey(KeyCode.E))
         {
             m_keyDownE = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            m_keyDownF = true;
+        }
+        if (Input.GetKeyUp(KeyCode.F) || !Input.GetKey(KeyCode.F))
+        {
+            m_keyDownF = false;
         }
     }
 
@@ -173,9 +181,9 @@ public class Flower : MonoBehaviour
                 SetState(StateAnimations.STATES.JUMP);
             }
 
-            if (m_keyDownE)
+            if (m_keyDownF)
             {
-                m_keyDownE = false;
+                m_keyDownF = false;
                 SetState(StateAnimations.STATES.ATTACK);
             }
 
@@ -313,6 +321,8 @@ public class Flower : MonoBehaviour
 
     public void Damage()
     {
+        if (m_state == (int)StateAnimations.STATES.DAMAGE || m_state == (int)StateAnimations.STATES.DOWN) return;
+
         if (m_limitLifeTime <= m_timeLife) return;
 
         float oneHpTime = m_limitLifeTime / m_maxHP;

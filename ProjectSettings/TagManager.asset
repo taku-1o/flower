@@ -8,6 +8,7 @@ TagManager:
   - Item
   - Ground
   - HealArea
+  - Attack
   layers:
   - Default
   - TransparentFX
