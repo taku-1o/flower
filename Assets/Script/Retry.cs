@@ -17,11 +17,11 @@ public class Retry : MonoBehaviour
         //  Debug.Log("Click");
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            FadeManager.Instance.LoadScene("Game", 1.0f);
+            MyFadeManager.Instance.LoadScene("Game", 1.0f,true);
         }
         if (Input.GetMouseButtonDown(0))
         {
-            FadeManager.Instance.LoadScene("Game", 1.0f);
+            MyFadeManager.Instance.LoadScene("Game", 1.0f,true);
         }
     }
 

@@ -10,7 +10,8 @@ using UnityEngine.AI;
 public class CollisionDetector : MonoBehaviour
 {
     [SerializeField] private TriggerEvent onTriggerStay = new TriggerEvent();
-    
+    [SerializeField] private TriggerEvent onTriggerExit = new TriggerEvent();
+
     private NavMeshAgent navMeshAgent;
 
     /// <summary>
@@ -31,22 +32,30 @@ public class CollisionDetector : MonoBehaviour
        
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        // InspectorタブのonTriggerStayで指定された処理を実行する
+
+        onTriggerExit.Invoke(other);
+
+    }
+
     // UnityEventを継承したクラスに[Serializable]属性を付与することで、Inspectorウインドウ上に表示できるようになる。
     [Serializable]
     public class TriggerEvent : UnityEvent<Collider2D>
     {
 
     }
-    public void OnDetectObject(Collider2D collider)
-    {
+    //public void OnDetectObject(Collider2D collider)
+    //{
 
-        //// 検知したオブジェクトに「Player」のタグがついていれば、そのオブジェクトを追いかける
-        //if (collider.CompareTag("Player"))
-        //{
-        //    Debug.Log("a");
-        //    navMeshAgent.destination = collider.transform.position;
-        //    Debug.Log("a");
-        //}
+    //    //// 検知したオブジェクトに「Player」のタグがついていれば、そのオブジェクトを追いかける
+    //    //if (collider.CompareTag("Player"))
+    //    //{
+    //    //    Debug.Log("a");
+    //    //    navMeshAgent.destination = collider.transform.position;
+    //    //    Debug.Log("a");
+    //    //}
 
-    }
+    //}
 }

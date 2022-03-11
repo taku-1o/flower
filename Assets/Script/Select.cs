@@ -37,7 +37,7 @@ public class Select : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            FadeManager.Instance.LoadScene("Game", 1.0f);
+            MyFadeManager.Instance.LoadScene("Game", 1.0f,true);
 
         }
     }
@@ -46,7 +46,7 @@ public class Select : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            FadeManager.Instance.LoadScene("SampleScene", 1.0f);
+            MyFadeManager.Instance.LoadScene("SampleScene", 1.0f,true);
 
         }
     }

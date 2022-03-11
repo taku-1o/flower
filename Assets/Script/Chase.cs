@@ -51,30 +51,7 @@ public class Chase : MonoBehaviour
     void  Update()
     {
        
-        currentPosition = transform.position;
-
-        if (-5f > initialPosition.y || -5f > initialPosition.x )
-        {
-            // 初期位置に戻す。
-            transform.position = initialPosition;
-
-            // 初期角度に戻す。
-            transform.eulerAngles = initialRot;
-        }
-
-
-        Vector2 p = new Vector2(move, 0);
-        transform.Translate(p);
-        counter++;
-
-        //countが100になれば-1を掛けて逆方向に動かす
-        if (counter == 100 && flg==false)
-        {
-
-            counter = 0;
-             move *= -1;
-            
-        }
+     
 
         //Vector2 dir = (targetObject.transform.position - this.transform.position).normalized;
 
@@ -101,8 +78,31 @@ public class Chase : MonoBehaviour
 
             //this.GetComponent<SpriteRenderer>().flipX = (vx < 0);
             //this.GetComponent<SpriteRenderer>().flipY = (vy < 0);
-             navMeshAgent.destination = collider.transform.position;
-           // navMeshAgent.destination = player.transform.position;
+
+            // navMeshAgent.destination = collider.transform.position;
+
+            // navMeshAgent.destination = player.transform.position;
+            float x = Input.GetAxisRaw("Horizontal");
+            // デフォルトが右向きの画像の場合
+            // スケール値取り出し
+            Vector2 scale = transform.localScale;
+
+            if (vx >= 0)
+            {
+
+                // 右方向に移動中
+                scale.x = 1; // そのまま（右向き
+
+            }
+            else
+            {
+
+                // 左方向に移動中
+                scale.x = -1; // 反転する（左向き）
+
+            }
+            // 代入し直す
+            transform.localScale = scale;
         }
         else
         {
@@ -110,9 +110,67 @@ public class Chase : MonoBehaviour
         }
     }
 
+    public void OnDetectObj(Collider2D collider)
+    {
+
+        //if (collider.CompareTag("Player"))
+        //{
+        //    flg = true;
+        //    // 検知したオブジェクトに「Player」のタグがついていれば、そのオブジェクトを追いかける
+        //    Vector3 dir = (targetObject.transform.position - this.transform.position).normalized;
+
+        //    float vx = dir.x * speed;
+        //    float vy = dir.y * speed;
+           
+
+        //    //this.GetComponent<SpriteRenderer>().flipX = (vx < 0);
+        //    //this.GetComponent<SpriteRenderer>().flipY = (vy < 0);
+
+        //    // navMeshAgent.destination = collider.transform.position;
+
+        //    // navMeshAgent.destination = player.transform.position;
+        //}
+
+        if (collider.CompareTag("Player"))
+        {
+            flg = false;
+            rbody.velocity = new Vector2(0, 0);
+
+            // 初期位置に戻す。
+            transform.position = initialPosition;
+
+            // 初期角度に戻す。
+            transform.eulerAngles = initialRot;
+        }
+    }
+
+
     void FixedUpdate()
     {
-       
+        currentPosition = transform.position;
+
+        if (-5f > initialPosition.y || -5f > initialPosition.x)
+        {
+            // 初期位置に戻す。
+            transform.position = initialPosition;
+
+            // 初期角度に戻す。
+            transform.eulerAngles = initialRot;
+        }
+
+        if (flg == true) return;
+        Vector2 p = new Vector2(move, 0);
+        transform.Translate(p);
+        counter++;
+
+        //countが100になれば-1を掛けて逆方向に動かす
+        if (counter == 100 && flg == false)
+        {
+
+            counter = 0;
+            move *= -1;
+
+        }
 
         float x = Input.GetAxisRaw("Horizontal");
         // デフォルトが右向きの画像の場合

@@ -25,7 +25,7 @@ public class Pause : MonoBehaviour
             if (pauseUIInstance == null)
             {
                 pauseUIInstance = GameObject.Instantiate(pauseUIPrefab) as GameObject;
-                Time.timeScale = 1f;
+                Time.timeScale = 0f;
             }
             else
             {

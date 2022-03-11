@@ -16,11 +16,11 @@ public class Title : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            FadeManager.Instance.LoadScene("SampleScene", 1.0f);
+            MyFadeManager.Instance.LoadScene("SampleScene", 1.0f,true);
         }
         if (Input.GetMouseButtonDown(0))
         {
-            FadeManager.Instance.LoadScene("SampleScene", 1.0f);
+           MyFadeManager.Instance.LoadScene("SampleScene", 1.0f,true);
         }
     }
 }
