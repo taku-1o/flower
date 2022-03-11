@@ -23,6 +23,7 @@ public class Chase : MonoBehaviour
     private Vector3 initialRot;
 
     bool flg;
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -100,7 +101,8 @@ public class Chase : MonoBehaviour
 
             //this.GetComponent<SpriteRenderer>().flipX = (vx < 0);
             //this.GetComponent<SpriteRenderer>().flipY = (vy < 0);
-            //navMeshAgent.destination = collider.transform.position;
+             navMeshAgent.destination = collider.transform.position;
+           // navMeshAgent.destination = player.transform.position;
         }
         else
         {
