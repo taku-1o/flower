@@ -375,7 +375,7 @@ GameObject:
   - component: {fileID: 750326062}
   m_Layer: 0
   m_Name: Square
-  m_TagString: Player
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1061,7 +1061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400095256809944576, guid: 9485c8d7da2d39042b0e28f786d92f00, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400095256809944580, guid: 9485c8d7da2d39042b0e28f786d92f00, type: 3}
       propertyPath: m_Pivot.x
@@ -1175,6 +1175,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 400095257457861934, guid: 9485c8d7da2d39042b0e28f786d92f00, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 514
+      objectReference: {fileID: 0}
+    - target: {fileID: 400095257457861934, guid: 9485c8d7da2d39042b0e28f786d92f00, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 400095258059636829, guid: 9485c8d7da2d39042b0e28f786d92f00, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -1202,6 +1210,18 @@ PrefabInstance:
     - target: {fileID: 400095258059636829, guid: 9485c8d7da2d39042b0e28f786d92f00, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 400095258059636830, guid: 9485c8d7da2d39042b0e28f786d92f00, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 400095258059636830, guid: 9485c8d7da2d39042b0e28f786d92f00, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 400095258059636830, guid: 9485c8d7da2d39042b0e28f786d92f00, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 395
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9485c8d7da2d39042b0e28f786d92f00, type: 3}
