@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Title : MonoBehaviour
+public class Title2 : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -14,13 +14,14 @@ public class Title : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        
+    }
+
+     void OnMouseDown()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            MyFadeManager.Instance.LoadScene("SampleScene", 1.0f,true);
+            MyFadeManager.Instance.LoadScene("SampleScene", 1.0f, true);
         }
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    MyFadeManager.Instance.LoadScene("SampleScene", 1.0f, true);
-        //}
     }
 }

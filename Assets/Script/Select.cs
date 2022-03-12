@@ -35,24 +35,35 @@ public class Select : MonoBehaviour
 
     public void Retry()
     {
+      
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            MyFadeManager.Instance.LoadScene("Game", 1.0f,true);
+            MyFadeManager.Instance.LoadScene("Game", 1.0f, true);
 
         }
+        
+    }
+    public void ClickRetry()
+    {
+        MyFadeManager.Instance.LoadScene("Game", 1.0f, true);
     }
 
-    public void Title()
+        public void Title()
     {
+       
         if (Input.GetKeyDown(KeyCode.Return))
         {
             MyFadeManager.Instance.LoadScene("SampleScene", 1.0f,true);
 
         }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    MyFadeManager.Instance.LoadScene("SampleScene", 1.0f, true);
+        //}
     }
 
-    //private void OnMouseDown()
-    //{
-    //    FadeManager.Instance.LoadScene("SampleScene", 1.0f);
-    //}
+    public void Clickta()
+    {
+        MyFadeManager.Instance.LoadScene("SampleScene", 1.0f, true);
+    }
 }
