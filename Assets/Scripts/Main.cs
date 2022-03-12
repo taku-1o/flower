@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 
 public class Main : MonoBehaviour
 {
+
     /* [SerializeField] */
     [SerializeField] private GUIManager guiController;                 //UI管理（インゲーム）
     [SerializeField] private Flower flowerPrefab;               //プレイヤー（花）のPrefab
@@ -15,6 +17,8 @@ public class Main : MonoBehaviour
     /* [SerializeField] */
 
 
+    public static int stage_num = 0;
+
     /* Private */
     private Flower m_flower;                                    //プレイヤー（花）
     private bool m_IsClear;
@@ -23,13 +27,13 @@ public class Main : MonoBehaviour
     /* Private */
 
 
-
     private void Start()
     {
+        m_audioSource = GetComponent<AudioSource>();
+
         m_flower = Instantiate(flowerPrefab, initPosition, Quaternion.identity);
         m_flower.gameObject.name = "Flower";
         Camera.main.GetComponent<FollowCam>().SetFlower(m_flower);
-        m_audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -61,6 +65,7 @@ public class Main : MonoBehaviour
                 {
                     m_IsClear = true;
                     Camera.main.GetComponent<FollowCam>().SetZoom(true);
+                    stage_num++;
                 }
 
                 Vector3 finishPos = goalObject.transform.position - (Vector3)goalOffset[m_flower.m_selection];
@@ -183,6 +188,7 @@ public class Main : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F7))
         {
+            stage_num++;
             MyFadeManager.Instance.LoadScene("Game", 1f);
         }
     }

@@ -156,7 +156,7 @@ public class Flower : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!m_isGoal)
+        if (!m_isGoal && m_timeLife < m_limitLifeTime)
         {
             if (m_isInHealAria)
             {
@@ -224,6 +224,7 @@ public class Flower : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
         if (collision.gameObject.CompareTag("Finish"))
         {
             m_isGoal = true;
@@ -242,6 +243,7 @@ public class Flower : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
         if (collision.gameObject.CompareTag("HealArea"))
         {
             m_isInHealAria = true;
@@ -250,6 +252,7 @@ public class Flower : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
         if (collision.gameObject.CompareTag("Item"))
         {
             if (m_triggerItem == collision.gameObject.GetComponent<Item>())
@@ -265,6 +268,7 @@ public class Flower : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Damage();
