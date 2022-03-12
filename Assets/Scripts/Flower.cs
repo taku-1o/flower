@@ -213,6 +213,13 @@ public class Flower : MonoBehaviour
             }
             PlaySE();
         }
+        else
+        {
+            if (!IsAnimationMatchState())
+            {
+                UpdateAnimation();//バグ回避
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -227,6 +234,14 @@ public class Flower : MonoBehaviour
         {
             m_triggerItem = collision.gameObject.GetComponent<Item>();
         }
+        if (collision.gameObject.CompareTag("HealArea"))
+        {
+            m_isInHealAria = true;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
         if (collision.gameObject.CompareTag("HealArea"))
         {
             m_isInHealAria = true;
@@ -327,6 +342,14 @@ public class Flower : MonoBehaviour
         if (selectionAnimations[m_selection].animationClips.Length < (int)StateAnimations.STATES.COUNT) return;
 
         m_animator.Play(selectionAnimations[m_selection].animationClips[m_state].name);
+    }
+
+    private bool IsAnimationMatchState()
+    {
+        if (selectionAnimations.Length <= m_selection) return false;
+        if (selectionAnimations[m_selection].animationClips.Length < (int)StateAnimations.STATES.COUNT) return false;
+
+        return m_animator.GetCurrentAnimatorStateInfo(0).IsName(selectionAnimations[m_selection].animationClips[m_state].name);
     }
 
     public void Damage()
