@@ -5,11 +5,10 @@ using UnityEngine;
 public class FollowCam : MonoBehaviour
 {
     /* [SerializeField] */
-    [SerializeField] private GameObject m_background;
     [SerializeField] private float m_zoomMin;
     [SerializeField] private float m_zoomMax;
     [SerializeField] private float m_zoomTime;
-    [SerializeField] private float m_zoomRange;
+    [SerializeField] private float m_followDif;
     /* [SerializeField] */
 
 
@@ -20,6 +19,9 @@ public class FollowCam : MonoBehaviour
     private bool m_zoomEndFlg = true;
     private Vector2 m_rangeRightTop;
     private Vector2 m_rangeLeftBotom;
+    private float m_limitRangeLeft;
+    private float m_limitRangeRight;
+    private GameObject m_background;
     /* Private */
 
 
@@ -37,7 +39,40 @@ public class FollowCam : MonoBehaviour
     private void FixedUpdate()
     {
         if (!m_flower) return;
-        if (m_zoomEndFlg) return;
+
+        Vector3 dif = m_flower.transform.position - transform.position;
+        if (Mathf.Abs(dif.x) > m_followDif)
+        {
+            float followDistance = m_followDif * Mathf.Sign(dif.x);
+            transform.position += new Vector3(dif.x - followDistance, 0, 0);
+        }
+
+        if (!m_zoomEndFlg)
+        {
+            ZoomFunction();
+        }
+        
+        m_rangeRightTop = m_camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        m_rangeLeftBotom = m_camera.ScreenToWorldPoint(Vector3.zero);
+        if (m_limitRangeRight < m_rangeRightTop.x)
+        {
+            transform.position += new Vector3(m_limitRangeRight - m_rangeRightTop.x, 0, 0);
+        }
+        else if (m_rangeLeftBotom.x < m_limitRangeLeft)
+        {
+            transform.position += new Vector3(m_limitRangeLeft - m_rangeLeftBotom.x, 0, 0);
+        }
+
+        if (m_background && !m_zoomFlg && m_zoomEndFlg)
+        {
+            Vector3 bgVec = m_background.transform.position;
+            bgVec.x = transform.position.x;
+            m_background.transform.position = bgVec;
+        }
+    }
+
+    private void ZoomFunction()
+    {
         if (m_zoomFlg)
         {
             if (m_zoomMax < m_camera.orthographicSize)
@@ -47,7 +82,6 @@ public class FollowCam : MonoBehaviour
                 {
                     m_camera.orthographicSize = m_zoomMax;
                     m_zoomEndFlg = true;
-                    m_zoomFlg = false;
                 }
             }
             Vector3 dif = m_flower.transform.position - transform.position;
@@ -57,16 +91,6 @@ public class FollowCam : MonoBehaviour
             dif *= Vector3.Distance(m_flower.transform.position, transform.position);
 
             transform.position += dif * Time.deltaTime;
-            m_rangeRightTop = m_camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-            m_rangeLeftBotom = m_camera.ScreenToWorldPoint(Vector3.zero);
-            if (m_zoomRange < m_rangeRightTop.x)
-            {
-                transform.position += new Vector3(m_zoomRange - m_rangeRightTop.x, 0, 0);
-            }
-            else if (m_rangeLeftBotom.x < -m_zoomRange)
-            {
-                transform.position += new Vector3(-m_zoomRange - m_rangeLeftBotom.x, 0, 0);
-            }
         }
         else
         {
@@ -86,16 +110,6 @@ public class FollowCam : MonoBehaviour
             dif *= Vector3.Distance(Vector3.zero, transform.position);
 
             transform.position += dif * Time.deltaTime;
-            m_rangeRightTop = m_camera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
-            m_rangeLeftBotom = m_camera.ScreenToWorldPoint(Vector3.zero);
-            if (m_zoomRange < m_rangeRightTop.x)
-            {
-                transform.position += new Vector3(m_zoomRange - m_rangeRightTop.x, 0, 0);
-            }
-            else if (m_rangeLeftBotom.x < -m_zoomRange)
-            {
-                transform.position += new Vector3(-m_zoomRange - m_rangeLeftBotom.x, 0, 0);
-            }
         }
     }
 
@@ -108,5 +122,16 @@ public class FollowCam : MonoBehaviour
     {
         m_zoomFlg = zoomFlg;
         m_zoomEndFlg = false;
+    }
+
+    public void SetLimitRange(float left, float right)
+    {
+        m_limitRangeLeft = left;
+        m_limitRangeRight = right;
+    }
+
+    public void SetBackground(GameObject background)
+    {
+        m_background = background;
     }
 }

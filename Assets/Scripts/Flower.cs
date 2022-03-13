@@ -71,11 +71,13 @@ public class Flower : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
     [SerializeField] private float lifeTime;
+    [SerializeField] private float lifeHealTime;
     /* [SerializeField] */
 
 
     /* Public */
     public float m_limitLifeTime { get { return lifeTime; } }        //最大生存時間（SerializeField参照）
+    public float m_lifeHealTime { get { return lifeHealTime; } }     //全回復までの時間（SerializeField参照）
     public float m_timeLife { get; private set; }               //生存時間
     public int m_maxHP { get { return maxHP; } }                //最大HP（SerializeField参照）
     public int m_selection { get; private set; } = 0;           //現在の形態
@@ -160,7 +162,7 @@ public class Flower : MonoBehaviour
         {
             if (m_isInHealAria)
             {
-                m_timeLife -= Time.deltaTime;
+                m_timeLife -= Time.deltaTime * (m_limitLifeTime / m_lifeHealTime);
                 if (m_timeLife < 0)
                 {
                     m_timeLife = 0;

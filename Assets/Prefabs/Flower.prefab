@@ -310,7 +310,8 @@ MonoBehaviour:
   maxHP: 5
   speed: 0.05
   jumpPower: 330
-  lifeTime: 15
+  lifeTime: 8
+  lifeHealTime: 10
 --- !u!95 &4711943926410012376
 Animator:
   serializedVersion: 3
