@@ -149,14 +149,14 @@ public class Chase : MonoBehaviour
     {
         currentPosition = transform.position;
 
-        if (-5f > initialPosition.y || -5f > initialPosition.x)
-        {
-            // 初期位置に戻す。
-            transform.position = initialPosition;
+        //if (-5f > initialPosition.y || -5f > initialPosition.x)
+        //{
+        //    // 初期位置に戻す。
+        //    transform.position = initialPosition;
 
-            // 初期角度に戻す。
-            transform.eulerAngles = initialRot;
-        }
+        //    // 初期角度に戻す。
+        //    transform.eulerAngles = initialRot;
+        //}
 
         if (flg == true) return;
         Vector2 p = new Vector2(move, 0);
