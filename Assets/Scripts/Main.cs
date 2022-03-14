@@ -189,6 +189,11 @@ public class Main : MonoBehaviour
             m_flower.Pick(new Item(1));
         }
 
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            m_flower.ToggleDebugMode();
+        }
+
         if (Input.GetKeyDown(KeyCode.F6))
         {
             if (Time.timeScale == 0)
@@ -204,7 +209,7 @@ public class Main : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F7))
         {
             stage_num++;
-            MyFadeManager.Instance.LoadScene("Game", 1f);
+            MyFadeManager.Instance.LoadScene("Game", 1f, true);
         }
     }
 

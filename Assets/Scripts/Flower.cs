@@ -101,6 +101,7 @@ public class Flower : MonoBehaviour
     private bool m_keyDownF;                                    //F入力
     private bool m_isInHealAria;                                //回復エリア内か
     private AudioSource m_audioSource;
+    private bool m_isDebug;
     private bool m_isJump;
     /* Private */
 
@@ -159,26 +160,29 @@ public class Flower : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //if (!m_isGoal && m_timeLife < m_limitLifeTime)
-        //{
-        //    if (m_isInHealAria)
-        //    {
-        //        m_timeLife -= Time.deltaTime * (m_limitLifeTime / m_lifeHealTime);
-        //        if (m_timeLife < 0)
-        //        {
-        //            m_timeLife = 0;
-        //        }
-        //    }
-        //    else if (m_timeLife < m_limitLifeTime)
-        //    {
-        //        m_timeLife += Time.deltaTime;
-        //        if (m_timeLife >= m_limitLifeTime)
-        //        {
-        //            m_timeLife = m_limitLifeTime;
-        //            SetState(StateAnimations.STATES.DOWN);
-        //        }
-        //    }
-        //}
+        if (!m_isGoal && m_timeLife < m_limitLifeTime && !m_isDebug)
+        {
+            if (m_isInHealAria)
+            {
+                m_timeLife -= Time.deltaTime * (m_limitLifeTime / m_lifeHealTime);
+                if (m_timeLife < 0)
+                {
+                    m_timeLife = 0;
+                }
+            }
+            else if (m_timeLife < m_limitLifeTime)
+            {
+                m_timeLife += Time.deltaTime;
+                if (m_timeLife >= m_limitLifeTime)
+                {
+                    m_timeLife = m_limitLifeTime;
+                }
+            }
+        }
+        if (m_timeLife >= m_limitLifeTime)
+        {
+            SetState(StateAnimations.STATES.DOWN);
+        }
 
         if (StateAnimations.IsMoveAnim(m_selection, m_state))
         {
@@ -204,6 +208,11 @@ public class Flower : MonoBehaviour
             if (m_inputX < 0) scale.x = -Mathf.Abs(scale.x);
             if (m_inputX > 0) scale.x = Mathf.Abs(scale.x);
             transform.localScale = scale;
+        }
+
+        if (transform.position.y < -5)
+        {
+            m_timeLife = m_limitLifeTime;
         }
 
         if (StateAnimations.IsLoopAnim(m_selection, m_state))
@@ -285,11 +294,11 @@ public class Flower : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
-        //if (collision.gameObject.CompareTag("Enemy"))
-        //{
-        //    Damage();
-        //}
+        if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (!m_isDebug) Damage();
+        }
     }
 
     public void PlaySE()
@@ -390,21 +399,21 @@ public class Flower : MonoBehaviour
 
     public void Damage()
     {
-        //if (m_state == (int)StateAnimations.STATES.DAMAGE || m_state == (int)StateAnimations.STATES.DOWN) return;
+        if (m_state == (int)StateAnimations.STATES.DAMAGE || m_state == (int)StateAnimations.STATES.DOWN) return;
 
-        //if (m_limitLifeTime <= m_timeLife) return;
+        if (m_limitLifeTime <= m_timeLife) return;
 
-        //float oneHpTime = m_limitLifeTime / m_maxHP;
-        //m_timeLife += oneHpTime;
-        //if (m_limitLifeTime <= m_timeLife)
-        //{
-        //    m_timeLife = m_limitLifeTime;
-        //    SetState(StateAnimations.STATES.DOWN);
-        //}
-        //else
-        //{
-        //    SetState(StateAnimations.STATES.DAMAGE);
-        //}
+        float oneHpTime = m_limitLifeTime / m_maxHP;
+        m_timeLife += oneHpTime;
+        if (m_limitLifeTime <= m_timeLife)
+        {
+            m_timeLife = m_limitLifeTime;
+            SetState(StateAnimations.STATES.DOWN);
+        }
+        else
+        {
+            SetState(StateAnimations.STATES.DAMAGE);
+        }
     }
 
     public void Heal()
@@ -460,5 +469,10 @@ public class Flower : MonoBehaviour
         m_isFinish = true;
         transform.localScale = Vector3.one;
         SetState(StateAnimations.STATES.GOAL);
+    }
+
+    public void ToggleDebugMode()
+    {
+        m_isDebug = !m_isDebug;
     }
 }
