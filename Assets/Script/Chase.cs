@@ -94,14 +94,14 @@ public class Chase : MonoBehaviour
             {
 
                 // 右方向に移動中
-                scale.x = 1; // そのまま（右向き
+                scale.x = 0.6f; // そのまま（右向き
 
             }
             else
             {
 
                 // 左方向に移動中
-                scale.x = -1; // 反転する（左向き）
+                scale.x = -0.6f; // 反転する（左向き）
 
             }
             // 代入し直す
@@ -170,14 +170,14 @@ public class Chase : MonoBehaviour
         {
         
             // 右方向に移動中
-            scale.x = 1; // そのまま（右向き
+            scale.x = 0.6f; // そのまま（右向き
           
         }
         else
         {
 
             // 左方向に移動中
-            scale.x = -1; // 反転する（左向き）
+            scale.x = -0.6f; // 反転する（左向き）
             
         }
         // 代入し直す
