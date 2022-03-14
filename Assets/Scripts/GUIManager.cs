@@ -9,6 +9,7 @@ public class GUIManager : MonoBehaviour
     [SerializeField] private Image m_hpImage;
     [SerializeField] private GameObject m_getUI;
     [SerializeField] private Vector2 m_getUIOffset;
+    [SerializeField] private GameObject m_stageClear;
     /* [SerializeField] */
 
 
@@ -25,5 +26,9 @@ public class GUIManager : MonoBehaviour
     {
         m_getUI.SetActive(active);
         m_getUI.transform.position = pos + (Vector3)m_getUIOffset;
+    }
+    public void SetStageClearUIActive(bool active)
+    {
+        m_stageClear.SetActive(active);
     }
 }

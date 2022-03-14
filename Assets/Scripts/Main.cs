@@ -58,6 +58,7 @@ public class Main : MonoBehaviour
             if (m_flower.m_isGoalEnd && !m_IsClearEnd)
             {
                 m_IsClearEnd = true;
+                ShowNextStage();
             }
 
             if (m_flower.m_isFinish && m_audioSource.volume > 0)
@@ -76,7 +77,6 @@ public class Main : MonoBehaviour
                 {
                     m_IsClear = true;
                     followCam.SetZoom(true);
-                    stage_num++;
                 }
 
                 Vector3 finishPos = m_currentStage.m_GoalObject.transform.position - (Vector3)goalOffset[m_flower.m_selection];
@@ -85,7 +85,11 @@ public class Main : MonoBehaviour
                 {
                     m_flower.Finish();
                     m_currentStage.m_GoalObject.SetActive(false);
-                    MyFadeManager.Instance.LoadScene("GameClear", 1.2f, 0.6f, true);
+                    if (stagePrefabList.Length <= stage_num + 1)
+                    {
+                        MyFadeManager.Instance.LoadScene("GameClear", 1.2f, 0.6f, true);
+                    }
+                    //MyFadeManager.Instance.LoadScene("GameClear", 1.2f, 0.6f, true);
                 }
                 else
                 {
@@ -202,5 +206,16 @@ public class Main : MonoBehaviour
             stage_num++;
             MyFadeManager.Instance.LoadScene("Game", 1f);
         }
+    }
+
+    private void ShowNextStage()
+    {
+        guiController.SetStageClearUIActive(true);
+    }
+
+    public void NextStage()
+    {
+        stage_num++;
+        MyFadeManager.Instance.LoadScene("Game", 1f);
     }
 }

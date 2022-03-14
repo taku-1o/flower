@@ -101,6 +101,7 @@ public class Flower : MonoBehaviour
     private bool m_keyDownF;                                    //F入力
     private bool m_isInHealAria;                                //回復エリア内か
     private AudioSource m_audioSource;
+    private bool m_isJump;
     /* Private */
 
 
@@ -216,9 +217,21 @@ public class Flower : MonoBehaviour
                 SetState(StateAnimations.STATES.MOVE);
             }
             PlaySE();
+
+            if (groundCheck.IsGround())
+            {
+                m_isJump = false;
+            }
         }
         else
         {
+            if (m_state == (int)StateAnimations.STATES.JUMP && m_isJump)
+            {
+                if (groundCheck.IsGround())
+                {
+                    SetState(StateAnimations.STATES.IDLE);
+                }
+            }
             if (!IsAnimationMatchState())
             {
                 UpdateAnimation();//バグ回避
@@ -326,9 +339,24 @@ public class Flower : MonoBehaviour
         m_rigidbody.AddForce(Vector2.up * jumpPower);
     }
 
+    public void JumpHighEnd()
+    {
+        m_isJump = true;
+    }
+
     public void AnimationEnded()//ループしないアニメーション用
     {
-        SetState(StateAnimations.STATES.IDLE);
+        if (m_state == (int)StateAnimations.STATES.JUMP)
+        {
+            if (groundCheck.IsGround())
+            {
+                SetState(StateAnimations.STATES.IDLE);
+            }
+        }
+        else
+        {
+            SetState(StateAnimations.STATES.IDLE);
+        }
     }
 
     public void GoalEnd()

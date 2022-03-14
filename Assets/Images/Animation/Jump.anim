@@ -99,6 +99,8 @@ AnimationClip:
       value: {fileID: 21300000, guid: 82e3f9fe0ab165f4782aa9d1873ea0d1, type: 3}
     - time: 0.98333335
       value: {fileID: 21300000, guid: 3bbfbed369547754b9c557fb5a89f514, type: 3}
+    - time: 1.0166667
+      value: {fileID: 21300000, guid: 5775776cc7e1edc42a5f9dbcdc72517e, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -158,12 +160,13 @@ AnimationClip:
     - {fileID: 21300000, guid: b139f8d2cdbb5564b8ea4c251f27b972, type: 3}
     - {fileID: 21300000, guid: 82e3f9fe0ab165f4782aa9d1873ea0d1, type: 3}
     - {fileID: 21300000, guid: 3bbfbed369547754b9c557fb5a89f514, type: 3}
+    - {fileID: 21300000, guid: 5775776cc7e1edc42a5f9dbcdc72517e, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 1.0333333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -197,7 +200,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.98333335
+  - time: 0.6166667
+    functionName: JumpHighEnd
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.0166667
     functionName: AnimationEnded
     data: 
     objectReferenceParameter: {fileID: 0}
