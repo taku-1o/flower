@@ -350,8 +350,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FirstSelectButton: {fileID: 2384681586888092253}
-  col: {fileID: 4478110706678338263}
-  col2: {fileID: 4478110707492384415}
 --- !u!95 &8527667368244188749
 Animator:
   serializedVersion: 3
