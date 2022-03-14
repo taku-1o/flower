@@ -199,8 +199,10 @@ public class Flower : MonoBehaviour
                 SetState(StateAnimations.STATES.ATTACK);
             }
 
-            if (m_inputX < 0) transform.localScale = new Vector3(-1, 1, 1);
-            if (m_inputX > 0) transform.localScale = Vector3.one;
+            Vector3 scale = transform.localScale;
+            if (m_inputX < 0) scale.x = -Mathf.Abs(scale.x);
+            if (m_inputX > 0) scale.x = Mathf.Abs(scale.x);
+            transform.localScale = scale;
         }
 
         if (StateAnimations.IsLoopAnim(m_selection, m_state))
