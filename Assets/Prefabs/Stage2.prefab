@@ -1254,6 +1254,26 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
+  - first: {x: 26, y: 2, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
+  - first: {x: 27, y: 2, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      dummyAlignment: 0
+      m_AllTileFlags: 1073741825
   - first: {x: 63, y: 2, z: 0}
     second:
       serializedVersion: 2
@@ -1269,26 +1289,6 @@ Tilemap:
       serializedVersion: 2
       m_TileIndex: 3
       m_TileSpriteIndex: 3
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 26, y: 3, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 2
-      m_TileSpriteIndex: 2
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
-  - first: {x: 27, y: 3, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -1695,7 +1695,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.28
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1769,7 +1769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.81
+      value: -3.18
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1839,11 +1839,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1851,7 +1851,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.7
+      value: -3.27
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1925,7 +1925,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.81
+      value: -3.183
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2007,7 +2007,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.16
+      value: 3.58
       objectReference: {fileID: 0}
     - target: {fileID: 5422895196070530218, guid: 3a8557a5679440a44a58cf61adbf495b, type: 3}
       propertyPath: m_LocalPosition.z

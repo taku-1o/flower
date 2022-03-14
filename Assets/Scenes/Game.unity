@@ -2138,6 +2138,7 @@ MonoBehaviour:
   stagePrefabList:
   - {fileID: 5597078462386944469, guid: 156d3d4b7e0f2d240b861294ac3d70d5, type: 3}
   - {fileID: 5003930829453736943, guid: c8e5d960639529c4ebe7550f2f83c07b, type: 3}
+  - {fileID: 5003930829453736943, guid: 8ca491e730d68e04baabfe6a94de8316, type: 3}
   goalOffset:
   - {x: 0.6, y: -0.38}
   - {x: 0.63, y: -0.28}
@@ -2744,7 +2745,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e67c8c5670877d14aa365ba3cce68714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_background: {fileID: 1417202170}
   m_zoomMin: 5
   m_zoomMax: 2.5
   m_zoomTime: 1
