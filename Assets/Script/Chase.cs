@@ -22,7 +22,10 @@ public class Chase : MonoBehaviour
     private Vector3 currentPosition;
     private Vector3 initialRot;
 
+    //プレイヤーが範囲に入ったかのフラグ
     bool flg;
+
+    public BoxCollider2D col;
     private GameObject player;
 
     // Start is called before the first frame update
@@ -113,23 +116,7 @@ public class Chase : MonoBehaviour
     public void OnDetectObj(Collider2D collider)
     {
 
-        //if (collider.CompareTag("Player"))
-        //{
-        //    flg = true;
-        //    // 検知したオブジェクトに「Player」のタグがついていれば、そのオブジェクトを追いかける
-        //    Vector3 dir = (targetObject.transform.position - this.transform.position).normalized;
-
-        //    float vx = dir.x * speed;
-        //    float vy = dir.y * speed;
-           
-
-        //    //this.GetComponent<SpriteRenderer>().flipX = (vx < 0);
-        //    //this.GetComponent<SpriteRenderer>().flipY = (vy < 0);
-
-        //    // navMeshAgent.destination = collider.transform.position;
-
-        //    // navMeshAgent.destination = player.transform.position;
-        //}
+      
 
         if (collider.CompareTag("Player"))
         {
@@ -137,10 +124,12 @@ public class Chase : MonoBehaviour
             rbody.velocity = new Vector2(0, 0);
 
             // 初期位置に戻す。
-            transform.position = initialPosition;
+             transform.position = initialPosition;
+           // transform.position =Vector2.up*1f;
+           // transform.position(initialPosition)
 
             // 初期角度に戻す。
-            transform.eulerAngles = initialRot;
+           // transform.eulerAngles = initialRot;
         }
     }
 
@@ -199,11 +188,13 @@ public class Chase : MonoBehaviour
     {
         if (other.CompareTag("Attack"))
         {
+           // col.enabled = false;
             move = 0;
             Destroy(gameObject,2.5f);
             Animator animator = GetComponent<Animator>();
-            Debug.Log("a");
+          
             animator.Play("hati_Down");
+           
         }
     }
 }

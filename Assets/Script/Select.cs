@@ -8,6 +8,9 @@ public class Select : MonoBehaviour
 {
     public Button FirstSelectButton;
 
+    public BoxCollider2D col;
+    public BoxCollider2D col2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +41,8 @@ public class Select : MonoBehaviour
       
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            col.enabled = false;
+            col2.enabled = false;
             MyFadeManager.Instance.LoadScene("Game", 1.0f, true);
 
         }
@@ -45,6 +50,8 @@ public class Select : MonoBehaviour
     }
     public void ClickRetry()
     {
+        col.enabled = false;
+        col2.enabled = false;
         MyFadeManager.Instance.LoadScene("Game", 1.0f, true);
     }
 
@@ -53,17 +60,18 @@ public class Select : MonoBehaviour
        
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            col.enabled = false;
+            col2.enabled = false;
             MyFadeManager.Instance.LoadScene("SampleScene", 1.0f,true);
 
         }
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    MyFadeManager.Instance.LoadScene("SampleScene", 1.0f, true);
-        //}
+        
     }
 
     public void Clickta()
     {
+        col.enabled = false;
+        col2.enabled = false;
         MyFadeManager.Instance.LoadScene("SampleScene", 1.0f, true);
     }
 }
