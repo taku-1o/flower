@@ -71,11 +71,13 @@ public class Flower : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
     [SerializeField] private float lifeTime;
+    [SerializeField] private float lifeHealTime;
     /* [SerializeField] */
 
 
     /* Public */
     public float m_limitLifeTime { get { return lifeTime; } }        //最大生存時間（SerializeField参照）
+    public float m_lifeHealTime { get { return lifeHealTime; } }     //全回復までの時間（SerializeField参照）
     public float m_timeLife { get; private set; }               //生存時間
     public int m_maxHP { get { return maxHP; } }                //最大HP（SerializeField参照）
     public int m_selection { get; private set; } = 0;           //現在の形態
@@ -156,11 +158,11 @@ public class Flower : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!m_isGoal)
+        if (!m_isGoal && m_timeLife < m_limitLifeTime)
         {
             if (m_isInHealAria)
             {
-                m_timeLife -= Time.deltaTime;
+                m_timeLife -= Time.deltaTime * (m_limitLifeTime / m_lifeHealTime);
                 if (m_timeLife < 0)
                 {
                     m_timeLife = 0;
@@ -197,8 +199,10 @@ public class Flower : MonoBehaviour
                 SetState(StateAnimations.STATES.ATTACK);
             }
 
-            if (m_inputX < 0) transform.localScale = new Vector3(-1, 1, 1);
-            if (m_inputX > 0) transform.localScale = Vector3.one;
+            Vector3 scale = transform.localScale;
+            if (m_inputX < 0) scale.x = -Mathf.Abs(scale.x);
+            if (m_inputX > 0) scale.x = Mathf.Abs(scale.x);
+            transform.localScale = scale;
         }
 
         if (StateAnimations.IsLoopAnim(m_selection, m_state))
@@ -224,6 +228,7 @@ public class Flower : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
         if (collision.gameObject.CompareTag("Finish"))
         {
             m_isGoal = true;
@@ -242,6 +247,7 @@ public class Flower : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
         if (collision.gameObject.CompareTag("HealArea"))
         {
             m_isInHealAria = true;
@@ -250,6 +256,7 @@ public class Flower : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
         if (collision.gameObject.CompareTag("Item"))
         {
             if (m_triggerItem == collision.gameObject.GetComponent<Item>())
@@ -265,6 +272,7 @@ public class Flower : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Damage();
