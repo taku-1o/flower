@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
 
@@ -19,6 +20,7 @@ public class Main : MonoBehaviour
 
 
     public static int stage_num = 0;
+    //public static bool is_first_play = true;
 
     /* Private */
     private FollowCam followCam;
@@ -27,6 +29,9 @@ public class Main : MonoBehaviour
     private bool m_IsClearEnd;
     private AudioSource m_audioSource;
     private Stage m_currentStage;
+    private int m_IdxTutorial = -1;
+
+    private static bool[] m_TutorialFlgs = new bool[3];
     /* Private */
 
 
@@ -40,6 +45,9 @@ public class Main : MonoBehaviour
 
         m_flower = Instantiate(flowerPrefab, m_currentStage.m_StartPosition, Quaternion.identity);
         m_flower.gameObject.name = "Flower";
+        m_flower.AddHealEreaEnterEvent(ShowHealEreaTutorial);
+        m_flower.AddItemEnterEvent(ShowItemTutorial);
+
 
         followCam = Camera.main.GetComponent<FollowCam>();
         followCam.SetFlower(m_flower);
@@ -58,7 +66,10 @@ public class Main : MonoBehaviour
             if (m_flower.m_isGoalEnd && !m_IsClearEnd)
             {
                 m_IsClearEnd = true;
-                ShowNextStage();
+                if (stagePrefabList.Length > stage_num + 1)
+                {
+                    ShowNextStage();
+                }
             }
 
             if (m_flower.m_isFinish && m_audioSource.volume > 0)
@@ -131,6 +142,33 @@ public class Main : MonoBehaviour
             }
 
             guiController.SetHpPer(m_flower.m_timeLife / m_flower.m_limitLifeTime);
+
+            if (m_IdxTutorial >= 0)
+            {
+                if (Time.timeScale != 0)
+                {
+                    Time.timeScale = 0;
+                    guiController.SetTutorialImageActive(true, m_IdxTutorial);
+                    m_TutorialFlgs[m_IdxTutorial] = true;
+                }
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    if (m_IdxTutorial == 1)
+                    {
+                        m_IdxTutorial = 2;
+                        m_TutorialFlgs[m_IdxTutorial] = true;
+                    }
+                    else
+                    {
+                        m_IdxTutorial = -1;
+                    }
+                    guiController.SetTutorialImageActive(m_IdxTutorial >= 0, m_IdxTutorial, true);
+                }
+            }
+            else if (Time.timeScale == 0)
+            {
+                if (!guiController.IsTutorialActive()) Time.timeScale = 1;
+            }
 
             if (m_flower.m_limitLifeTime <= m_flower.m_timeLife)
             {
@@ -222,5 +260,21 @@ public class Main : MonoBehaviour
     {
         stage_num++;
         MyFadeManager.Instance.LoadScene("Game", 1f);
+    }
+
+    public void ShowHealEreaTutorial()
+    {
+        if (!m_TutorialFlgs[0])
+        {
+            m_IdxTutorial = 0;
+        }
+    }
+
+    public void ShowItemTutorial()
+    {
+        if (!m_TutorialFlgs[1])
+        {
+            m_IdxTutorial = 1;
+        }
     }
 }

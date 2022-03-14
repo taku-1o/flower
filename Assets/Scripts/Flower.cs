@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Flower : MonoBehaviour
 {
@@ -103,6 +104,9 @@ public class Flower : MonoBehaviour
     private AudioSource m_audioSource;
     private bool m_isDebug;
     private bool m_isJump;
+    private UnityEvent m_HealEreaEnterEvents = new UnityEvent();
+    private UnityEvent m_ItemEnterEvents = new UnityEvent();
+    private bool m_isPause;
     /* Private */
 
 
@@ -117,6 +121,19 @@ public class Flower : MonoBehaviour
 
     private void Update()
     {
+        if (m_isPause)
+        {
+            if (Time.timeScale != 0)
+            {
+                m_isPause = false;
+                m_audioSource.Play();
+            }
+        }
+        else if (Time.timeScale == 0)
+        {
+            m_audioSource.Pause();
+        }
+
         if (m_isGoal) return;
 
         m_inputX = Input.GetAxis("Horizontal");
@@ -259,11 +276,13 @@ public class Flower : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Item"))
         {
+            m_ItemEnterEvents.Invoke();
             m_triggerItem = collision.gameObject.GetComponent<Item>();
         }
         if (collision.gameObject.CompareTag("HealArea"))
         {
             m_isInHealAria = true;
+            m_HealEreaEnterEvents.Invoke();
         }
     }
 
@@ -474,5 +493,25 @@ public class Flower : MonoBehaviour
     public void ToggleDebugMode()
     {
         m_isDebug = !m_isDebug;
+    }
+
+    public void AddHealEreaEnterEvent(UnityAction action)
+    {
+        m_HealEreaEnterEvents.AddListener(action);
+    }
+
+    public void RemoveHealEreaEnterEvent(UnityAction action)
+    {
+        m_HealEreaEnterEvents.RemoveListener(action);
+    }
+
+    public void AddItemEnterEvent(UnityAction action)
+    {
+        m_ItemEnterEvents.AddListener(action);
+    }
+
+    public void RemoveItemEnterEvent(UnityAction action)
+    {
+        m_ItemEnterEvents.RemoveListener(action);
     }
 }
