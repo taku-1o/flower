@@ -158,26 +158,26 @@ public class Flower : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!m_isGoal && m_timeLife < m_limitLifeTime)
-        {
-            if (m_isInHealAria)
-            {
-                m_timeLife -= Time.deltaTime * (m_limitLifeTime / m_lifeHealTime);
-                if (m_timeLife < 0)
-                {
-                    m_timeLife = 0;
-                }
-            }
-            else if (m_timeLife < m_limitLifeTime)
-            {
-                m_timeLife += Time.deltaTime;
-                if (m_timeLife >= m_limitLifeTime)
-                {
-                    m_timeLife = m_limitLifeTime;
-                    SetState(StateAnimations.STATES.DOWN);
-                }
-            }
-        }
+        //if (!m_isGoal && m_timeLife < m_limitLifeTime)
+        //{
+        //    if (m_isInHealAria)
+        //    {
+        //        m_timeLife -= Time.deltaTime * (m_limitLifeTime / m_lifeHealTime);
+        //        if (m_timeLife < 0)
+        //        {
+        //            m_timeLife = 0;
+        //        }
+        //    }
+        //    else if (m_timeLife < m_limitLifeTime)
+        //    {
+        //        m_timeLife += Time.deltaTime;
+        //        if (m_timeLife >= m_limitLifeTime)
+        //        {
+        //            m_timeLife = m_limitLifeTime;
+        //            SetState(StateAnimations.STATES.DOWN);
+        //        }
+        //    }
+        //}
 
         if (StateAnimations.IsMoveAnim(m_selection, m_state))
         {
@@ -272,11 +272,11 @@ public class Flower : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Damage();
-        }
+        //if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
+        //if (collision.gameObject.CompareTag("Enemy"))
+        //{
+        //    Damage();
+        //}
     }
 
     public void PlaySE()
@@ -362,21 +362,21 @@ public class Flower : MonoBehaviour
 
     public void Damage()
     {
-        if (m_state == (int)StateAnimations.STATES.DAMAGE || m_state == (int)StateAnimations.STATES.DOWN) return;
+        //if (m_state == (int)StateAnimations.STATES.DAMAGE || m_state == (int)StateAnimations.STATES.DOWN) return;
 
-        if (m_limitLifeTime <= m_timeLife) return;
+        //if (m_limitLifeTime <= m_timeLife) return;
 
-        float oneHpTime = m_limitLifeTime / m_maxHP;
-        m_timeLife += oneHpTime;
-        if (m_limitLifeTime <= m_timeLife)
-        {
-            m_timeLife = m_limitLifeTime;
-            SetState(StateAnimations.STATES.DOWN);
-        }
-        else
-        {
-            SetState(StateAnimations.STATES.DAMAGE);
-        }
+        //float oneHpTime = m_limitLifeTime / m_maxHP;
+        //m_timeLife += oneHpTime;
+        //if (m_limitLifeTime <= m_timeLife)
+        //{
+        //    m_timeLife = m_limitLifeTime;
+        //    SetState(StateAnimations.STATES.DOWN);
+        //}
+        //else
+        //{
+        //    SetState(StateAnimations.STATES.DAMAGE);
+        //}
     }
 
     public void Heal()
