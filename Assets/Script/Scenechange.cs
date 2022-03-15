@@ -8,21 +8,25 @@ public class Scenechange : MonoBehaviour
 {
 
     public float totalTime;
-    int seconds;
+    float seconds;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        seconds = totalTime;
     }
 
     // Update is called once per frame
     void Update()
     {
-        totalTime -= Time.deltaTime;
-        seconds = (int)totalTime;
+        //totalTime -= Time.deltaTime;
+        //seconds = (int)totalTime;
+        if (seconds > 0)
+        {
+            seconds -= Time.deltaTime;
+        }
 
-        if(seconds==0)
+        if (seconds<=0)
         {
             MyFadeManager.Instance.LoadScene("Game", 1.0f, true);
         }
