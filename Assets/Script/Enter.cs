@@ -19,7 +19,7 @@ public class Enter : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-           MyFadeManager.Instance.LoadScene("Game", 1.0f);
+           MyFadeManager.Instance.LoadScene("Gamestart", 1.0f);
             //SceneManager.LoadScene(sceneName);
         }
     }
