@@ -13,6 +13,7 @@ public class Flower : MonoBehaviour
     {
         public enum STATES
         {
+            START,
             IDLE,
             MOVE,
             GET,
@@ -34,6 +35,7 @@ public class Flower : MonoBehaviour
                 case (int)STATES.MOVE:
                     return true;
                 case (int)STATES.GET:
+                case (int)STATES.START:
                     return selection == 1;
                 case (int)STATES.TRANSFORM:
                 case (int)STATES.ATTACK:
@@ -52,6 +54,7 @@ public class Flower : MonoBehaviour
                 case (int)STATES.JUMP:
                     return true;
                 case (int)STATES.GET:
+                case (int)STATES.START:
                     return selection == 1;
                 case (int)STATES.TRANSFORM:
                 case (int)STATES.ATTACK:
@@ -107,16 +110,24 @@ public class Flower : MonoBehaviour
     private UnityEvent m_HealEreaEnterEvents = new UnityEvent();
     private UnityEvent m_ItemEnterEvents = new UnityEvent();
     private bool m_isPause;
+    private bool m_isFirstStart;
     /* Private */
 
 
 
     private void Start()
     {
-        SetState(StateAnimations.STATES.IDLE);
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_audioSource = GetComponent<AudioSource>();
+        if (m_isFirstStart)
+        {
+            SetState(StateAnimations.STATES.START);
+        }
+        else
+        {
+            SetState(StateAnimations.STATES.IDLE);
+        }
     }
 
     private void Update()
@@ -403,7 +414,7 @@ public class Flower : MonoBehaviour
     private void UpdateAnimation()
     {
         if (selectionAnimations.Length <= m_selection) return;
-        if (selectionAnimations[m_selection].animationClips.Length < (int)StateAnimations.STATES.COUNT) return;
+        if (selectionAnimations[m_selection].animationClips.Length <= m_state) return;
 
         m_animator.Play(selectionAnimations[m_selection].animationClips[m_state].name);
     }
@@ -411,7 +422,7 @@ public class Flower : MonoBehaviour
     private bool IsAnimationMatchState()
     {
         if (selectionAnimations.Length <= m_selection) return false;
-        if (selectionAnimations[m_selection].animationClips.Length < (int)StateAnimations.STATES.COUNT) return false;
+        if (selectionAnimations[m_selection].animationClips.Length <= m_state) return false;
 
         return m_animator.GetCurrentAnimatorStateInfo(0).IsName(selectionAnimations[m_selection].animationClips[m_state].name);
     }
@@ -513,5 +524,10 @@ public class Flower : MonoBehaviour
     public void RemoveItemEnterEvent(UnityAction action)
     {
         m_ItemEnterEvents.RemoveListener(action);
+    }
+
+    public void SetFirstStartAnim()
+    {
+        m_isFirstStart = true;
     }
 }

@@ -20,7 +20,7 @@ public class Main : MonoBehaviour
 
 
     public static int stage_num = 0;
-    //public static bool is_first_play = true;
+    public static bool is_first_play = true;
 
     /* Private */
     private FollowCam followCam;
@@ -32,6 +32,7 @@ public class Main : MonoBehaviour
     private int m_IdxTutorial = -1;
 
     private static bool[] m_TutorialFlgs = new bool[3];
+    private static bool m_firstPlayManageFlg = true;
     /* Private */
 
 
@@ -44,6 +45,15 @@ public class Main : MonoBehaviour
         m_currentStage = Instantiate(stagePrefabList[stage_num], Vector3.zero, Quaternion.identity);
 
         m_flower = Instantiate(flowerPrefab, m_currentStage.m_StartPosition, Quaternion.identity);
+        if (is_first_play && m_firstPlayManageFlg)
+        {
+            m_firstPlayManageFlg = false;
+            m_flower.SetFirstStartAnim();
+        }
+        else
+        {
+            is_first_play = false;
+        }
         m_flower.gameObject.name = "Flower";
         m_flower.AddHealEreaEnterEvent(ShowHealEreaTutorial);
         m_flower.AddItemEnterEvent(ShowItemTutorial);

@@ -278,6 +278,7 @@ MonoBehaviour:
   groundCheck: {fileID: 6431796037944992241}
   selectionAnimations:
   - animationClips:
+    - {fileID: 7400000, guid: 42d9595c2c2ef454db2bbffa36c2ab0f, type: 2}
     - {fileID: 7400000, guid: 0dee3e03ae7fd044e94890a6445686a5, type: 2}
     - {fileID: 7400000, guid: adcb69e0611ed6b4f89b22a579378213, type: 2}
     - {fileID: 7400000, guid: b5b8d2bf7d972fc4a975a559de72f9a6, type: 2}
@@ -288,6 +289,7 @@ MonoBehaviour:
     - {fileID: 7400000, guid: 0dee3e03ae7fd044e94890a6445686a5, type: 2}
     - {fileID: 7400000, guid: dc08334e7022c9c48b3511c86e3cbfaf, type: 2}
   - animationClips:
+    - {fileID: 7400000, guid: 0dee3e03ae7fd044e94890a6445686a5, type: 2}
     - {fileID: 7400000, guid: 40854450292892f4a949abdb2663d9cc, type: 2}
     - {fileID: 7400000, guid: efa83575f971e29409861998b365f029, type: 2}
     - {fileID: 7400000, guid: 40854450292892f4a949abdb2663d9cc, type: 2}
@@ -298,6 +300,7 @@ MonoBehaviour:
     - {fileID: 7400000, guid: 720cd56ad0e5a4b4ca3954ca09260331, type: 2}
     - {fileID: 7400000, guid: d1ae6f93b12cd6b43ac4cab9020103bb, type: 2}
   audioClips:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 8300000, guid: 00c8de78f026a69439654d8fb0957b18, type: 3}
   - {fileID: 8300000, guid: f953fd918d5cbdc4c8fc00eb035ad5dc, type: 3}
