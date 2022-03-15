@@ -93,6 +93,7 @@ public class Flower : MonoBehaviour
 
 
     /* Private */
+    private BoxCollider2D m_collider;
     private Rigidbody2D m_rigidbody;
     private Animator m_animator;                                //アニメーション
     private int m_state;                                        //現在のステータス
@@ -110,28 +111,32 @@ public class Flower : MonoBehaviour
     private UnityEvent m_HealEreaEnterEvents = new UnityEvent();
     private UnityEvent m_ItemEnterEvents = new UnityEvent();
     private bool m_isPause;
-    private bool m_isFirstStart;
     /* Private */
 
 
-
-    private void Start()
+    private void Awake()
     {
+        m_collider = GetComponent<BoxCollider2D>();
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_audioSource = GetComponent<AudioSource>();
-        if (m_isFirstStart)
-        {
-            SetState(StateAnimations.STATES.START);
-        }
-        else
-        {
-            SetState(StateAnimations.STATES.IDLE);
-        }
+        m_rigidbody.bodyType = RigidbodyType2D.Kinematic;
+        SetState(StateAnimations.STATES.IDLE);
+        Debug.Log("Awake End:" + m_rigidbody.isKinematic);
+    }
+
+    private void Start()
+    {
+        Debug.Log("Start:" + m_rigidbody.isKinematic);
     }
 
     private void Update()
     {
+        //Debug.Log("Update(" + Time.time + "):" + m_rigidbody.isKinematic);
+        if (m_rigidbody.isKinematic)
+        {
+            m_rigidbody.bodyType = RigidbodyType2D.Dynamic;
+        }
         if (m_isPause)
         {
             if (Time.timeScale != 0)
@@ -188,6 +193,7 @@ public class Flower : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Debug.Log("FixedUpdate(" + Time.time + "):" + m_rigidbody.isKinematic);
         if (!m_isGoal && m_timeLife < m_limitLifeTime && !m_isDebug)
         {
             if (m_isInHealAria)
@@ -324,6 +330,7 @@ public class Flower : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //Debug.Log("CollisionEnter:" + m_rigidbody.isKinematic);
         if (m_isGoal || m_timeLife >= m_limitLifeTime) return;
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -528,6 +535,7 @@ public class Flower : MonoBehaviour
 
     public void SetFirstStartAnim()
     {
-        m_isFirstStart = true;
+        //Debug.Log("SetFirstStartAnim:" + m_rigidbody.isKinematic);
+        SetState(StateAnimations.STATES.START);
     }
 }

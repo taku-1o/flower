@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class GUIManager : MonoBehaviour
 {
     /* [SerializeField] */
+    [SerializeField] private Text m_timerText;
     [SerializeField] private Image m_hpImage;
     [SerializeField] private GameObject m_getUI;
     [SerializeField] private Vector2 m_getUIOffset;
     [SerializeField] private GameObject m_stageClear;
     [SerializeField] private Tutorial[] m_TutorialImages;
+    [SerializeField] private GameStart m_gameStart;
     /* [SerializeField] */
 
 
@@ -26,11 +28,28 @@ public class GUIManager : MonoBehaviour
                 }
             }
         }
+        if (m_gameStart.gameObject.activeSelf)
+        {
+            if (m_gameStart.m_IsHideEnded)
+            {
+                m_gameStart.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void SetTimerTextActive(bool active)
+    {
+        m_timerText.gameObject.SetActive(active);
     }
 
     public void SetHpPer(float p)
     {
         m_hpImage.GetComponent<Animator>().SetFloat("LifeTime", Mathf.Clamp(p, 0f, 1f));
+    }
+
+    public void SetHpActive(bool active)
+    {
+        m_hpImage.gameObject.SetActive(active);
     }
 
     public void SetGetUIActive(bool active)
@@ -80,5 +99,37 @@ public class GUIManager : MonoBehaviour
             if (m_TutorialImages[i].gameObject.activeSelf) return true;
         }
         return false;
+    }
+
+    public void SetGameStartAnimActive(bool active)
+    {
+        if (!m_gameStart.gameObject.activeSelf)
+        {
+            m_gameStart.gameObject.SetActive(active);
+        }
+        else if (!active)
+        {
+            m_gameStart.Hide();
+        }
+    }
+
+    public bool IsGameStartAnimActive()
+    {
+        return m_gameStart.gameObject.activeSelf;
+    }
+
+    public bool IsGameStartAnimEnded()
+    {
+        return m_gameStart.m_IsAnimEnded || !m_gameStart.gameObject.activeSelf;
+    }
+
+    public bool IsGameStartHideNow()
+    {
+        return m_gameStart.m_IsHideNow;
+    }
+
+    public bool IsGameStartHideEnded()
+    {
+        return m_gameStart.m_IsHideEnded || !m_gameStart.gameObject.activeSelf;
     }
 }

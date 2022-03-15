@@ -10,6 +10,7 @@ public class Main : MonoBehaviour
 
     /* [SerializeField] */
     [SerializeField] private GUIManager guiController;                 //UI管理（インゲーム）
+    [SerializeField] private GameObject wareta_uekibatiPrefab;
     [SerializeField] private Flower flowerPrefab;               //プレイヤー（花）のPrefab
     [SerializeField] private Stage[] stagePrefabList;
     //[SerializeField] private Vector2 initPosition;
@@ -30,6 +31,8 @@ public class Main : MonoBehaviour
     private AudioSource m_audioSource;
     private Stage m_currentStage;
     private int m_IdxTutorial = -1;
+    private bool m_IsTutorial;
+    private bool m_IsGameStartAnim;
 
     private static bool[] m_TutorialFlgs = new bool[3];
     private static bool m_firstPlayManageFlg = true;
@@ -45,14 +48,19 @@ public class Main : MonoBehaviour
         m_currentStage = Instantiate(stagePrefabList[stage_num], Vector3.zero, Quaternion.identity);
 
         m_flower = Instantiate(flowerPrefab, m_currentStage.m_StartPosition, Quaternion.identity);
+        Instantiate(wareta_uekibatiPrefab, m_currentStage.m_StartPosition + new Vector2(-1.25f, -0.15f), Quaternion.identity);
         if (is_first_play && m_firstPlayManageFlg)
         {
+            Time.timeScale = 0;
             m_firstPlayManageFlg = false;
             m_flower.SetFirstStartAnim();
+            guiController.SetGameStartAnimActive(true);
         }
         else
         {
             is_first_play = false;
+            guiController.SetHpActive(true);
+            guiController.SetTimerTextActive(true);
         }
         m_flower.gameObject.name = "Flower";
         m_flower.AddHealEreaEnterEvent(ShowHealEreaTutorial);
@@ -102,7 +110,7 @@ public class Main : MonoBehaviour
 
                 Vector3 finishPos = m_currentStage.m_GoalObject.transform.position - (Vector3)goalOffset[m_flower.m_selection];
                 Vector3 diffPos = finishPos - m_flower.transform.position;
-                if (Mathf.Abs(diffPos.x) < 0.001f && Mathf.Abs(diffPos.y) < 0.001f)
+                if (Mathf.Abs(diffPos.x) < 0.002f && Mathf.Abs(diffPos.y) < 0.002f)
                 {
                     m_flower.Finish();
                     m_currentStage.m_GoalObject.SetActive(false);
@@ -123,11 +131,11 @@ public class Main : MonoBehaviour
                     {
                         vec.x = 0.2f;
                     }
-                    else if (diffPos.x < -0.001f)
+                    else if (diffPos.x < -0.002f)
                     {
                         vec.x = -0.01f;
                     }
-                    else if (diffPos.x > 0.001f)
+                    else if (diffPos.x > 0.002f)
                     {
                         vec.x = 0.01f;
                     }
@@ -139,11 +147,11 @@ public class Main : MonoBehaviour
                     {
                         vec.y = 0.2f;
                     }
-                    else if (diffPos.y < -0.001f)
+                    else if (diffPos.y < -0.002f)
                     {
                         vec.y = -0.01f;
                     }
-                    else if (diffPos.y > 0.001f)
+                    else if (diffPos.y > 0.002f)
                     {
                         vec.y = 0.01f;
                     }
@@ -175,9 +183,29 @@ public class Main : MonoBehaviour
                     guiController.SetTutorialImageActive(m_IdxTutorial >= 0, m_IdxTutorial, true);
                 }
             }
-            else if (Time.timeScale == 0)
+            if (Time.timeScale == 0)
             {
-                if (!guiController.IsTutorialActive()) Time.timeScale = 1;
+                if (m_IsGameStartAnim)
+                {
+                    if (guiController.IsGameStartHideEnded())
+                    {
+                        Time.timeScale = 1;
+                        guiController.SetHpActive(true);
+                        guiController.SetTimerTextActive(true);
+                    }
+                    else if (guiController.IsGameStartAnimEnded() && !guiController.IsGameStartHideNow())
+                    {
+                        guiController.SetGameStartAnimActive(false);
+                    }
+                }
+
+                if (m_IsTutorial)
+                {
+                    Time.timeScale = guiController.IsTutorialActive() ? 0 : 1;
+                }
+
+                m_IsTutorial = guiController.IsTutorialActive();
+                m_IsGameStartAnim = guiController.IsGameStartAnimActive();
             }
 
             if (m_flower.m_limitLifeTime <= m_flower.m_timeLife)
