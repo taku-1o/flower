@@ -23,6 +23,8 @@ public class Flower : MonoBehaviour
             DOWN,
             ATTACK,
             GOAL,
+            ABILITY_VERTICAL,
+            ABILITY_HORIZONTAL,
 
             COUNT,
         }
@@ -38,6 +40,7 @@ public class Flower : MonoBehaviour
                 case (int)STATES.START:
                     return selection == 1 || selection == 2;
                 case (int)STATES.TRANSFORM:
+                    return selection == 0;
                 case (int)STATES.ATTACK:
                     return selection == 0 || selection == 2;
                 default:
@@ -57,6 +60,7 @@ public class Flower : MonoBehaviour
                 case (int)STATES.START:
                     return selection == 1 || selection == 2;
                 case (int)STATES.TRANSFORM:
+                    return selection == 0;
                 case (int)STATES.ATTACK:
                     return selection == 0 || selection == 2;
                 default:
@@ -69,6 +73,7 @@ public class Flower : MonoBehaviour
 
     /* [SerializeField] */
     [SerializeField] private GroundCheck groundCheck;
+    [SerializeField] private WireCheck wireCheck;
     [SerializeField] private StateAnimations[] selectionAnimations;
     [SerializeField] private AudioClip[] audioClips;
     [SerializeField] private int maxHP;
@@ -102,15 +107,25 @@ public class Flower : MonoBehaviour
     private Vector3 m_manualTargetPos;
     private Item m_triggerItem = null;                          //取得可能なアイテム
     private bool m_keyDownSpace;                                //Space入力
-    private bool m_keyDownW;                                    //E入力
+    private bool m_keyDownW;                                    //W入力
     private bool m_keyDownE;                                    //E入力
     private bool m_keyDownF;                                    //F入力
+    private bool m_keyDownTen4;                                 //4入力
+    private bool m_keyDownTen6;                                 //6入力
+    private bool m_keyDownTen8;                                 //8入力
     private bool m_isInHealAria;                                //回復エリア内か
     private AudioSource m_audioSource;
     private bool m_isDebug;
     private bool m_isJump;
+    private float m_abilityTime;
+    private float m_abilityHitTime;
+    private float m_abilityMoveStart = 0.1f;
+    private float m_abilityMoveEnd = 0.2f;
+    private float m_abilityMoveTime = 0.40f;
+    private bool m_isAbilityChecked;
+    private bool m_isAbilityCancel;
     private UnityEvent m_HealEreaEnterEvents = new UnityEvent();
-    private UnityEvent m_ItemEnterEvents = new UnityEvent();
+    private UnityEvent<Item> m_ItemEnterEvents = new UnityEvent<Item>();
     private bool m_isPause;
     /* Private */
 
@@ -134,7 +149,7 @@ public class Flower : MonoBehaviour
     private void Update()
     {
         //Debug.Log("Update(" + Time.time + "):" + m_rigidbody.isKinematic);
-        if (m_rigidbody.isKinematic && !m_isGoal)
+        if (m_rigidbody.isKinematic && !m_isGoal && m_abilityTime <= 0)
         {
             m_rigidbody.bodyType = RigidbodyType2D.Dynamic;
         }
@@ -189,6 +204,33 @@ public class Flower : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.F) || !Input.GetKey(KeyCode.F))
         {
             m_keyDownF = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            m_keyDownTen4 = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Keypad4) || !Input.GetKey(KeyCode.Keypad4))
+        {
+            m_keyDownTen4 = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            m_keyDownTen6 = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Keypad6) || !Input.GetKey(KeyCode.Keypad6))
+        {
+            m_keyDownTen6 = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad8))
+        {
+            m_keyDownTen8 = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Keypad8) || !Input.GetKey(KeyCode.Keypad8))
+        {
+            m_keyDownTen8 = false;
         }
     }
 
@@ -249,6 +291,11 @@ public class Flower : MonoBehaviour
                 transform.position += new Vector3(m_inputX * speed, 0, 0);
             }
 
+            Vector3 scale = transform.localScale;
+            if (m_inputX < 0) scale.x = -Mathf.Abs(scale.x);
+            if (m_inputX > 0) scale.x = Mathf.Abs(scale.x);
+            transform.localScale = scale;
+
             if (m_keyDownW && groundCheck.IsGround())
             {
                 m_keyDownW = false;
@@ -258,13 +305,100 @@ public class Flower : MonoBehaviour
             if (m_keyDownF)
             {
                 m_keyDownF = false;
-                SetState(StateAnimations.STATES.ATTACK);
-            }
 
-            Vector3 scale = transform.localScale;
-            if (m_inputX < 0) scale.x = -Mathf.Abs(scale.x);
-            if (m_inputX > 0) scale.x = Mathf.Abs(scale.x);
-            transform.localScale = scale;
+                if (m_selection == 1)
+                {
+                    SetState(StateAnimations.STATES.ATTACK);
+                }
+                else if (m_selection == 2)
+                {
+                    m_abilityTime = 0;
+                    m_abilityHitTime = 0;
+                    m_isAbilityChecked = false;
+                    m_isAbilityCancel = false;
+                    m_animator.SetFloat("WireAbility", 1);
+                    if (m_keyDownTen8)
+                    {
+                        SetState(StateAnimations.STATES.ABILITY_VERTICAL);
+                    }
+                    else if (m_keyDownTen6 || !m_keyDownTen4)
+                    {
+                        scale.x = Mathf.Abs(scale.x);
+                        transform.localScale = scale;
+                        SetState(StateAnimations.STATES.ABILITY_HORIZONTAL);
+                    }
+                    else
+                    {
+                        scale.x = -Mathf.Abs(scale.x);
+                        transform.localScale = scale;
+                        SetState(StateAnimations.STATES.ABILITY_HORIZONTAL);
+                    }
+                    m_keyDownTen4 = false;
+                    m_keyDownTen6 = false;
+                    m_keyDownTen8 = false;
+                    PlaySE();
+                }
+            }
+        }
+
+        if (m_state == (int)StateAnimations.STATES.ABILITY_VERTICAL ||
+            m_state == (int)StateAnimations.STATES.ABILITY_HORIZONTAL)
+        {
+            //Debug.Log(m_abilityTime + ":" + m_isAbilityChecked);
+            if (m_isAbilityCancel)
+            {
+                m_abilityTime -= Time.deltaTime;
+                if (m_abilityTime <= 0)
+                {
+                    AnimationEnded();
+                }
+            }
+            else
+            {
+                m_abilityTime += Time.deltaTime;
+            }
+            if (!m_isAbilityChecked)
+            {
+                if (wireCheck.IsWire())
+                {
+                    m_isAbilityChecked = true;
+                    m_abilityHitTime = m_abilityTime;
+                    m_abilityTime = 2.0f - (m_abilityTime - Time.deltaTime);
+                    m_rigidbody.bodyType = RigidbodyType2D.Kinematic;
+                    m_rigidbody.velocity = Vector3.zero;
+                }
+                else if (wireCheck.IsGround())
+                {
+                    m_isAbilityChecked = true;
+                    m_isAbilityCancel = true;
+                }
+                else
+                {
+                }
+            }
+            if (m_abilityHitTime > 0)
+            {
+                if (m_abilityTime - 1 < (m_abilityMoveEnd / m_abilityMoveTime))
+                {
+                    if (m_abilityTime - 1 > (m_abilityMoveStart / m_abilityMoveTime))
+                    {
+                        if (m_state == (int)StateAnimations.STATES.ABILITY_VERTICAL)
+                        {
+                            transform.position += new Vector3(0, (5.2f * (m_abilityHitTime / 1.0f)) * (Time.deltaTime / ((m_abilityMoveEnd - m_abilityMoveStart) / m_abilityMoveTime)));
+                        }
+                        else
+                        {
+                            int lrflg = transform.localScale.x < 0 ? -1 : 1;
+                            transform.position += new Vector3((6.0f * (m_abilityHitTime / 1.0f)) * (Time.deltaTime / ((m_abilityMoveEnd - m_abilityMoveStart) / m_abilityMoveTime)) * lrflg, 0);
+                        }
+                    }
+                }
+            }
+            if (m_abilityTime >= 2)
+            {
+                AnimationEnded();
+            }
+            m_animator.SetFloat("WireAbility", 1 - Mathf.PingPong(Mathf.Clamp(m_abilityTime, 0, 2), 1));
         }
 
         if (transform.position.y < -5)
@@ -274,7 +408,7 @@ public class Flower : MonoBehaviour
 
         if (StateAnimations.IsLoopAnim(m_selection, m_state))
         {
-            if (m_inputX == 0)
+            if (m_inputX == 0 || !groundCheck.IsGround())
             {
                 SetState(StateAnimations.STATES.IDLE);
             }
@@ -317,8 +451,8 @@ public class Flower : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Item"))
         {
-            m_ItemEnterEvents.Invoke();
             m_triggerItem = collision.gameObject.GetComponent<Item>();
+            m_ItemEnterEvents.Invoke(m_triggerItem);
         }
         if (collision.gameObject.CompareTag("HealArea"))
         {
@@ -414,6 +548,15 @@ public class Flower : MonoBehaviour
         m_isJump = true;
     }
 
+    public void AbilityChecked()
+    {
+        Debug.Log("AbilityChecked:" + m_abilityTime + "," + m_isAbilityChecked);
+        if (!m_isAbilityChecked)
+        {
+            m_isAbilityChecked = true;
+        }
+    }
+
     public void AnimationEnded()//ループしないアニメーション用
     {
         if (m_state == (int)StateAnimations.STATES.JUMP)
@@ -425,7 +568,16 @@ public class Flower : MonoBehaviour
         }
         else
         {
+            Debug.Log("anim end:" + m_state);
+            bool isAbilityAnim = m_state == (int)StateAnimations.STATES.ABILITY_VERTICAL ||
+                m_state == (int)StateAnimations.STATES.ABILITY_HORIZONTAL;
             SetState(StateAnimations.STATES.IDLE);
+            if (isAbilityAnim)
+            {
+                m_abilityTime = 0;
+                m_abilityHitTime = 0;
+                m_animator.SetFloat("WireAbility", 1);
+            }
         }
     }
 
@@ -548,12 +700,12 @@ public class Flower : MonoBehaviour
         m_HealEreaEnterEvents.RemoveListener(action);
     }
 
-    public void AddItemEnterEvent(UnityAction action)
+    public void AddItemEnterEvent(UnityAction<Item> action)
     {
         m_ItemEnterEvents.AddListener(action);
     }
 
-    public void RemoveItemEnterEvent(UnityAction action)
+    public void RemoveItemEnterEvent(UnityAction<Item> action)
     {
         m_ItemEnterEvents.RemoveListener(action);
     }

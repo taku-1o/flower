@@ -13,6 +13,7 @@ public class Main : MonoBehaviour
     [SerializeField] private GameObject wareta_uekibatiPrefab;
     [SerializeField] private Flower flowerPrefab;               //プレイヤー（花）のPrefab
     [SerializeField] private Stage[] stagePrefabList;
+    [SerializeField] private int stageCount;
     //[SerializeField] private Vector2 initPosition;
     //[SerializeField] private GameObject goalObject;             //ゴールオブジェクト
     [SerializeField] private Vector2[] goalOffset;              //ゴールアニメーションとの差
@@ -34,7 +35,7 @@ public class Main : MonoBehaviour
     private bool m_IsTutorial;
     private bool m_IsGameStartAnim;
 
-    private static bool[] m_TutorialFlgs = new bool[3];
+    private static bool[] m_TutorialFlgs = new bool[4];
     private static bool m_firstPlayManageFlg = true;
     /* Private */
 
@@ -42,8 +43,6 @@ public class Main : MonoBehaviour
     private void Start()
     {
         m_audioSource = GetComponent<AudioSource>();
-
-        if (stagePrefabList.Length <= stage_num) stage_num = 0;
 
         m_currentStage = Instantiate(stagePrefabList[stage_num], Vector3.zero, Quaternion.identity);
 
@@ -65,6 +64,7 @@ public class Main : MonoBehaviour
         m_flower.gameObject.name = "Flower";
         m_flower.AddHealEreaEnterEvent(ShowHealEreaTutorial);
         m_flower.AddItemEnterEvent(ShowItemTutorial);
+        if (stage_num == 3) m_flower.ToggleDebugMode();
 
 
         followCam = Camera.main.GetComponent<FollowCam>();
@@ -84,7 +84,7 @@ public class Main : MonoBehaviour
             if (m_flower.m_isGoalEnd && !m_IsClearEnd)
             {
                 m_IsClearEnd = true;
-                if (stagePrefabList.Length > stage_num + 1)
+                if (stageCount > stage_num + 1)
                 {
                     ShowNextStage();
                 }
@@ -114,7 +114,7 @@ public class Main : MonoBehaviour
                 {
                     m_flower.Finish();
                     m_currentStage.m_GoalObject.SetActive(false);
-                    if (stagePrefabList.Length <= stage_num + 1)
+                    if (stageCount <= stage_num + 1)
                     {
                         MyFadeManager.Instance.LoadScene("GameClear", 1.2f, 0.6f, true);
                     }
@@ -125,8 +125,6 @@ public class Main : MonoBehaviour
                     m_flower.SetGoalPos(finishPos);
                 }
             }
-
-            guiController.SetHpPer(m_flower.m_timeLife / m_flower.m_limitLifeTime);
 
             if (m_IdxTutorial >= 0)
             {
@@ -173,6 +171,10 @@ public class Main : MonoBehaviour
 
                 m_IsTutorial = guiController.IsTutorialActive();
                 m_IsGameStartAnim = guiController.IsGameStartAnimActive();
+            }
+            else
+            {
+                guiController.SetHpPer(m_flower.m_timeLife / m_flower.m_limitLifeTime);
             }
 
             if (m_flower.m_limitLifeTime <= m_flower.m_timeLife)
@@ -251,8 +253,7 @@ public class Main : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F7))
         {
-            stage_num++;
-            MyFadeManager.Instance.LoadScene("Game", 1f, true);
+            NextStage();
         }
     }
 
@@ -264,7 +265,8 @@ public class Main : MonoBehaviour
     public void NextStage()
     {
         stage_num++;
-        MyFadeManager.Instance.LoadScene("Game", 1f);
+        if (stageCount <= stage_num) stage_num = 0;
+        MyFadeManager.Instance.LoadScene("Game", 1f, true);
     }
 
     public void ShowHealEreaTutorial()
@@ -275,11 +277,21 @@ public class Main : MonoBehaviour
         }
     }
 
-    public void ShowItemTutorial()
+    public void ShowItemTutorial(Item item)
     {
-        if (!m_TutorialFlgs[1])
+        if (item.m_flowerSelection == 1)
         {
-            m_IdxTutorial = 1;
+            if (!m_TutorialFlgs[1])
+            {
+                m_IdxTutorial = 1;
+            }
+        }
+        else if (item.m_flowerSelection == 2)
+        {
+            if (!m_TutorialFlgs[3])
+            {
+                m_IdxTutorial = 3;
+            }
         }
     }
 }
