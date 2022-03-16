@@ -19,7 +19,7 @@ public class Enter : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Return))
         {
-            Debug.Log("a");
+           
             MyFadeManager.Instance.LoadScene("Stage2", 1.0f);
 
             
@@ -30,17 +30,9 @@ public class Enter : MonoBehaviour
             //SceneManager.LoadScene(sceneName);
 
         }
-        //else  if (Input.GetKey(KeyCode.LeftShift)/* && Input.GetKey(KeyCode.Return)*/)
-        //  {
-        //      Debug.Log("a");
-        //      MyFadeManager.Instance.LoadScene("Stage2", 1.0f);
-
-        //  }
+       
     }
 
-  //void OnMouseDown()
-  //  {
-  //      SceneManager.LoadScene(sceneName);
-  //  }
+ 
 
 }
