@@ -110,7 +110,7 @@ public class Main : MonoBehaviour
 
                 Vector3 finishPos = m_currentStage.m_GoalObject.transform.position - (Vector3)goalOffset[m_flower.m_selection];
                 Vector3 diffPos = finishPos - m_flower.transform.position;
-                if (Mathf.Abs(diffPos.x) < 0.002f && Mathf.Abs(diffPos.y) < 0.002f)
+                if (Mathf.Abs(diffPos.x) < 0.01f && Mathf.Abs(diffPos.y) < 0.01f)
                 {
                     m_flower.Finish();
                     m_currentStage.m_GoalObject.SetActive(false);
@@ -122,40 +122,7 @@ public class Main : MonoBehaviour
                 }
                 else
                 {
-                    Vector3 vec = Vector3.zero;
-                    if (diffPos.x < -0.01f)
-                    {
-                        vec.x = -0.2f;
-                    }
-                    else if (diffPos.x > 0.01f)
-                    {
-                        vec.x = 0.2f;
-                    }
-                    else if (diffPos.x < -0.002f)
-                    {
-                        vec.x = -0.01f;
-                    }
-                    else if (diffPos.x > 0.002f)
-                    {
-                        vec.x = 0.01f;
-                    }
-                    if (diffPos.y < -0.01f)
-                    {
-                        vec.y = -0.2f;
-                    }
-                    else if (diffPos.y > 0.01f)
-                    {
-                        vec.y = 0.2f;
-                    }
-                    else if (diffPos.y < -0.002f)
-                    {
-                        vec.y = -0.01f;
-                    }
-                    else if (diffPos.y > 0.002f)
-                    {
-                        vec.y = 0.01f;
-                    }
-                    m_flower.SetInput(vec);
+                    m_flower.SetGoalPos(finishPos);
                 }
             }
 

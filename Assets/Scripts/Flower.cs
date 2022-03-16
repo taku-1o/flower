@@ -36,10 +36,10 @@ public class Flower : MonoBehaviour
                     return true;
                 case (int)STATES.GET:
                 case (int)STATES.START:
-                    return selection == 1;
+                    return selection == 1 || selection == 2;
                 case (int)STATES.TRANSFORM:
                 case (int)STATES.ATTACK:
-                    return selection == 0;
+                    return selection == 0 || selection == 2;
                 default:
                     return false;
             }
@@ -55,10 +55,10 @@ public class Flower : MonoBehaviour
                     return true;
                 case (int)STATES.GET:
                 case (int)STATES.START:
-                    return selection == 1;
+                    return selection == 1 || selection == 2;
                 case (int)STATES.TRANSFORM:
                 case (int)STATES.ATTACK:
-                    return selection == 0;
+                    return selection == 0 || selection == 2;
                 default:
                     return false;
             }
@@ -98,7 +98,8 @@ public class Flower : MonoBehaviour
     private Animator m_animator;                                //アニメーション
     private int m_state;                                        //現在のステータス
     private float m_inputX;                                     //横入力量（Update）
-    private float m_inputY;                                     //縦入力量（操作用）
+    private float m_inputY;                                     //縦入力量（）
+    private Vector3 m_manualTargetPos;
     private Item m_triggerItem = null;                          //取得可能なアイテム
     private bool m_keyDownSpace;                                //Space入力
     private bool m_keyDownW;                                    //E入力
@@ -133,7 +134,7 @@ public class Flower : MonoBehaviour
     private void Update()
     {
         //Debug.Log("Update(" + Time.time + "):" + m_rigidbody.isKinematic);
-        if (m_rigidbody.isKinematic)
+        if (m_rigidbody.isKinematic && !m_isGoal)
         {
             m_rigidbody.bodyType = RigidbodyType2D.Dynamic;
         }
@@ -220,10 +221,32 @@ public class Flower : MonoBehaviour
 
         if (StateAnimations.IsMoveAnim(m_selection, m_state))
         {
-            transform.position += new Vector3(m_inputX * speed, 0, 0);
             if (m_isGoal)
             {
-                transform.position += new Vector3(0, m_inputY * speed, 0);
+                if (!m_isGoalEnd)
+                {
+                    Vector3 dif = m_manualTargetPos - transform.position;
+                    float distance = Vector3.Distance(m_manualTargetPos, transform.position);
+                    dif.Normalize();
+                    dif *= distance;
+                    m_inputX = dif.x;
+                    m_inputY = dif.y;
+
+                    if (m_inputX * speed > dif.x)
+                    {
+                        m_inputX = dif.x / speed;
+                    }
+                    if (m_inputY * speed > dif.y)
+                    {
+                        m_inputY = dif.y / speed;
+                    }
+
+                    transform.position += new Vector3(m_inputX * speed, m_inputY * speed, 0);
+                }
+            }
+            else
+            {
+                transform.position += new Vector3(m_inputX * speed, 0, 0);
             }
 
             if (m_keyDownW && groundCheck.IsGround())
@@ -288,6 +311,7 @@ public class Flower : MonoBehaviour
         if (collision.gameObject.CompareTag("Finish"))
         {
             m_isGoal = true;
+            m_manualTargetPos = transform.position;
             m_rigidbody.bodyType = RigidbodyType2D.Kinematic;
             m_rigidbody.velocity = Vector3.zero;
         }
@@ -495,16 +519,17 @@ public class Flower : MonoBehaviour
         SetState(StateAnimations.STATES.TRANSFORM);
     }
 
-    public void SetInput(Vector2 vec)
+    public void SetGoalPos(Vector2 gPos)
     {
-        m_inputX = vec.x;
-        m_inputY = vec.y;
+        m_manualTargetPos = gPos;
     }
 
     public void Finish()
     {
         m_isFinish = true;
-        transform.localScale = Vector3.one;
+        Vector3 scale = transform.localScale;
+        scale.x = Mathf.Abs(scale.x);
+        transform.localScale = scale;
         SetState(StateAnimations.STATES.GOAL);
     }
 
