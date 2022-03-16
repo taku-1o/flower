@@ -265,7 +265,7 @@ public class Main : MonoBehaviour
     public void NextStage()
     {
         stage_num++;
-        if (stageCount <= stage_num) stage_num = 0;
+        //if (stageCount <= stage_num) stage_num = 0;
         MyFadeManager.Instance.LoadScene("Game", 1f, true);
     }
 
