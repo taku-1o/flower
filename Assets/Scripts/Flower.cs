@@ -232,6 +232,15 @@ public class Flower : MonoBehaviour
         {
             m_keyDownTen8 = false;
         }
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            if (m_selection == 1)
+            {
+                m_selection = 0;
+                 //Select();
+                m_triggerItem.gameObject.SetActive(true);
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -477,7 +486,8 @@ public class Flower : MonoBehaviour
         {
             if (m_triggerItem == collision.gameObject.GetComponent<Item>())
             {
-                m_triggerItem = null;
+                // m_triggerItem = null;
+               // m_triggerItem.enabled=false;
             }
         }
         if (collision.gameObject.CompareTag("HealArea"))
@@ -642,6 +652,7 @@ public class Flower : MonoBehaviour
     public bool IsTriggerItem()
     {
         return m_triggerItem != null;
+       // return m_triggerItem != false;
     }
 
     public void Pick()
@@ -650,8 +661,10 @@ public class Flower : MonoBehaviour
         m_nextSelection = m_triggerItem.m_flowerSelection;
         SetState(StateAnimations.STATES.GET);
 
-        Destroy(m_triggerItem.gameObject);
-        m_triggerItem = null;
+        m_triggerItem.gameObject.SetActive(false);
+        // Destroy(m_triggerItem.gameObject);
+        //m_triggerItem = null;
+
     }
 
     public void Pick(Item item)
