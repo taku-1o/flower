@@ -17,11 +17,25 @@ public class Enter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.Return))
         {
-           MyFadeManager.Instance.LoadScene("Gamestart", 1.0f);
-            //SceneManager.LoadScene(sceneName);
+            Debug.Log("a");
+            MyFadeManager.Instance.LoadScene("Stage2", 1.0f);
+
+            
         }
+        else if (Input.GetKeyDown(KeyCode.Return))
+        {
+            MyFadeManager.Instance.LoadScene("Gamestart", 1.0f);
+            //SceneManager.LoadScene(sceneName);
+
+        }
+        //else  if (Input.GetKey(KeyCode.LeftShift)/* && Input.GetKey(KeyCode.Return)*/)
+        //  {
+        //      Debug.Log("a");
+        //      MyFadeManager.Instance.LoadScene("Stage2", 1.0f);
+
+        //  }
     }
 
   //void OnMouseDown()
