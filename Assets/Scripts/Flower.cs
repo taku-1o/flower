@@ -236,9 +236,11 @@ public class Flower : MonoBehaviour
         {
             if (m_selection == 1)
             {
-                m_selection = 0;
-                 //Select();
-                m_triggerItem.gameObject.SetActive(true);
+               // SetState(StateAnimations.STATES.TRANSFORM);
+                //m_selection = 0;
+
+                //Select();
+                //m_triggerItem.gameObject.SetActive(true);
             }
         }
     }

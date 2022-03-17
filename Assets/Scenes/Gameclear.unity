@@ -342,6 +342,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1841395999 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9449846406349443, guid: 686222123830b0a43a96b8a05cdb3c8e, type: 3}
+  m_PrefabInstance: {fileID: 9449845234234078}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1841396001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1841395999}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21e2b890920c7ab4b96af911d4acf53d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FirstSelectButton: {fileID: 0}
 --- !u!1001 &1922041331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -410,6 +428,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9449845242500539, guid: 686222123830b0a43a96b8a05cdb3c8e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9449845242500540, guid: 686222123830b0a43a96b8a05cdb3c8e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Clickta
+      objectReference: {fileID: 0}
     - target: {fileID: 9449846621625047, guid: 686222123830b0a43a96b8a05cdb3c8e, type: 3}
       propertyPath: m_Pivot.x
       value: 0
