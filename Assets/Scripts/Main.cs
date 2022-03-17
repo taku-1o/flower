@@ -47,7 +47,12 @@ public class Main : MonoBehaviour
         m_currentStage = Instantiate(stagePrefabList[stage_num], Vector3.zero, Quaternion.identity);
 
         m_flower = Instantiate(flowerPrefab, m_currentStage.m_StartPosition, Quaternion.identity);
-        Instantiate(wareta_uekibatiPrefab, m_currentStage.m_StartPosition + new Vector2(-1.25f, -0.15f), Quaternion.identity);
+
+        if (stage_num == 0)
+        {
+            Instantiate(wareta_uekibatiPrefab, m_currentStage.m_StartPosition + new Vector2(-1.25f, -0.15f), Quaternion.identity);
+        }
+
         if (is_first_play && m_firstPlayManageFlg)
         {
             Time.timeScale = 0;
@@ -265,7 +270,7 @@ public class Main : MonoBehaviour
     public void NextStage()
     {
         stage_num++;
-        //if (stageCount <= stage_num) stage_num = 0;
+        if (stagePrefabList.Length <= stage_num) stage_num = 0;
         MyFadeManager.Instance.LoadScene("Game", 1f, true);
     }
 

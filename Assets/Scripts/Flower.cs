@@ -419,7 +419,7 @@ public class Flower : MonoBehaviour
 
         if (StateAnimations.IsLoopAnim(m_selection, m_state))
         {
-            if (m_inputX == 0 || !groundCheck.IsGround())
+            if (m_inputX == 0 || (!groundCheck.IsGround() && !m_isGoal))
             {
                 SetState(StateAnimations.STATES.IDLE);
             }

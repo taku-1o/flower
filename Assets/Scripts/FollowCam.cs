@@ -132,6 +132,6 @@ public class FollowCam : MonoBehaviour
 
     public void SetBackground(GameObject background)
     {
-        m_background = background;
+        //m_background = background;
     }
 }
