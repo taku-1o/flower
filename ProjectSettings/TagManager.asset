@@ -9,7 +9,6 @@ TagManager:
   - Ground
   - HealArea
   - Attack
-  - Wire
   layers:
   - Default
   - TransparentFX

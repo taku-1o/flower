@@ -127,76 +127,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5}
   m_EdgeRadius: 0
---- !u!1 &3803328206840518369
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8933906872002467382}
-  - component: {fileID: 8220077911145014065}
-  - component: {fileID: 982820561649827120}
-  m_Layer: 0
-  m_Name: WireCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &8933906872002467382
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3803328206840518369}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 8003933685492871207}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &8220077911145014065
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3803328206840518369}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.5}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 1}
-  m_EdgeRadius: 0
---- !u!114 &982820561649827120
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3803328206840518369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef4d1c251e770c743be4e3527358ebb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8003933685492871205
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +162,6 @@ Transform:
   m_Children:
   - {fileID: 3711058760819181276}
   - {fileID: 4114505472719252977}
-  - {fileID: 8933906872002467382}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -347,10 +276,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheck: {fileID: 6431796037944992241}
-  wireCheck: {fileID: 982820561649827120}
   selectionAnimations:
   - animationClips:
-    - {fileID: 7400000, guid: 42d9595c2c2ef454db2bbffa36c2ab0f, type: 2}
     - {fileID: 7400000, guid: 0dee3e03ae7fd044e94890a6445686a5, type: 2}
     - {fileID: 7400000, guid: adcb69e0611ed6b4f89b22a579378213, type: 2}
     - {fileID: 7400000, guid: b5b8d2bf7d972fc4a975a559de72f9a6, type: 2}
@@ -362,7 +289,6 @@ MonoBehaviour:
     - {fileID: 7400000, guid: dc08334e7022c9c48b3511c86e3cbfaf, type: 2}
   - animationClips:
     - {fileID: 7400000, guid: 40854450292892f4a949abdb2663d9cc, type: 2}
-    - {fileID: 7400000, guid: 40854450292892f4a949abdb2663d9cc, type: 2}
     - {fileID: 7400000, guid: efa83575f971e29409861998b365f029, type: 2}
     - {fileID: 7400000, guid: 40854450292892f4a949abdb2663d9cc, type: 2}
     - {fileID: 7400000, guid: e10f095b24888ab429f3054756772d2b, type: 2}
@@ -371,21 +297,7 @@ MonoBehaviour:
     - {fileID: 7400000, guid: 08223df2a7eb5e640b23cb60e3e0fec3, type: 2}
     - {fileID: 7400000, guid: 720cd56ad0e5a4b4ca3954ca09260331, type: 2}
     - {fileID: 7400000, guid: d1ae6f93b12cd6b43ac4cab9020103bb, type: 2}
-  - animationClips:
-    - {fileID: 7400000, guid: 106730a28a32f904f8a06b08712d7a30, type: 2}
-    - {fileID: 7400000, guid: 106730a28a32f904f8a06b08712d7a30, type: 2}
-    - {fileID: 7400000, guid: b3f6c924ecddc3e4597865e27b3370ea, type: 2}
-    - {fileID: 7400000, guid: 106730a28a32f904f8a06b08712d7a30, type: 2}
-    - {fileID: 7400000, guid: 2dacafe83ed6b7440888c1f4648cbd11, type: 2}
-    - {fileID: 7400000, guid: 899d80c19fd832a43b14656cb6382c31, type: 2}
-    - {fileID: 7400000, guid: 938a9a2bd010310479555983a0578c95, type: 2}
-    - {fileID: 7400000, guid: 71f55981768c76b43a722ac65be45488, type: 2}
-    - {fileID: 7400000, guid: 106730a28a32f904f8a06b08712d7a30, type: 2}
-    - {fileID: 7400000, guid: ac0365cc88ffe464b9400e5555ab3c08, type: 2}
-    - {fileID: 7400000, guid: 648ef1fc0d2c99b49b75522bffea436d, type: 2}
-    - {fileID: 7400000, guid: 8e8f8bfaaf4f5914182283ca755c595d, type: 2}
   audioClips:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 8300000, guid: 00c8de78f026a69439654d8fb0957b18, type: 3}
   - {fileID: 8300000, guid: f953fd918d5cbdc4c8fc00eb035ad5dc, type: 3}
@@ -398,7 +310,7 @@ MonoBehaviour:
   maxHP: 5
   speed: 0.05
   jumpPower: 330
-  lifeTime: 12
+  lifeTime: 8
   lifeHealTime: 10
 --- !u!95 &4711943926410012376
 Animator:
