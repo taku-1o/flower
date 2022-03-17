@@ -160,6 +160,7 @@ public class Flower : MonoBehaviour
     private bool m_keyDownTen8;                                 //8入力
     private bool m_isInHealAria;                                //回復エリア内か
     private AudioSource m_audioSource;
+    private GameObject m_currentItem;                           //現在のアイテム情報 
     private bool m_isDebug;
     private bool m_isJump;
     private float m_abilityTime;
@@ -189,6 +190,7 @@ public class Flower : MonoBehaviour
     private void Start()
     {
         Debug.Log("Start:" + m_rigidbody.isKinematic);
+       
     }
 
     private void Update()
@@ -279,13 +281,13 @@ public class Flower : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if (m_selection == 1)
+            if (m_selection !=0 )
             {
-               // SetState(StateAnimations.STATES.TRANSFORM);
-                //m_selection = 0;
-
-                //Select();
-                //m_triggerItem.gameObject.SetActive(true);
+               
+                m_nextSelection = 0;
+                Select();
+              
+                 m_currentItem.SetActive(true);
             }
         }
     }
@@ -533,7 +535,7 @@ public class Flower : MonoBehaviour
         {
             if (m_triggerItem == collision.gameObject.GetComponent<Item>())
             {
-                // m_triggerItem = null;
+                 m_triggerItem = null;
                // m_triggerItem.enabled=false;
             }
         }
@@ -708,9 +710,12 @@ public class Flower : MonoBehaviour
         m_nextSelection = m_triggerItem.m_flowerSelection;
         SetState(StateAnimations.STATES.GET);
 
+        m_currentItem = m_triggerItem.gameObject;
+
         m_triggerItem.gameObject.SetActive(false);
-        // Destroy(m_triggerItem.gameObject);
-        //m_triggerItem = null;
+        
+        m_triggerItem = null;
+      
 
     }
 
