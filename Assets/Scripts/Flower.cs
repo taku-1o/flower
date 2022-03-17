@@ -68,7 +68,52 @@ public class Flower : MonoBehaviour
             }
         }
 
-        public AnimationClip[] animationClips = new AnimationClip[(int)STATES.COUNT];
+        public AnimationClip GetAnimation(int state)
+        {
+            switch (state)
+            {
+                case (int)STATES.START:
+                    return animationStart;
+                case (int)STATES.IDLE:
+                    return animationIdle;
+                case (int)STATES.MOVE:
+                    return animationMove;
+                case (int)STATES.GET:
+                    return animationGet;
+                case (int)STATES.TRANSFORM:
+                    return animationTransform;
+                case (int)STATES.JUMP:
+                    return animationJump;
+                case (int)STATES.DAMAGE:
+                    return animationDamage;
+                case (int)STATES.DOWN:
+                    return animationDown;
+                case (int)STATES.ATTACK:
+                    return animationAttack;
+                case (int)STATES.GOAL:
+                    return animationGoal;
+                case (int)STATES.ABILITY_VERTICAL:
+                    return animationAbilityVertical;
+                case (int)STATES.ABILITY_HORIZONTAL:
+                    return animationAbilityHorizontal;
+                default:
+                    return null;
+            }
+        }
+
+        //public AnimationClip[] animationClips = new AnimationClip[(int)STATES.COUNT];
+        public AnimationClip animationStart;
+        public AnimationClip animationIdle;
+        public AnimationClip animationMove;
+        public AnimationClip animationGet;
+        public AnimationClip animationTransform;
+        public AnimationClip animationJump;
+        public AnimationClip animationDamage;
+        public AnimationClip animationDown;
+        public AnimationClip animationAttack;
+        public AnimationClip animationGoal;
+        public AnimationClip animationAbilityVertical;
+        public AnimationClip animationAbilityHorizontal;
     }
 
     /* [SerializeField] */
@@ -609,17 +654,17 @@ public class Flower : MonoBehaviour
     private void UpdateAnimation()
     {
         if (selectionAnimations.Length <= m_selection) return;
-        if (selectionAnimations[m_selection].animationClips.Length <= m_state) return;
+        if (selectionAnimations[m_selection].GetAnimation(m_state) == null) return;
 
-        m_animator.Play(selectionAnimations[m_selection].animationClips[m_state].name);
+        m_animator.Play(selectionAnimations[m_selection].GetAnimation(m_state).name);
     }
 
     private bool IsAnimationMatchState()
     {
         if (selectionAnimations.Length <= m_selection) return false;
-        if (selectionAnimations[m_selection].animationClips.Length <= m_state) return false;
+        if (selectionAnimations[m_selection].GetAnimation(m_state) == null) return false;
 
-        return m_animator.GetCurrentAnimatorStateInfo(0).IsName(selectionAnimations[m_selection].animationClips[m_state].name);
+        return m_animator.GetCurrentAnimatorStateInfo(0).IsName(selectionAnimations[m_selection].GetAnimation(m_state).name);
     }
 
     public void Damage()
