@@ -30,6 +30,9 @@ public class Chase : MonoBehaviour
     private GameObject player;
 
     public BoxCollider2D col;
+
+    //スケール計算変数
+    public int Scalecalculation;
     // Start is called before the first frame update
     void Start()
     {
@@ -171,31 +174,36 @@ public class Chase : MonoBehaviour
             // スケール値取り出し
             Vector2 scale = transform.localScale;
 
-            if (move >= 0)
-            {
-
-                // 右方向に移動中
-                scale.x = 0.6f; // そのまま（右向き
-
-            }
-            else
-            {
-
-                // 左方向に移動中
-                scale.x = -0.6f; // 反転する（左向き）
-
-            }
-            // 代入し直す
-            transform.localScale = scale;
-            //Vector3 scale = transform.localScale;
-            //if (move < 0) scale.x = -Mathf.Abs(scale.x);
+            //if (move >= 0)
             //{
-            //    Debug.Log("a");
-            //    if (move > 0) scale.x = Mathf.Abs(scale.x);
-            //    {
-            //        transform.localScale = scale;
-            //    }
+
+            //    // 右方向に移動中
+            //    scale.x = 0.6f; // そのまま（右向き
+
             //}
+            //else
+            //{
+
+            //    // 左方向に移動中
+            //    scale.x = -0.6f; // 反転する（左向き）
+
+            //}
+            // 代入し直す
+            //transform.localScale = scale;
+            //Vector3 scale = transform.localScale;
+
+            if (move < 0) scale.x = -Mathf.Abs(scale.x);
+            {
+               
+                if (move > 0) scale.x = Mathf.Abs(scale.x);
+                {
+
+                   // Scalecalculation =;
+
+                    transform.localScale = scale;
+
+                }
+            }
         }
     }
 
