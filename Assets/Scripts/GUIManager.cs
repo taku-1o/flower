@@ -36,6 +36,13 @@ public class GUIManager : MonoBehaviour
             {
                 m_gameStart.gameObject.SetActive(false);
             }
+            else if (m_gameStart.IsAnimStopping())
+            {
+                if (!MyFadeManager.Instance.IsFading())
+                {
+                    m_gameStart.SetAnimatorStop(false);
+                }
+            }
         }
         if (m_stageClear.activeSelf)
         {
@@ -116,11 +123,15 @@ public class GUIManager : MonoBehaviour
 
     public void SetGameStartAnimActive(bool active)
     {
-        if (!m_gameStart.gameObject.activeSelf)
+        if (active && !m_gameStart.gameObject.activeSelf)
         {
-            m_gameStart.gameObject.SetActive(active);
+            m_gameStart.gameObject.SetActive(true);
+            if (MyFadeManager.Instance.IsFading())
+            {
+                m_gameStart.SetAnimatorStop(true);
+            }
         }
-        else if (!active)
+        else if (!active && m_gameStart.gameObject.activeSelf)
         {
             m_gameStart.Hide();
         }

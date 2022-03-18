@@ -777,7 +777,6 @@ public class Flower : MonoBehaviour
 
     public void SetFirstStartAnim()
     {
-        //Debug.Log("SetFirstStartAnim:" + m_rigidbody.isKinematic);
         SetState(StateAnimations.STATES.START);
     }
 }

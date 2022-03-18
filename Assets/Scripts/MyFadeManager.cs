@@ -74,6 +74,11 @@ public class MyFadeManager : MonoBehaviour
         StartCoroutine(Transition(scene, 0f, interval, interval, autoScaleReset));
     }
 
+    public bool IsFading()
+    {
+        return isFading;
+    }
+
     /// <summary>
     /// 
     /// </summary>

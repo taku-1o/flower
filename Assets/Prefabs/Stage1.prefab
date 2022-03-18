@@ -2162,7 +2162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 448f2de7ccfbf1948b588f8a880b28ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: -7, y: -3.9}
+  startPosition: {x: -6, y: -3.9}
   goalObject: {fileID: 5597078460589515688}
   background: {fileID: 0}
   limitRangeLeft: -9
