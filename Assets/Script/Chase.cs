@@ -57,11 +57,8 @@ public class Chase : MonoBehaviour
 
     void  Update()
     {
-       
-     
-
+      
         //Vector2 dir = (targetObject.transform.position - this.transform.position).normalized;
-
         //float vx = dir.x * speed;
         //float vy = dir.y * speed;
         //rbody.velocity = new Vector2(vx, vy);
@@ -77,6 +74,7 @@ public class Chase : MonoBehaviour
             if (collider.CompareTag("Player"))
             {
                 flg = true;
+               
                 // 検知したオブジェクトに「Player」のタグがついていれば、そのオブジェクトを追いかける
                 Vector3 dir = (targetObject.transform.position - this.transform.position).normalized;
 
@@ -99,14 +97,15 @@ public class Chase : MonoBehaviour
                 {
 
                     // 右方向に移動中
-                    scale.x = 0.6f; // そのまま（右向き
+                    scale.x = 0.4f; // そのまま（右向き
+
 
                 }
                 else
                 {
 
                     // 左方向に移動中
-                    scale.x = -0.6f; // 反転する（左向き）
+                    scale.x = -0.4f; // 反転する（左向き）
 
                 }
                 // 代入し直す
@@ -121,19 +120,19 @@ public class Chase : MonoBehaviour
 
     public void OnDetectObj(Collider2D collider)
     {
-
-       
-
-        if (collider.CompareTag("Player"))
+        if (Downflg == false)
         {
-            flg = false;
-            rbody.velocity = new Vector2(0, 0);
+            if (collider.CompareTag("Player"))
+            {
+                flg = false;
+                rbody.velocity = new Vector2(0, 0);
 
-            // 初期位置に戻す。
-            transform.position = initialPosition;
+                // 初期位置に戻す。
+                transform.position = initialPosition;
 
-            // 初期角度に戻す。
-            transform.eulerAngles = initialRot;
+                // 初期角度に戻す。
+                transform.eulerAngles = initialRot;
+            }
         }
     }
 
@@ -172,39 +171,47 @@ public class Chase : MonoBehaviour
             // スケール値取り出し
             Vector2 scale = transform.localScale;
 
-            //if (move >= 0)
-            //{
+            if (move >= 0)
+            {
 
-            //    // 右方向に移動中
-            //    scale.x = 0.6f; // そのまま（右向き
+                // 右方向に移動中
+                scale.x = 0.6f; // そのまま（右向き
 
-            //}
-            //else
-            //{
+            }
+            else
+            {
 
-            //    // 左方向に移動中
-            //    scale.x = -0.6f; // 反転する（左向き）
+                // 左方向に移動中
+                scale.x = -0.6f; // 反転する（左向き）
 
-            //}
+            }
             // 代入し直す
             transform.localScale = scale;
             //Vector3 scale = transform.localScale;
-            if (move < 0) scale.x = -Mathf.Abs(scale.x);
-            if (move > 0) scale.x = Mathf.Abs(scale.x);
-            transform.localScale = scale;
+            //if (move < 0) scale.x = -Mathf.Abs(scale.x);
+            //{
+            //    Debug.Log("a");
+            //    if (move > 0) scale.x = Mathf.Abs(scale.x);
+            //    {
+            //        transform.localScale = scale;
+            //    }
+            //}
         }
     }
 
    public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Attack"))
+        if (Downflg == false)
         {
-            col.enabled = false;
-            Downflg = true;
-            move = 0;
-            Destroy(gameObject,2.5f);
-            Animator animator = GetComponent<Animator>();
-            animator.Play("hati_Down");
+            if (other.CompareTag("Attack"))
+            {
+                col.enabled = false;
+                Downflg = true;
+                move = 0;
+                Destroy(gameObject, 2.5f);
+                Animator animator = GetComponent<Animator>();
+                animator.Play("hati_Down");
+            }
         }
     }
 }

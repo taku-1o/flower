@@ -250,29 +250,29 @@ public class Flower : MonoBehaviour
     private void FixedUpdate()
     {
         //Debug.Log("FixedUpdate(" + Time.time + "):" + m_rigidbody.isKinematic);
-        if (!m_isGoal && m_timeLife < m_limitLifeTime && !m_isDebug)
-        {
-            if (m_isInHealAria)
-            {
-                m_timeLife -= Time.deltaTime * (m_limitLifeTime / m_lifeHealTime);
-                if (m_timeLife < 0)
-                {
-                    m_timeLife = 0;
-                }
-            }
-            else if (m_timeLife < m_limitLifeTime)
-            {
-                m_timeLife += Time.deltaTime;
-                if (m_timeLife >= m_limitLifeTime)
-                {
-                    m_timeLife = m_limitLifeTime;
-                }
-            }
-        }
-        if (m_timeLife >= m_limitLifeTime)
-        {
-            SetState(StateAnimations.STATES.DOWN);
-        }
+        //if (!m_isGoal && m_timeLife < m_limitLifeTime && !m_isDebug)
+        //{
+        //    if (m_isInHealAria)
+        //    {
+        //        m_timeLife -= Time.deltaTime * (m_limitLifeTime / m_lifeHealTime);
+        //        if (m_timeLife < 0)
+        //        {
+        //            m_timeLife = 0;
+        //        }
+        //    }
+        //    else if (m_timeLife < m_limitLifeTime)
+        //    {
+        //        m_timeLife += Time.deltaTime;
+        //        if (m_timeLife >= m_limitLifeTime)
+        //        {
+        //            m_timeLife = m_limitLifeTime;
+        //        }
+        //    }
+        //}
+        //if (m_timeLife >= m_limitLifeTime)
+        //{
+        //    SetState(StateAnimations.STATES.DOWN);
+        //}
 
         if (StateAnimations.IsMoveAnim(m_selection, m_state))
         {
