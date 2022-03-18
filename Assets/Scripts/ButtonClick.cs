@@ -31,6 +31,11 @@ public class ButtonClick : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+
+    }
+
     public void ClickedFunc(AudioClip clickSound)
     {
         if (IsOnceClick)
