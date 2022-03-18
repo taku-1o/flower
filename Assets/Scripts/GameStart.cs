@@ -9,10 +9,17 @@ public class GameStart : MonoBehaviour
     public bool m_IsHideEnded { get; private set; } = false;
 
     private Animator m_animator;
+    private AudioSource m_audioSource;
 
     private void Awake()
     {
         m_animator = GetComponent<Animator>();
+        m_audioSource = GetComponent<AudioSource>();
+    }
+
+    public void PlayClashSound(AudioClip audioClip)
+    {
+        m_audioSource.PlayOneShot(audioClip);
     }
 
     public void SetAnimatorStop(bool stop)
