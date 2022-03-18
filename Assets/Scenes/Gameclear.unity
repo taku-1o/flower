@@ -360,6 +360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FirstSelectButton: {fileID: 0}
+  StartTime: 5
 --- !u!1001 &1922041331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -435,6 +436,10 @@ PrefabInstance:
     - target: {fileID: 9449845242500540, guid: 686222123830b0a43a96b8a05cdb3c8e, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Clickta
+      objectReference: {fileID: 0}
+    - target: {fileID: 9449846406349503, guid: 686222123830b0a43a96b8a05cdb3c8e, type: 3}
+      propertyPath: StartTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9449846621625047, guid: 686222123830b0a43a96b8a05cdb3c8e, type: 3}
       propertyPath: m_Pivot.x
