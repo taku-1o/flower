@@ -350,6 +350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FirstSelectButton: {fileID: 2384681586888092253}
+  StartTime: 2
 --- !u!95 &8527667368244188749
 Animator:
   serializedVersion: 3
