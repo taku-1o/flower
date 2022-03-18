@@ -182,6 +182,7 @@ public class Flower : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_audioSource = GetComponent<AudioSource>();
+       
         m_rigidbody.bodyType = RigidbodyType2D.Kinematic;
         SetState(StateAnimations.STATES.IDLE);
         Debug.Log("Awake End:" + m_rigidbody.isKinematic);
@@ -294,7 +295,7 @@ public class Flower : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Debug.Log("FixedUpdate(" + Time.time + "):" + m_rigidbody.isKinematic);
+        Debug.Log("FixedUpdate(" + Time.time + "):" + m_rigidbody.isKinematic);
         if (!m_isGoal && m_timeLife < m_limitLifeTime && !m_isDebug)
         {
             if (m_isInHealAria)
