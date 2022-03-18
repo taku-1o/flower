@@ -31,8 +31,12 @@ public class Chase : MonoBehaviour
 
     public BoxCollider2D col;
 
+    //SE再生
+    private AudioSource sound01;
+
     //スケール計算変数
-    public int Scalecalculation;
+    public float Scalecalculation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,6 +58,8 @@ public class Chase : MonoBehaviour
         flg = false;
 
         Downflg = false;
+
+        sound01 = GetComponent<AudioSource>();
     }
 
     //Update is called once per frame
@@ -77,7 +83,9 @@ public class Chase : MonoBehaviour
             if (collider.CompareTag("Player"))
             {
                 flg = true;
-               
+
+                //sound01.PlayOneShot(sound01.clip);
+
                 // 検知したオブジェクトに「Player」のタグがついていれば、そのオブジェクトを追いかける
                 Vector3 dir = (targetObject.transform.position - this.transform.position).normalized;
 
@@ -92,26 +100,29 @@ public class Chase : MonoBehaviour
 
                 // navMeshAgent.destination = player.transform.position;
                 float x = Input.GetAxisRaw("Horizontal");
+
                 // デフォルトが右向きの画像の場合
                 // スケール値取り出し
                 Vector2 scale = transform.localScale;
 
-                if (vx >= 0)
+                if (vx < 0)
                 {
 
                     // 右方向に移動中
-                    scale.x = 0.4f; // そのまま（右向き
+                    scale.x = -Mathf.Abs(Scalecalculation); // そのまま（右向き
 
 
                 }
-                else
+                 else
                 {
 
                     // 左方向に移動中
-                    scale.x = -0.4f; // 反転する（左向き）
+                    scale.x =Mathf.Abs(Scalecalculation); // 反転する（左向き）
 
                 }
                 // 代入し直す
+
+                scale.y = Mathf.Abs(Scalecalculation); 
                 transform.localScale = scale;
             }
             else
@@ -146,14 +157,6 @@ public class Chase : MonoBehaviour
         {
             currentPosition = transform.position;
 
-            //if (-5f > initialPosition.y || -5f > initialPosition.x)
-            //{
-            //    // 初期位置に戻す。
-            //    transform.position = initialPosition;
-
-            //    // 初期角度に戻す。
-            //    transform.eulerAngles = initialRot;
-            //}
 
             if (flg == true) return;
             Vector2 p = new Vector2(move, 0);
@@ -172,7 +175,7 @@ public class Chase : MonoBehaviour
             float x = Input.GetAxisRaw("Horizontal");
             // デフォルトが右向きの画像の場合
             // スケール値取り出し
-            Vector2 scale = transform.localScale;
+            
 
             //if (move >= 0)
             //{
@@ -192,34 +195,61 @@ public class Chase : MonoBehaviour
             //transform.localScale = scale;
             //Vector3 scale = transform.localScale;
 
-            if (move < 0) scale.x = -Mathf.Abs(scale.x);
-            {
-               
-                if (move > 0) scale.x = Mathf.Abs(scale.x);
-                {
-
-                   // Scalecalculation =;
-
-                    transform.localScale = scale;
-
-                }
-            }
+           
+            
+                
+            
         }
+        else if(Downflg==true)
+        {
+            float moveY = 0.01f;
+            Vector2 p = new Vector2(0, -moveY);
+            transform.Translate(p);
+            moveY *= -1;
+        }
+       
     }
 
    public void OnTriggerEnter2D(Collider2D other)
     {
+       
+       
+
         if (Downflg == false)
         {
             if (other.CompareTag("Attack"))
             {
+               
+
                 col.enabled = false;
                 Downflg = true;
-                move = 0;
+                // move = 0;
+              
                 Destroy(gameObject, 2.5f);
                 Animator animator = GetComponent<Animator>();
                 animator.Play("hati_Down");
             }
         }
+    }
+
+    void LateUpdate()
+    {
+        Vector2 scale = transform.localScale;
+        if (move < 0)
+        {
+            scale.x = -Mathf.Abs(Scalecalculation);
+
+
+        }
+
+
+        if (move > 0)
+        {
+            scale.x = Mathf.Abs(Scalecalculation);
+
+        }
+
+        scale.y = Mathf.Abs(Scalecalculation);
+        transform.localScale = scale;
     }
 }
