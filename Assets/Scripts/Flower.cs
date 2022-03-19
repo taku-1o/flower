@@ -23,6 +23,7 @@ public class Flower : MonoBehaviour
             DOWN,
             ATTACK,
             GOAL,
+            LIFT,
             ABILITY_VERTICAL,
             ABILITY_HORIZONTAL,
 
@@ -40,6 +41,7 @@ public class Flower : MonoBehaviour
                 case (int)STATES.START:
                     return selection == 1 || selection == 2;
                 case (int)STATES.TRANSFORM:
+                case (int)STATES.LIFT:
                     return selection == 0;
                 case (int)STATES.ATTACK:
                     return selection == 0 || selection == 2;
@@ -60,6 +62,7 @@ public class Flower : MonoBehaviour
                 case (int)STATES.START:
                     return selection == 1 || selection == 2;
                 case (int)STATES.TRANSFORM:
+                case (int)STATES.LIFT:
                     return selection == 0;
                 case (int)STATES.ATTACK:
                     return selection == 0 || selection == 2;
@@ -92,6 +95,8 @@ public class Flower : MonoBehaviour
                     return animationAttack;
                 case (int)STATES.GOAL:
                     return animationGoal;
+                case (int)STATES.LIFT:
+                    return animationLift;
                 case (int)STATES.ABILITY_VERTICAL:
                     return animationAbilityVertical;
                 case (int)STATES.ABILITY_HORIZONTAL:
@@ -112,6 +117,7 @@ public class Flower : MonoBehaviour
         public AnimationClip animationDown;
         public AnimationClip animationAttack;
         public AnimationClip animationGoal;
+        public AnimationClip animationLift;
         public AnimationClip animationAbilityVertical;
         public AnimationClip animationAbilityHorizontal;
     }
@@ -284,9 +290,8 @@ public class Flower : MonoBehaviour
         {
             if (m_selection !=0 )
             {
-               
-                m_nextSelection = 0;
-                Select();
+
+                SetState(StateAnimations.STATES.LIFT);
               
                  m_currentItem.SetActive(true);
             }
@@ -625,6 +630,12 @@ public class Flower : MonoBehaviour
             {
                 SetState(StateAnimations.STATES.IDLE);
             }
+        }
+        else if (m_state == (int)StateAnimations.STATES.LIFT)
+        {
+            m_nextSelection = 0;
+            m_selection = 0;
+            SetState(StateAnimations.STATES.IDLE);
         }
         else
         {
