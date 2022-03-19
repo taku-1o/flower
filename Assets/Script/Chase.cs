@@ -87,15 +87,18 @@ public class Chase : MonoBehaviour
             {
                 flg = true;
 
-                 Animator animato = GetComponent<Animator>();
-                animato.Play("hati_found");
+                 Animator animator = GetComponent<Animator>();
+                
+                animator.Play("hati_found");
+                
+                
 
-                //sound01.PlayOneShot(sound01.clip);
+                 sound01.PlayOneShot(sound01.clip);
 
                 // 検知したオブジェクトに「Player」のタグがついていれば、そのオブジェクトを追いかける
                 Vector3 dir = (targetObject.transform.position - this.transform.position).normalized;
 
-                Animator animator = GetComponent<Animator>();
+                animator = GetComponent<Animator>();
                 animator.Play("hati_attack");
 
                 float vx = dir.x * speed;
