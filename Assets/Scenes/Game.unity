@@ -756,6 +756,7 @@ MonoBehaviour:
   speed: 1
   col: {fileID: 0}
   Scalecalculation: 0
+  other: {fileID: 0}
 --- !u!50 &271390464
 Rigidbody2D:
   serializedVersion: 4
@@ -4261,7 +4262,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2992701889562949180, guid: fbd450fc4fb0ac64081d44f36cbd6a8f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2992701889562949181, guid: fbd450fc4fb0ac64081d44f36cbd6a8f, type: 3}
+      propertyPath: speed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbd450fc4fb0ac64081d44f36cbd6a8f, type: 3}

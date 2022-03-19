@@ -25,6 +25,9 @@ public class Chase : MonoBehaviour
     //プレイヤーが範囲に入った時のフラグ
     bool flg;
 
+    //初期位置フラグ
+    private bool startPosition;
+
     //ダウンしたかのフラグ
     bool Downflg;
     private GameObject player;
@@ -36,6 +39,9 @@ public class Chase : MonoBehaviour
 
     //スケール計算変数
     public float Scalecalculation;
+
+    //
+    public Transform other;
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +66,8 @@ public class Chase : MonoBehaviour
         Downflg = false;
 
         sound01 = GetComponent<AudioSource>();
+
+        startPosition = false;
     }
 
     //Update is called once per frame
@@ -67,12 +75,7 @@ public class Chase : MonoBehaviour
     void  Update()
     {
       
-        //Vector2 dir = (targetObject.transform.position - this.transform.position).normalized;
-        //float vx = dir.x * speed;
-        //float vy = dir.y * speed;
-        //rbody.velocity = new Vector2(vx, vy);
-
-        //this.GetComponent<SpriteRenderer>().flipX = (vx < 0);
+      
 
     }
 
@@ -84,10 +87,16 @@ public class Chase : MonoBehaviour
             {
                 flg = true;
 
+                 Animator animato = GetComponent<Animator>();
+                animato.Play("hati_found");
+
                 //sound01.PlayOneShot(sound01.clip);
 
                 // 検知したオブジェクトに「Player」のタグがついていれば、そのオブジェクトを追いかける
                 Vector3 dir = (targetObject.transform.position - this.transform.position).normalized;
+
+                Animator animator = GetComponent<Animator>();
+                animator.Play("hati_attack");
 
                 float vx = dir.x * speed;
                 float vy = dir.y * speed;
@@ -139,13 +148,11 @@ public class Chase : MonoBehaviour
             if (collider.CompareTag("Player"))
             {
                 flg = false;
+                Animator animator = GetComponent<Animator>();
+                animator.Play("hati");
                 rbody.velocity = new Vector2(0, 0);
-
-                // 初期位置に戻す。
-                transform.position = initialPosition;
-
-                // 初期角度に戻す。
-                transform.eulerAngles = initialRot;
+                startPosition = true;
+               
             }
         }
     }
@@ -159,46 +166,52 @@ public class Chase : MonoBehaviour
 
 
             if (flg == true) return;
-            Vector2 p = new Vector2(move, 0);
-            transform.Translate(p);
-            counter++;
-
-            //countが100になれば-1を掛けて逆方向に動かす
-            if (counter == 100 && flg == false)
-            {
-
-                counter = 0;
-                move *= -1;
-
-            }
+           
 
             float x = Input.GetAxisRaw("Horizontal");
-            // デフォルトが右向きの画像の場合
-            // スケール値取り出し
-            
 
-            //if (move >= 0)
-            //{
+            float dist = Vector3.Distance(initialPosition, this.transform.position);
+            if (dist < 0.1)
+            {
+                startPosition = false;
+            }
 
-            //    // 右方向に移動中
-            //    scale.x = 0.6f; // そのまま（右向き
 
-            //}
-            //else
-            //{
-
-            //    // 左方向に移動中
-            //    scale.x = -0.6f; // 反転する（左向き）
-
-            //}
-            // 代入し直す
-            //transform.localScale = scale;
-            //Vector3 scale = transform.localScale;
-
-           
-            
+            if (startPosition == true)
+            {
                 
-            
+                
+                // 初期位置に戻す。
+                Vector3 dir = (initialPosition - this.transform.position).normalized;
+                dir*=0.1f;
+               
+                
+                dir.x = Mathf.Clamp(dir.x, - dist, dist);
+                dir.y = Mathf.Clamp(dir.y, -dist, dist);
+
+                transform.Translate(dir);
+
+            }
+            else
+            {
+                Vector2 p = new Vector2(move, 0);
+                transform.Translate(p);
+                counter++;
+
+                //countが100になれば-1を掛けて逆方向に動かす
+                if (counter == 100 && flg == false)
+                {
+
+                    counter = 0;
+                    move *= -1;
+
+                }
+            }
+          
+          
+
+
+
         }
         else if(Downflg==true)
         {
@@ -212,9 +225,6 @@ public class Chase : MonoBehaviour
 
    public void OnTriggerEnter2D(Collider2D other)
     {
-       
-       
-
         if (Downflg == false)
         {
             if (other.CompareTag("Attack"))
@@ -238,7 +248,6 @@ public class Chase : MonoBehaviour
         if (move < 0)
         {
             scale.x = -Mathf.Abs(Scalecalculation);
-
 
         }
 
