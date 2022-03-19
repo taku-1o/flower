@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GUIManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GUIManager : MonoBehaviour
     [SerializeField] private GameObject m_getUI;
     [SerializeField] private Vector2 m_getUIOffset;
     [SerializeField] private GameObject m_stageClear;
+    [SerializeField] private Button m_nextStageButton;
     [SerializeField] private Tutorial[] m_TutorialImages;
     [SerializeField] private GameStart m_gameStart;
     /* [SerializeField] */
@@ -33,6 +35,23 @@ public class GUIManager : MonoBehaviour
             if (m_gameStart.m_IsHideEnded)
             {
                 m_gameStart.gameObject.SetActive(false);
+            }
+            else if (m_gameStart.IsAnimStopping())
+            {
+                if (!MyFadeManager.Instance.IsFading())
+                {
+                    m_gameStart.SetAnimatorStop(false);
+                }
+            }
+        }
+        if (m_stageClear.activeSelf)
+        {
+            if (Input.GetAxis("Vertical") != 0)
+            {
+                if (EventSystem.current.currentSelectedGameObject == null)
+                {
+                    EventSystem.current.SetSelectedGameObject(m_nextStageButton.gameObject);
+                }
             }
         }
     }
@@ -64,6 +83,7 @@ public class GUIManager : MonoBehaviour
     public void SetStageClearUIActive(bool active)
     {
         m_stageClear.SetActive(active);
+        if (active) EventSystem.current.SetSelectedGameObject(m_nextStageButton.gameObject);
     }
 
     public void SetTutorialImageActive(bool active, int idx, bool defaultStay = false)
@@ -103,11 +123,15 @@ public class GUIManager : MonoBehaviour
 
     public void SetGameStartAnimActive(bool active)
     {
-        if (!m_gameStart.gameObject.activeSelf)
+        if (active && !m_gameStart.gameObject.activeSelf)
         {
-            m_gameStart.gameObject.SetActive(active);
+            m_gameStart.gameObject.SetActive(true);
+            if (MyFadeManager.Instance.IsFading())
+            {
+                m_gameStart.SetAnimatorStop(true);
+            }
         }
-        else if (!active)
+        else if (!active && m_gameStart.gameObject.activeSelf)
         {
             m_gameStart.Hide();
         }

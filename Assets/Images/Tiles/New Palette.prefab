@@ -214,7 +214,7 @@ Tilemap:
       e10: 0
       e11: 1
       e12: 0
-      e13: -0.4
+      e13: -0.2
       e20: 0
       e21: 0
       e22: 1
@@ -232,7 +232,7 @@ Tilemap:
       e10: 0
       e11: 1
       e12: 0
-      e13: -0.9
+      e13: -0.7
       e20: 0
       e21: 0
       e22: 1
@@ -317,6 +317,7 @@ TilemapRenderer:
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
 --- !u!114 &3906534196909463929
+--- !u!114 &4083354817304951005
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

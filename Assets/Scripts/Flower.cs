@@ -23,6 +23,7 @@ public class Flower : MonoBehaviour
             DOWN,
             ATTACK,
             GOAL,
+            LIFT,
             ABILITY_VERTICAL,
             ABILITY_HORIZONTAL,
 
@@ -40,6 +41,7 @@ public class Flower : MonoBehaviour
                 case (int)STATES.START:
                     return selection == 1 || selection == 2;
                 case (int)STATES.TRANSFORM:
+                case (int)STATES.LIFT:
                     return selection == 0;
                 case (int)STATES.ATTACK:
                     return selection == 0 || selection == 2;
@@ -60,6 +62,7 @@ public class Flower : MonoBehaviour
                 case (int)STATES.START:
                     return selection == 1 || selection == 2;
                 case (int)STATES.TRANSFORM:
+                case (int)STATES.LIFT:
                     return selection == 0;
                 case (int)STATES.ATTACK:
                     return selection == 0 || selection == 2;
@@ -68,7 +71,55 @@ public class Flower : MonoBehaviour
             }
         }
 
-        public AnimationClip[] animationClips = new AnimationClip[(int)STATES.COUNT];
+        public AnimationClip GetAnimation(int state)
+        {
+            switch (state)
+            {
+                case (int)STATES.START:
+                    return animationStart;
+                case (int)STATES.IDLE:
+                    return animationIdle;
+                case (int)STATES.MOVE:
+                    return animationMove;
+                case (int)STATES.GET:
+                    return animationGet;
+                case (int)STATES.TRANSFORM:
+                    return animationTransform;
+                case (int)STATES.JUMP:
+                    return animationJump;
+                case (int)STATES.DAMAGE:
+                    return animationDamage;
+                case (int)STATES.DOWN:
+                    return animationDown;
+                case (int)STATES.ATTACK:
+                    return animationAttack;
+                case (int)STATES.GOAL:
+                    return animationGoal;
+                case (int)STATES.LIFT:
+                    return animationLift;
+                case (int)STATES.ABILITY_VERTICAL:
+                    return animationAbilityVertical;
+                case (int)STATES.ABILITY_HORIZONTAL:
+                    return animationAbilityHorizontal;
+                default:
+                    return null;
+            }
+        }
+
+        //public AnimationClip[] animationClips = new AnimationClip[(int)STATES.COUNT];
+        public AnimationClip animationStart;
+        public AnimationClip animationIdle;
+        public AnimationClip animationMove;
+        public AnimationClip animationGet;
+        public AnimationClip animationTransform;
+        public AnimationClip animationJump;
+        public AnimationClip animationDamage;
+        public AnimationClip animationDown;
+        public AnimationClip animationAttack;
+        public AnimationClip animationGoal;
+        public AnimationClip animationLift;
+        public AnimationClip animationAbilityVertical;
+        public AnimationClip animationAbilityHorizontal;
     }
 
     /* [SerializeField] */
@@ -146,6 +197,7 @@ public class Flower : MonoBehaviour
     private void Start()
     {
         Debug.Log("Start:" + m_rigidbody.isKinematic);
+       
     }
 
     private void Update()
@@ -238,9 +290,8 @@ public class Flower : MonoBehaviour
         {
             if (m_selection !=0 )
             {
-               
-                m_nextSelection = 0;
-                Select();
+
+                SetState(StateAnimations.STATES.LIFT);
               
                  m_currentItem.SetActive(true);
             }
@@ -249,30 +300,30 @@ public class Flower : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Debug.Log("FixedUpdate(" + Time.time + "):" + m_rigidbody.isKinematic);
-        //if (!m_isGoal && m_timeLife < m_limitLifeTime && !m_isDebug)
-        //{
-        //    if (m_isInHealAria)
-        //    {
-        //        m_timeLife -= Time.deltaTime * (m_limitLifeTime / m_lifeHealTime);
-        //        if (m_timeLife < 0)
-        //        {
-        //            m_timeLife = 0;
-        //        }
-        //    }
-        //    else if (m_timeLife < m_limitLifeTime)
-        //    {
-        //        m_timeLife += Time.deltaTime;
-        //        if (m_timeLife >= m_limitLifeTime)
-        //        {
-        //            m_timeLife = m_limitLifeTime;
-        //        }
-        //    }
-        //}
-        //if (m_timeLife >= m_limitLifeTime)
-        //{
-        //    SetState(StateAnimations.STATES.DOWN);
-        //}
+        Debug.Log("FixedUpdate(" + Time.time + "):" + m_rigidbody.isKinematic);
+        if (!m_isGoal && m_timeLife < m_limitLifeTime && !m_isDebug)
+        {
+            if (m_isInHealAria)
+            {
+                m_timeLife -= Time.deltaTime * (m_limitLifeTime / m_lifeHealTime);
+                if (m_timeLife < 0)
+                {
+                    m_timeLife = 0;
+                }
+            }
+            else if (m_timeLife < m_limitLifeTime)
+            {
+                m_timeLife += Time.deltaTime;
+                if (m_timeLife >= m_limitLifeTime)
+                {
+                    m_timeLife = m_limitLifeTime;
+                }
+            }
+        }
+        if (m_timeLife >= m_limitLifeTime)
+        {
+            SetState(StateAnimations.STATES.DOWN);
+        }
 
         if (StateAnimations.IsMoveAnim(m_selection, m_state))
         {
@@ -580,6 +631,12 @@ public class Flower : MonoBehaviour
                 SetState(StateAnimations.STATES.IDLE);
             }
         }
+        else if (m_state == (int)StateAnimations.STATES.LIFT)
+        {
+            m_nextSelection = 0;
+            m_selection = 0;
+            SetState(StateAnimations.STATES.IDLE);
+        }
         else
         {
             Debug.Log("anim end:" + m_state);
@@ -611,17 +668,17 @@ public class Flower : MonoBehaviour
     private void UpdateAnimation()
     {
         if (selectionAnimations.Length <= m_selection) return;
-        if (selectionAnimations[m_selection].animationClips.Length <= m_state) return;
+        if (selectionAnimations[m_selection].GetAnimation(m_state) == null) return;
 
-        m_animator.Play(selectionAnimations[m_selection].animationClips[m_state].name);
+        m_animator.Play(selectionAnimations[m_selection].GetAnimation(m_state).name);
     }
 
     private bool IsAnimationMatchState()
     {
         if (selectionAnimations.Length <= m_selection) return false;
-        if (selectionAnimations[m_selection].animationClips.Length <= m_state) return false;
+        if (selectionAnimations[m_selection].GetAnimation(m_state) == null) return false;
 
-        return m_animator.GetCurrentAnimatorStateInfo(0).IsName(selectionAnimations[m_selection].animationClips[m_state].name);
+        return m_animator.GetCurrentAnimatorStateInfo(0).IsName(selectionAnimations[m_selection].GetAnimation(m_state).name);
     }
 
     public void Damage()
@@ -732,7 +789,6 @@ public class Flower : MonoBehaviour
 
     public void SetFirstStartAnim()
     {
-        //Debug.Log("SetFirstStartAnim:" + m_rigidbody.isKinematic);
         SetState(StateAnimations.STATES.START);
     }
 }

@@ -349,47 +349,51 @@ MonoBehaviour:
   groundCheck: {fileID: 6431796037944992241}
   wireCheck: {fileID: 982820561649827120}
   selectionAnimations:
-  - animationClips:
-    - {fileID: 7400000, guid: 42d9595c2c2ef454db2bbffa36c2ab0f, type: 2}
-    - {fileID: 7400000, guid: 0dee3e03ae7fd044e94890a6445686a5, type: 2}
-    - {fileID: 7400000, guid: adcb69e0611ed6b4f89b22a579378213, type: 2}
-    - {fileID: 7400000, guid: b5b8d2bf7d972fc4a975a559de72f9a6, type: 2}
-    - {fileID: 7400000, guid: 0dee3e03ae7fd044e94890a6445686a5, type: 2}
-    - {fileID: 7400000, guid: af5209295a1372c4789a34521c8d296d, type: 2}
-    - {fileID: 7400000, guid: 52ad6bcac4c9b3b4182894a6da4d3f62, type: 2}
-    - {fileID: 7400000, guid: b2329d16f94f53740afa598958733b04, type: 2}
-    - {fileID: 7400000, guid: 0dee3e03ae7fd044e94890a6445686a5, type: 2}
-    - {fileID: 7400000, guid: dc08334e7022c9c48b3511c86e3cbfaf, type: 2}
-  - animationClips:
-    - {fileID: 7400000, guid: 40854450292892f4a949abdb2663d9cc, type: 2}
-    - {fileID: 7400000, guid: 40854450292892f4a949abdb2663d9cc, type: 2}
-    - {fileID: 7400000, guid: efa83575f971e29409861998b365f029, type: 2}
-    - {fileID: 7400000, guid: 40854450292892f4a949abdb2663d9cc, type: 2}
-    - {fileID: 7400000, guid: e10f095b24888ab429f3054756772d2b, type: 2}
-    - {fileID: 7400000, guid: 70d55148436dbfc448dd6889bb193158, type: 2}
-    - {fileID: 7400000, guid: 9b5aa6ddabd300d41bfff5a0dcfe5c44, type: 2}
-    - {fileID: 7400000, guid: 08223df2a7eb5e640b23cb60e3e0fec3, type: 2}
-    - {fileID: 7400000, guid: 720cd56ad0e5a4b4ca3954ca09260331, type: 2}
-    - {fileID: 7400000, guid: d1ae6f93b12cd6b43ac4cab9020103bb, type: 2}
-  - animationClips:
-    - {fileID: 7400000, guid: 106730a28a32f904f8a06b08712d7a30, type: 2}
-    - {fileID: 7400000, guid: 106730a28a32f904f8a06b08712d7a30, type: 2}
-    - {fileID: 7400000, guid: b3f6c924ecddc3e4597865e27b3370ea, type: 2}
-    - {fileID: 7400000, guid: 106730a28a32f904f8a06b08712d7a30, type: 2}
-    - {fileID: 7400000, guid: 2dacafe83ed6b7440888c1f4648cbd11, type: 2}
-    - {fileID: 7400000, guid: 899d80c19fd832a43b14656cb6382c31, type: 2}
-    - {fileID: 7400000, guid: 938a9a2bd010310479555983a0578c95, type: 2}
-    - {fileID: 7400000, guid: 71f55981768c76b43a722ac65be45488, type: 2}
-    - {fileID: 7400000, guid: 106730a28a32f904f8a06b08712d7a30, type: 2}
-    - {fileID: 7400000, guid: ac0365cc88ffe464b9400e5555ab3c08, type: 2}
-    - {fileID: 7400000, guid: 648ef1fc0d2c99b49b75522bffea436d, type: 2}
-    - {fileID: 7400000, guid: 8e8f8bfaaf4f5914182283ca755c595d, type: 2}
+  - animationStart: {fileID: 7400000, guid: 42d9595c2c2ef454db2bbffa36c2ab0f, type: 2}
+    animationIdle: {fileID: 7400000, guid: 0dee3e03ae7fd044e94890a6445686a5, type: 2}
+    animationMove: {fileID: 7400000, guid: adcb69e0611ed6b4f89b22a579378213, type: 2}
+    animationGet: {fileID: 7400000, guid: b5b8d2bf7d972fc4a975a559de72f9a6, type: 2}
+    animationTransform: {fileID: 0}
+    animationJump: {fileID: 7400000, guid: af5209295a1372c4789a34521c8d296d, type: 2}
+    animationDamage: {fileID: 7400000, guid: 52ad6bcac4c9b3b4182894a6da4d3f62, type: 2}
+    animationDown: {fileID: 7400000, guid: b2329d16f94f53740afa598958733b04, type: 2}
+    animationAttack: {fileID: 0}
+    animationGoal: {fileID: 7400000, guid: dc08334e7022c9c48b3511c86e3cbfaf, type: 2}
+    animationLift: {fileID: 0}
+    animationAbilityVertical: {fileID: 0}
+    animationAbilityHorizontal: {fileID: 0}
+  - animationStart: {fileID: 0}
+    animationIdle: {fileID: 7400000, guid: 40854450292892f4a949abdb2663d9cc, type: 2}
+    animationMove: {fileID: 7400000, guid: efa83575f971e29409861998b365f029, type: 2}
+    animationGet: {fileID: 0}
+    animationTransform: {fileID: 7400000, guid: e10f095b24888ab429f3054756772d2b, type: 2}
+    animationJump: {fileID: 7400000, guid: 70d55148436dbfc448dd6889bb193158, type: 2}
+    animationDamage: {fileID: 7400000, guid: 9b5aa6ddabd300d41bfff5a0dcfe5c44, type: 2}
+    animationDown: {fileID: 7400000, guid: 08223df2a7eb5e640b23cb60e3e0fec3, type: 2}
+    animationAttack: {fileID: 7400000, guid: 720cd56ad0e5a4b4ca3954ca09260331, type: 2}
+    animationGoal: {fileID: 7400000, guid: d1ae6f93b12cd6b43ac4cab9020103bb, type: 2}
+    animationLift: {fileID: 7400000, guid: e10f095b24888ab429f3054756772d2b, type: 2}
+    animationAbilityVertical: {fileID: 0}
+    animationAbilityHorizontal: {fileID: 0}
+  - animationStart: {fileID: 0}
+    animationIdle: {fileID: 7400000, guid: 106730a28a32f904f8a06b08712d7a30, type: 2}
+    animationMove: {fileID: 7400000, guid: b3f6c924ecddc3e4597865e27b3370ea, type: 2}
+    animationGet: {fileID: 0}
+    animationTransform: {fileID: 7400000, guid: 2dacafe83ed6b7440888c1f4648cbd11, type: 2}
+    animationJump: {fileID: 7400000, guid: 899d80c19fd832a43b14656cb6382c31, type: 2}
+    animationDamage: {fileID: 7400000, guid: 938a9a2bd010310479555983a0578c95, type: 2}
+    animationDown: {fileID: 7400000, guid: 71f55981768c76b43a722ac65be45488, type: 2}
+    animationAttack: {fileID: 0}
+    animationGoal: {fileID: 7400000, guid: ac0365cc88ffe464b9400e5555ab3c08, type: 2}
+    animationLift: {fileID: 7400000, guid: 2dacafe83ed6b7440888c1f4648cbd11, type: 2}
+    animationAbilityVertical: {fileID: 7400000, guid: 648ef1fc0d2c99b49b75522bffea436d, type: 2}
+    animationAbilityHorizontal: {fileID: 7400000, guid: 8e8f8bfaaf4f5914182283ca755c595d, type: 2}
   audioClips:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 8300000, guid: 00c8de78f026a69439654d8fb0957b18, type: 3}
   - {fileID: 8300000, guid: f953fd918d5cbdc4c8fc00eb035ad5dc, type: 3}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 9efd0d26465490247a3221a15c8e0df9, type: 3}
   - {fileID: 8300000, guid: bec4834f22b45244d8aafc4bff6e13cf, type: 3}
   - {fileID: 8300000, guid: 582388fe783159040a80517e3fbf4178, type: 3}
   - {fileID: 8300000, guid: 4b010bb2d5da4e743bccd1f788cf07dd, type: 3}

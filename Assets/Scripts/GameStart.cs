@@ -8,6 +8,32 @@ public class GameStart : MonoBehaviour
     public bool m_IsHideNow { get; private set; } = false;
     public bool m_IsHideEnded { get; private set; } = false;
 
+    private Animator m_animator;
+    private AudioSource m_audioSource;
+
+    private void Awake()
+    {
+        m_animator = GetComponent<Animator>();
+        m_audioSource = GetComponent<AudioSource>();
+    }
+
+    public void PlayClashSound(AudioClip audioClip)
+    {
+        m_audioSource.PlayOneShot(audioClip);
+    }
+
+    public void SetAnimatorStop(bool stop)
+    {
+        if (stop)
+        {
+            m_animator.speed = 0;
+        }
+        else
+        {
+            m_animator.speed = 1;
+        }
+    }
+
     public void AnimEnded()
     {
         m_IsAnimEnded = true;
@@ -26,5 +52,10 @@ public class GameStart : MonoBehaviour
     {
         m_IsHideNow = false;
         m_IsHideEnded = true;
+    }
+
+    public bool IsAnimStopping()
+    {
+        return m_animator.speed == 0;
     }
 }
