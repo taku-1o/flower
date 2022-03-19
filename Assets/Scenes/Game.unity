@@ -221,7 +221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4391617202715334741, guid: d9f9db7a823b31b4c89aaa5d4ec46b17, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4391617202715334741, guid: d9f9db7a823b31b4c89aaa5d4ec46b17, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2657,7 +2657,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4391617202715334741, guid: d9f9db7a823b31b4c89aaa5d4ec46b17, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4391617202715334741, guid: d9f9db7a823b31b4c89aaa5d4ec46b17, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3927,7 +3927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4391617202715334741, guid: d9f9db7a823b31b4c89aaa5d4ec46b17, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4391617202715334741, guid: d9f9db7a823b31b4c89aaa5d4ec46b17, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4206,6 +4206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e9285948b0c23f44bcd6cac67b894ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  guiController: {fileID: 1298091798}
   pauseUIPrefab: {fileID: 8584235853969907559, guid: 66f1ca84a919ed5408a9c053ee6cb722, type: 3}
 --- !u!114 &2137812750
 MonoBehaviour:
@@ -4489,7 +4490,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4391617202715334741, guid: d9f9db7a823b31b4c89aaa5d4ec46b17, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4391617202715334741, guid: d9f9db7a823b31b4c89aaa5d4ec46b17, type: 3}
       propertyPath: m_AnchorMax.x

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Pause : MonoBehaviour
 {
 
+    [SerializeField] private GUIManager guiController;
     [SerializeField]
     //　ポーズした時に表示するUIのプレハブ
     private GameObject pauseUIPrefab;
@@ -20,6 +21,7 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (guiController.IsGameStartAnimActive()) return;
         if (Input.GetKeyDown("r"))
         {
             if (pauseUIInstance == null)
@@ -30,7 +32,10 @@ public class Pause : MonoBehaviour
             else
             {
                 Destroy(pauseUIInstance);
-                Time.timeScale = 1f;
+                if (!guiController.IsTutorialActive())
+                {
+                    Time.timeScale = 1f;
+                }
             }
         }
     }
