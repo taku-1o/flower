@@ -426,8 +426,19 @@ public class Flower : MonoBehaviour
                 if (wireCheck.IsWire())
                 {
                     m_isAbilityChecked = true;
-                    m_abilityHitTime = m_abilityTime;
-                    m_abilityTime = 2.0f - (m_abilityTime - Time.deltaTime);
+                    if (m_abilityTime > 1.0f)
+                    {
+                        m_abilityHitTime = 2.0f - (m_abilityTime - Time.deltaTime);
+                    }
+                    else
+                    {
+                        m_abilityHitTime = m_abilityTime;
+                        m_abilityTime = 2.0f - (m_abilityTime - Time.deltaTime);
+                    }
+                    if (m_abilityHitTime > 1.0f - (m_abilityMoveStart / m_abilityMoveTime))
+                    {
+                        m_abilityHitTime = 1.0f - (m_abilityMoveStart / m_abilityMoveTime);
+                    }
                     m_rigidbody.bodyType = RigidbodyType2D.Kinematic;
                     m_rigidbody.velocity = Vector3.zero;
                 }
