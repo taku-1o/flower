@@ -20,7 +20,7 @@ public class Select : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        StartTime -= Time.deltaTime;
+        StartTime -= Time.unscaledDeltaTime;
         seconds = (int)StartTime;
     }
 

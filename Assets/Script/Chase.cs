@@ -25,6 +25,13 @@ public class Chase : MonoBehaviour
     //プレイヤーが範囲に入った時のフラグ
     bool flg;
 
+    //初期位置フラグ
+    private bool startPosition;
+
+
+    //foundかどうか
+    bool foundflg;
+
     //ダウンしたかのフラグ
     bool Downflg;
     private GameObject player;
@@ -36,6 +43,9 @@ public class Chase : MonoBehaviour
 
     //スケール計算変数
     public float Scalecalculation;
+
+    //
+    public Transform other;
 
     // Start is called before the first frame update
     void Start()
@@ -60,74 +70,49 @@ public class Chase : MonoBehaviour
         Downflg = false;
 
         sound01 = GetComponent<AudioSource>();
+
+        startPosition = false;
+
+        foundflg = false;
     }
 
     //Update is called once per frame
 
-    void  Update()
+    void Update()
     {
-      
-        //Vector2 dir = (targetObject.transform.position - this.transform.position).normalized;
-        //float vx = dir.x * speed;
-        //float vy = dir.y * speed;
-        //rbody.velocity = new Vector2(vx, vy);
 
-        //this.GetComponent<SpriteRenderer>().flipX = (vx < 0);
+
 
     }
 
     public void OnDetectObject(Collider2D collider)
-     {
+    {
         if (Downflg == false)
         {
             if (collider.CompareTag("Player"))
             {
+
+
+                Animator animator = GetComponent<Animator>();
+
+                if (foundflg == false)
+                {
+                    if (flg == false)
+                    {
+                        foundflg = true;
+                       
+                        animator.Play("hati_found");
+                    }
+                }
                 flg = true;
 
-                //sound01.PlayOneShot(sound01.clip);
 
-                // 検知したオブジェクトに「Player」のタグがついていれば、そのオブジェクトを追いかける
-                Vector3 dir = (targetObject.transform.position - this.transform.position).normalized;
+                //else
+                //{
+                //    flg = false;
 
-                float vx = dir.x * speed;
-                float vy = dir.y * speed;
-                rbody.velocity = new Vector2(vx, vy);
+                //}
 
-                //this.GetComponent<SpriteRenderer>().flipX = (vx < 0);
-                //this.GetComponent<SpriteRenderer>().flipY = (vy < 0);
-
-                // navMeshAgent.destination = collider.transform.position;
-
-                // navMeshAgent.destination = player.transform.position;
-                float x = Input.GetAxisRaw("Horizontal");
-
-                // デフォルトが右向きの画像の場合
-                // スケール値取り出し
-                Vector2 scale = transform.localScale;
-
-                if (vx < 0)
-                {
-
-                    // 右方向に移動中
-                    scale.x = -Mathf.Abs(Scalecalculation); // そのまま（右向き
-
-
-                }
-                 else
-                {
-
-                    // 左方向に移動中
-                    scale.x =Mathf.Abs(Scalecalculation); // 反転する（左向き）
-
-                }
-                // 代入し直す
-
-                scale.y = Mathf.Abs(Scalecalculation); 
-                transform.localScale = scale;
-            }
-            else
-            {
-                flg = false;
             }
         }
     }
@@ -139,13 +124,12 @@ public class Chase : MonoBehaviour
             if (collider.CompareTag("Player"))
             {
                 flg = false;
+                Animator animator = GetComponent<Animator>();
+                animator.Play("hati");
+                foundflg = false;
                 rbody.velocity = new Vector2(0, 0);
+                startPosition = true;
 
-                // 初期位置に戻す。
-                transform.position = initialPosition;
-
-                // 初期角度に戻す。
-                transform.eulerAngles = initialRot;
             }
         }
     }
@@ -158,73 +142,120 @@ public class Chase : MonoBehaviour
             currentPosition = transform.position;
 
 
-            if (flg == true) return;
-            Vector2 p = new Vector2(move, 0);
-            transform.Translate(p);
-            counter++;
-
-            //countが100になれば-1を掛けて逆方向に動かす
-            if (counter == 100 && flg == false)
+            if (flg == true)
             {
+                if (foundflg == false)
+                {
+                    //sound01.PlayOneShot(sound01.clip);
 
-                counter = 0;
-                move *= -1;
+                    // 検知したオブジェクトに「Player」のタグがついていれば、そのオブジェクトを追いかける
+                    Vector3 dir = (targetObject.transform.position - this.transform.position).normalized;
 
+                    //animator = GetComponent<Animator>();
+                    //animator.Play("hati_attack");
+
+                    float vx = dir.x * speed;
+                    float vy = dir.y * speed;
+                    rbody.velocity = new Vector2(vx, vy);
+                   // float x = Input.GetAxisRaw("Horizontal");
+
+                    // デフォルトが右向きの画像の場合
+                    // スケール値取り出し
+                    Vector2 scale = transform.localScale;
+
+                    if (vx < 0)
+                    {
+
+                        // 右方向に移動中
+                        scale.x = -Mathf.Abs(Scalecalculation); // そのまま（右向き
+
+
+                    }
+                    else
+                    {
+
+                        // 左方向に移動中
+                        scale.x = Mathf.Abs(Scalecalculation); // 反転する（左向き）
+
+                    }
+                    // 代入し直す
+
+                    scale.y = Mathf.Abs(Scalecalculation);
+                    transform.localScale = scale;
+                }
+
+                return;
             }
 
             float x = Input.GetAxisRaw("Horizontal");
-            // デフォルトが右向きの画像の場合
-            // スケール値取り出し
-            
 
-            //if (move >= 0)
-            //{
+            float dist = Vector3.Distance(initialPosition, this.transform.position);
+            if (dist < 0.1)
+            {
+                startPosition = false;
+            }
 
-            //    // 右方向に移動中
-            //    scale.x = 0.6f; // そのまま（右向き
 
-            //}
-            //else
-            //{
+            if (startPosition == true)
+            {
 
-            //    // 左方向に移動中
-            //    scale.x = -0.6f; // 反転する（左向き）
 
-            //}
-            // 代入し直す
-            //transform.localScale = scale;
-            //Vector3 scale = transform.localScale;
+                // 初期位置に戻す。
+                Vector3 dir = (initialPosition - this.transform.position).normalized;
+                dir *= 0.1f;
 
-           
-            
-                
-            
+
+                dir.x = Mathf.Clamp(dir.x, -dist, dist);
+                dir.y = Mathf.Clamp(dir.y, -dist, dist);
+
+                transform.Translate(dir);
+
+            }
+            else
+            {
+                Vector2 p = new Vector2(move, 0);
+                transform.Translate(p);
+                counter++;
+
+                //countが100になれば-1を掛けて逆方向に動かす
+                if (counter == 100 && flg == false)
+                {
+
+                    counter = 0;
+                    move *= -1;
+
+                }
+            }
+
+
+
+
+
         }
-        else if(Downflg==true)
+        else if (Downflg == true)
         {
             float moveY = 0.01f;
             Vector2 p = new Vector2(0, -moveY);
             transform.Translate(p);
             moveY *= -1;
         }
-       
+           
     }
 
-   public void OnTriggerEnter2D(Collider2D other)
-    {
-       
-       
+    
 
+    public void OnTriggerEnter2D(Collider2D other)
+    {
         if (Downflg == false)
         {
             if (other.CompareTag("Attack"))
             {
-               
+
 
                 col.enabled = false;
                 Downflg = true;
-                // move = 0;
-              
+               
+
                 Destroy(gameObject, 2.5f);
                 Animator animator = GetComponent<Animator>();
                 animator.Play("hati_Down");
@@ -239,7 +270,6 @@ public class Chase : MonoBehaviour
         {
             scale.x = -Mathf.Abs(Scalecalculation);
 
-
         }
 
 
@@ -252,4 +282,11 @@ public class Chase : MonoBehaviour
         scale.y = Mathf.Abs(Scalecalculation);
         transform.localScale = scale;
     }
+
+
+    public void FoundAnimEnd()
+    {
+        foundflg = false;
+    }
+
 }
