@@ -372,7 +372,7 @@ MonoBehaviour:
     animationDown: {fileID: 7400000, guid: 08223df2a7eb5e640b23cb60e3e0fec3, type: 2}
     animationAttack: {fileID: 7400000, guid: 720cd56ad0e5a4b4ca3954ca09260331, type: 2}
     animationGoal: {fileID: 7400000, guid: d1ae6f93b12cd6b43ac4cab9020103bb, type: 2}
-    animationLift: {fileID: 7400000, guid: e10f095b24888ab429f3054756772d2b, type: 2}
+    animationLift: {fileID: 7400000, guid: 356c299bf87fdcb4b86004ab8db2c700, type: 2}
     animationAbilityVertical: {fileID: 0}
     animationAbilityHorizontal: {fileID: 0}
   - animationStart: {fileID: 0}
@@ -385,7 +385,7 @@ MonoBehaviour:
     animationDown: {fileID: 7400000, guid: 71f55981768c76b43a722ac65be45488, type: 2}
     animationAttack: {fileID: 0}
     animationGoal: {fileID: 7400000, guid: ac0365cc88ffe464b9400e5555ab3c08, type: 2}
-    animationLift: {fileID: 7400000, guid: 2dacafe83ed6b7440888c1f4648cbd11, type: 2}
+    animationLift: {fileID: 7400000, guid: 21e5e3667167fb94b93137561118ae7a, type: 2}
     animationAbilityVertical: {fileID: 7400000, guid: 648ef1fc0d2c99b49b75522bffea436d, type: 2}
     animationAbilityHorizontal: {fileID: 7400000, guid: 8e8f8bfaaf4f5914182283ca755c595d, type: 2}
   audioClips:
