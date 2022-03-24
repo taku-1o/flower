@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc94b279169d3847b07b43d29e4569c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOver: {fileID: 0}
   timerText: {fileID: 0}
   totalTime: 0
   StartTime: 0
@@ -4060,8 +4061,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc94b279169d3847b07b43d29e4569c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOver: {fileID: 750104778}
   timerText: {fileID: 131563207}
-  totalTime: 300
+  totalTime: 3
   StartTime: 2
 --- !u!4 &1659535726
 Transform:
@@ -4698,6 +4700,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 400095256479038293, guid: 9485c8d7da2d39042b0e28f786d92f00, type: 3}
+      propertyPath: m_UpdateMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 400095256809944576, guid: 9485c8d7da2d39042b0e28f786d92f00, type: 3}
       propertyPath: m_Name
       value: GameOver
