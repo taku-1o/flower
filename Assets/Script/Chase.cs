@@ -41,6 +41,8 @@ public class Chase : MonoBehaviour
     //SE再生
     private AudioSource sound01;
 
+    public AudioSource foundSE;//見つけた時のSE
+
     //スケール計算変数
     public float Scalecalculation;
 
@@ -81,7 +83,17 @@ public class Chase : MonoBehaviour
     void Update()
     {
 
-
+        if (targetObject)
+        {
+            float distance = Vector3.Distance(targetObject.transform.position, transform.position);
+            Debug.Log("distance:" + distance);
+            if (distance > 9)
+            {
+                distance = 9;
+            }
+            distance = 9f - distance;
+            sound01.volume = 0.1f * (distance / 9f);
+        }
 
     }
 
@@ -100,7 +112,7 @@ public class Chase : MonoBehaviour
                     if (flg == false)
                     {
                         foundflg = true;
-                       
+                        foundSE.Play();
                         animator.Play("hati_found");
                     }
                 }
@@ -242,9 +254,7 @@ public class Chase : MonoBehaviour
            
     }
 
-    
-
-    public void OnTriggerEnter2D(Collider2D other)
+    public void BodyTriggerEnter(Collider2D other)
     {
         if (Downflg == false)
         {
@@ -254,13 +264,18 @@ public class Chase : MonoBehaviour
 
                 col.enabled = false;
                 Downflg = true;
-               
+
 
                 Destroy(gameObject, 2.5f);
                 Animator animator = GetComponent<Animator>();
                 animator.Play("hati_Down");
             }
         }
+    }
+    
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
     }
 
     void LateUpdate()
