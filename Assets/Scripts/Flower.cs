@@ -161,6 +161,10 @@ public class Flower : MonoBehaviour
     private bool m_keyDownW;                                    //W入力
     private bool m_keyDownE;                                    //E入力
     private bool m_keyDownF;                                    //F入力
+    private bool m_keyDownUpArrow;                              //上矢印入力
+    private bool m_keyDownDownArrow;                            //下矢印入力
+    private bool m_keyDownLeftArrow;                            //左矢印入力
+    private bool m_keyDownRightArrow;                           //右矢印入力
     private bool m_keyDownTen4;                                 //4入力
     private bool m_keyDownTen6;                                 //6入力
     private bool m_keyDownTen8;                                 //8入力
@@ -286,6 +290,42 @@ public class Flower : MonoBehaviour
         {
             m_keyDownTen8 = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            m_keyDownUpArrow = true;
+        }
+        if (Input.GetKeyUp(KeyCode.UpArrow) || !Input.GetKey(KeyCode.UpArrow))
+        {
+            m_keyDownUpArrow = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            m_keyDownDownArrow = true;
+        }
+        if (Input.GetKeyUp(KeyCode.DownArrow) || !Input.GetKey(KeyCode.DownArrow))
+        {
+            m_keyDownDownArrow = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            m_keyDownLeftArrow = true;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftArrow) || !Input.GetKey(KeyCode.LeftArrow))
+        {
+            m_keyDownLeftArrow = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            m_keyDownRightArrow = true;
+        }
+        if (Input.GetKeyUp(KeyCode.RightArrow) || !Input.GetKey(KeyCode.RightArrow))
+        {
+            m_keyDownRightArrow = false;
+        }
         if (Input.GetKeyDown(KeyCode.Z))
         {
             if (m_selection !=0 )
@@ -381,11 +421,11 @@ public class Flower : MonoBehaviour
                     m_isAbilityChecked = false;
                     m_isAbilityCancel = false;
                     m_animator.SetFloat("WireAbility", 1);
-                    if (m_keyDownTen8)
+                    if (m_keyDownUpArrow)
                     {
                         SetState(StateAnimations.STATES.ABILITY_VERTICAL);
                     }
-                    else if (m_keyDownTen6 || !m_keyDownTen4)
+                    else if (m_keyDownRightArrow || !m_keyDownLeftArrow)
                     {
                         scale.x = Mathf.Abs(scale.x);
                         transform.localScale = scale;
@@ -397,9 +437,9 @@ public class Flower : MonoBehaviour
                         transform.localScale = scale;
                         SetState(StateAnimations.STATES.ABILITY_HORIZONTAL);
                     }
-                    m_keyDownTen4 = false;
-                    m_keyDownTen6 = false;
-                    m_keyDownTen8 = false;
+                    m_keyDownUpArrow = false;
+                    m_keyDownRightArrow = false;
+                    m_keyDownLeftArrow = false;
                     PlaySE();
                 }
             }
