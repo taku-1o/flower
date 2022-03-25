@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -53,7 +53,7 @@ public class Main : MonoBehaviour
             Instantiate(wareta_uekibatiPrefab, m_currentStage.m_StartPosition + new Vector2(-1.25f, -0.15f), Quaternion.identity);
         }
 
-        if (is_first_play && m_firstPlayManageFlg)
+        if (is_first_play && m_firstPlayManageFlg && stage_num == 0)
         {
             Time.timeScale = 0;
             m_firstPlayManageFlg = false;
@@ -62,7 +62,7 @@ public class Main : MonoBehaviour
         }
         else
         {
-            is_first_play = false;
+            if (stage_num == 0 && is_first_play && !m_firstPlayManageFlg) is_first_play = false;
             guiController.SetHpActive(true);
             guiController.SetTimerTextActive(true);
         }
@@ -260,6 +260,15 @@ public class Main : MonoBehaviour
         //{
         //    NextStage();
         //}
+        if (Input.GetKeyDown(KeyCode.F7))
+        {
+            NextStage();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
+            TransferGameOver();
+        }
     }
 
     private void ShowNextStage()
@@ -297,6 +306,14 @@ public class Main : MonoBehaviour
             {
                 m_IdxTutorial = 3;
             }
+        }
+    }
+
+    public void TransferGameOver()
+    {
+        if (m_flower)
+        {
+            m_flower.TransferGameOver();
         }
     }
 }

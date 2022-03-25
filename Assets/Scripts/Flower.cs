@@ -161,6 +161,10 @@ public class Flower : MonoBehaviour
     private bool m_keyDownW;                                    //W入力
     private bool m_keyDownE;                                    //E入力
     private bool m_keyDownF;                                    //F入力
+    private bool m_keyDownUpArrow;                              //上矢印入力
+    private bool m_keyDownDownArrow;                            //下矢印入力
+    private bool m_keyDownLeftArrow;                            //左矢印入力
+    private bool m_keyDownRightArrow;                           //右矢印入力
     private bool m_keyDownTen4;                                 //4入力
     private bool m_keyDownTen6;                                 //6入力
     private bool m_keyDownTen8;                                 //8入力
@@ -286,6 +290,42 @@ public class Flower : MonoBehaviour
         {
             m_keyDownTen8 = false;
         }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            m_keyDownUpArrow = true;
+        }
+        if (Input.GetKeyUp(KeyCode.UpArrow) || !Input.GetKey(KeyCode.UpArrow))
+        {
+            m_keyDownUpArrow = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            m_keyDownDownArrow = true;
+        }
+        if (Input.GetKeyUp(KeyCode.DownArrow) || !Input.GetKey(KeyCode.DownArrow))
+        {
+            m_keyDownDownArrow = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            m_keyDownLeftArrow = true;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftArrow) || !Input.GetKey(KeyCode.LeftArrow))
+        {
+            m_keyDownLeftArrow = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            m_keyDownRightArrow = true;
+        }
+        if (Input.GetKeyUp(KeyCode.RightArrow) || !Input.GetKey(KeyCode.RightArrow))
+        {
+            m_keyDownRightArrow = false;
+        }
         if (Input.GetKeyDown(KeyCode.Z))
         {
             if (m_selection !=0 )
@@ -300,30 +340,30 @@ public class Flower : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Debug.Log("FixedUpdate(" + Time.time + "):" + m_rigidbody.isKinematic);
-        //if (!m_isGoal && m_timeLife < m_limitLifeTime && !m_isDebug)
-        //{
-        //    if (m_isInHealAria)
-        //    {
-        //        m_timeLife -= Time.deltaTime * (m_limitLifeTime / m_lifeHealTime);
-        //        if (m_timeLife < 0)
-        //        {
-        //            m_timeLife = 0;
-        //        }
-        //    }
-        //    else if (m_timeLife < m_limitLifeTime)
-        //    {
-        //        m_timeLife += Time.deltaTime;
-        //        if (m_timeLife >= m_limitLifeTime)
-        //        {
-        //            m_timeLife = m_limitLifeTime;
-        //        }
-        //    }
-        //}
-        //if (m_timeLife >= m_limitLifeTime)
-        //{
-        //    SetState(StateAnimations.STATES.DOWN);
-        //}
+        Debug.Log("FixedUpdate(" + Time.time + "):" + m_rigidbody.isKinematic);
+        if (!m_isGoal && m_timeLife < m_limitLifeTime && !m_isDebug)
+        {
+            if (m_isInHealAria)
+            {
+                m_timeLife -= Time.deltaTime * (m_limitLifeTime / m_lifeHealTime);
+                if (m_timeLife < 0)
+                {
+                    m_timeLife = 0;
+                }
+            }
+            else if (m_timeLife < m_limitLifeTime)
+            {
+                m_timeLife += Time.deltaTime;
+                if (m_timeLife >= m_limitLifeTime)
+                {
+                    m_timeLife = m_limitLifeTime;
+                }
+            }
+        }
+        if (m_timeLife >= m_limitLifeTime)
+        {
+            SetState(StateAnimations.STATES.DOWN);
+        }
 
         if (StateAnimations.IsMoveAnim(m_selection, m_state))
         {
@@ -381,11 +421,11 @@ public class Flower : MonoBehaviour
                     m_isAbilityChecked = false;
                     m_isAbilityCancel = false;
                     m_animator.SetFloat("WireAbility", 1);
-                    if (m_keyDownTen8)
+                    if (m_keyDownUpArrow)
                     {
                         SetState(StateAnimations.STATES.ABILITY_VERTICAL);
                     }
-                    else if (m_keyDownTen6 || !m_keyDownTen4)
+                    else if (m_keyDownRightArrow || !m_keyDownLeftArrow)
                     {
                         scale.x = Mathf.Abs(scale.x);
                         transform.localScale = scale;
@@ -397,9 +437,9 @@ public class Flower : MonoBehaviour
                         transform.localScale = scale;
                         SetState(StateAnimations.STATES.ABILITY_HORIZONTAL);
                     }
-                    m_keyDownTen4 = false;
-                    m_keyDownTen6 = false;
-                    m_keyDownTen8 = false;
+                    m_keyDownUpArrow = false;
+                    m_keyDownRightArrow = false;
+                    m_keyDownLeftArrow = false;
                     PlaySE();
                 }
             }
@@ -426,8 +466,19 @@ public class Flower : MonoBehaviour
                 if (wireCheck.IsWire())
                 {
                     m_isAbilityChecked = true;
-                    m_abilityHitTime = m_abilityTime;
-                    m_abilityTime = 2.0f - (m_abilityTime - Time.deltaTime);
+                    if (m_abilityTime > 1.0f)
+                    {
+                        m_abilityHitTime = 2.0f - (m_abilityTime - Time.deltaTime);
+                    }
+                    else
+                    {
+                        m_abilityHitTime = m_abilityTime;
+                        m_abilityTime = 2.0f - (m_abilityTime - Time.deltaTime);
+                    }
+                    if (m_abilityHitTime > 1.0f - (m_abilityMoveStart / m_abilityMoveTime))
+                    {
+                        m_abilityHitTime = 1.0f - (m_abilityMoveStart / m_abilityMoveTime);
+                    }
                     m_rigidbody.bodyType = RigidbodyType2D.Kinematic;
                     m_rigidbody.velocity = Vector3.zero;
                 }
@@ -790,5 +841,10 @@ public class Flower : MonoBehaviour
     public void SetFirstStartAnim()
     {
         SetState(StateAnimations.STATES.START);
+    }
+
+    public void TransferGameOver()
+    {
+        m_timeLife = m_limitLifeTime;
     }
 }
