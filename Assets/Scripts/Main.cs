@@ -260,6 +260,11 @@ public class Main : MonoBehaviour
         {
             NextStage();
         }
+
+        if (Input.GetKeyDown(KeyCode.F8))
+        {
+            TransferGameOver();
+        }
     }
 
     private void ShowNextStage()
@@ -297,6 +302,14 @@ public class Main : MonoBehaviour
             {
                 m_IdxTutorial = 3;
             }
+        }
+    }
+
+    public void TransferGameOver()
+    {
+        if (m_flower)
+        {
+            m_flower.TransferGameOver();
         }
     }
 }

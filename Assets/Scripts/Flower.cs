@@ -842,4 +842,9 @@ public class Flower : MonoBehaviour
     {
         SetState(StateAnimations.STATES.START);
     }
+
+    public void TransferGameOver()
+    {
+        m_timeLife = m_limitLifeTime;
+    }
 }
