@@ -187,6 +187,10 @@ public class Main : MonoBehaviour
                 m_audioSource.Stop();
                 gameOver.SetActive(true);
             }
+            else if (gameOver.activeSelf)
+            {
+                TransferGameOver();
+            }
 
             if (m_flower.IsTriggerItem())
             {
