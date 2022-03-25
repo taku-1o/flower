@@ -256,10 +256,10 @@ public class Main : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F7))
-        {
-            NextStage();
-        }
+        //if (Input.GetKeyDown(KeyCode.F7))
+        //{
+        //    NextStage();
+        //}
     }
 
     private void ShowNextStage()

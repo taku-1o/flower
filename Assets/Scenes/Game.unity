@@ -4063,7 +4063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOver: {fileID: 750104778}
   timerText: {fileID: 131563207}
-  totalTime: 3
+  totalTime: 300
   StartTime: 2
 --- !u!4 &1659535726
 Transform:
