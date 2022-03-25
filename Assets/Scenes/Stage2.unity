@@ -1611,6 +1611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc94b279169d3847b07b43d29e4569c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOver: {fileID: 0}
   timerText: {fileID: 0}
   totalTime: 0
   StartTime: 0
@@ -2859,6 +2860,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc94b279169d3847b07b43d29e4569c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOver: {fileID: 0}
   timerText: {fileID: 288459073}
   totalTime: 300
   StartTime: 2
@@ -5402,9 +5404,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3561476458460838702, guid: 52d3b72089a2c6a45ae7c2b9962b2bc6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3561476459427843772, guid: 52d3b72089a2c6a45ae7c2b9962b2bc6, type: 3}
       propertyPath: m_Name
       value: SecretStage
+      objectReference: {fileID: 0}
+    - target: {fileID: 3561476459427843772, guid: 52d3b72089a2c6a45ae7c2b9962b2bc6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3561476459427843773, guid: 52d3b72089a2c6a45ae7c2b9962b2bc6, type: 3}
       propertyPath: m_RootOrder

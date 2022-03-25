@@ -666,7 +666,7 @@ public class Flower : MonoBehaviour
 
     public void AbilityChecked()
     {
-        Debug.Log("AbilityChecked:" + m_abilityTime + "," + m_isAbilityChecked);
+        //Debug.Log("AbilityChecked:" + m_abilityTime + "," + m_isAbilityChecked);
         if (!m_isAbilityChecked)
         {
             m_isAbilityChecked = true;
@@ -690,7 +690,7 @@ public class Flower : MonoBehaviour
         }
         else
         {
-            Debug.Log("anim end:" + m_state);
+           // Debug.Log("anim end:" + m_state);
             bool isAbilityAnim = m_state == (int)StateAnimations.STATES.ABILITY_VERTICAL ||
                 m_state == (int)StateAnimations.STATES.ABILITY_HORIZONTAL;
             SetState(StateAnimations.STATES.IDLE);

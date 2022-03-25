@@ -29,6 +29,7 @@ public class Scenechange : MonoBehaviour
         if (seconds<=0)
         {
             MyFadeManager.Instance.LoadScene("Game", 1.0f, true);
+            Main.stage_num = 0;
         }
     }
 }
