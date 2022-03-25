@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
+
+    public GameObject gameOver;
     public Text timerText;
     public float totalTime;
     public float StartTime;
@@ -14,7 +16,7 @@ public class Timer : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        gameOver.SetActive(false);
     }
 
     // Update is called once per frame
@@ -28,6 +30,21 @@ public class Timer : MonoBehaviour
             totalTime -= Time.deltaTime;
             seconds = (int)totalTime;
             timerText.text = seconds.ToString();
+
+           
         }
+
+        if (totalTime < 0)
+        {
+            //Debug.Log("gameover");
+            StartCoroutine("GameOver");
+
+        }
+      
+    }
+
+    public void GameOver()
+    {
+        gameOver.SetActive(true);
     }
 }
