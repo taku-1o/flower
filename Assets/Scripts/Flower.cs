@@ -349,6 +349,7 @@ public class Flower : MonoBehaviour
                 if (m_timeLife < 0)
                 {
                     m_timeLife = 0;
+                    PlaySE();
                 }
             }
             else if (m_timeLife < m_limitLifeTime)
@@ -639,9 +640,13 @@ public class Flower : MonoBehaviour
                 break;
             case (int)StateAnimations.STATES.GET:
             case (int)StateAnimations.STATES.JUMP:
+         
             case (int)StateAnimations.STATES.DAMAGE:
             case (int)StateAnimations.STATES.GOAL:
             case (int)StateAnimations.STATES.DOWN:
+            case (int)StateAnimations.STATES.ATTACK:
+            case (int)StateAnimations.STATES.ABILITY_HORIZONTAL:
+            case (int)StateAnimations.STATES.ABILITY_VERTICAL:
                 {
                     if (audioClips[m_state])
                     {
