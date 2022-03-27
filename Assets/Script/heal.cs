@@ -27,4 +27,12 @@ public class heal : MonoBehaviour
            sound01.Play();
         }
     }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            sound01.Stop();
+        }
+    }
 }
