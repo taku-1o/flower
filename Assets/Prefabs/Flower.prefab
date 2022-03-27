@@ -389,16 +389,19 @@ MonoBehaviour:
     animationAbilityVertical: {fileID: 7400000, guid: 648ef1fc0d2c99b49b75522bffea436d, type: 2}
     animationAbilityHorizontal: {fileID: 7400000, guid: 8e8f8bfaaf4f5914182283ca755c595d, type: 2}
   audioClips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 8300000, guid: 00c8de78f026a69439654d8fb0957b18, type: 3}
-  - {fileID: 8300000, guid: f953fd918d5cbdc4c8fc00eb035ad5dc, type: 3}
-  - {fileID: 8300000, guid: 9efd0d26465490247a3221a15c8e0df9, type: 3}
-  - {fileID: 8300000, guid: bec4834f22b45244d8aafc4bff6e13cf, type: 3}
-  - {fileID: 8300000, guid: 582388fe783159040a80517e3fbf4178, type: 3}
-  - {fileID: 8300000, guid: 4b010bb2d5da4e743bccd1f788cf07dd, type: 3}
-  - {fileID: 0}
-  - {fileID: 8300000, guid: 7520985216e0a124eb9be51587d27885, type: 3}
+    seStart: {fileID: 0}
+    seIdle: {fileID: 0}
+    seMove: {fileID: 8300000, guid: 00c8de78f026a69439654d8fb0957b18, type: 3}
+    seGet: {fileID: 8300000, guid: f953fd918d5cbdc4c8fc00eb035ad5dc, type: 3}
+    seTransform: {fileID: 8300000, guid: 9efd0d26465490247a3221a15c8e0df9, type: 3}
+    seJump: {fileID: 8300000, guid: bec4834f22b45244d8aafc4bff6e13cf, type: 3}
+    seDamage: {fileID: 8300000, guid: 582388fe783159040a80517e3fbf4178, type: 3}
+    seDown: {fileID: 8300000, guid: 4b010bb2d5da4e743bccd1f788cf07dd, type: 3}
+    seAttack: {fileID: 8300000, guid: 3a95b6858bd191b4d866bd24588a1adf, type: 3}
+    seGoal: {fileID: 8300000, guid: 7520985216e0a124eb9be51587d27885, type: 3}
+    seLift: {fileID: 0}
+    seAbilityVertical: {fileID: 8300000, guid: c3bb3738628704449a951f21e3a02055, type: 3}
+    seAbilityHorizontal: {fileID: 8300000, guid: c3bb3738628704449a951f21e3a02055, type: 3}
   maxHP: 5
   speed: 0.05
   jumpPower: 330

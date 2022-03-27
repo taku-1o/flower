@@ -120,13 +120,71 @@ public class Flower : MonoBehaviour
         public AnimationClip animationLift;
         public AnimationClip animationAbilityVertical;
         public AnimationClip animationAbilityHorizontal;
+
+        [System.Serializable]
+        public class StateAudioClips
+        {
+            public AudioClip GetAudioClip(int state)
+            {
+                switch (state)
+                {
+                    case (int)STATES.START:
+                        return seStart;
+                    case (int)STATES.IDLE:
+                        return seIdle;
+                    case (int)STATES.MOVE:
+                        return seMove;
+                    case (int)STATES.GET:
+                        return seGet;
+                    case (int)STATES.TRANSFORM:
+                        return seTransform;
+                    case (int)STATES.JUMP:
+                        return seJump;
+                    case (int)STATES.DAMAGE:
+                        return seDamage;
+                    case (int)STATES.DOWN:
+                        return seDown;
+                    case (int)STATES.ATTACK:
+                        return seAttack;
+                    case (int)STATES.GOAL:
+                        return seGoal;
+                    case (int)STATES.LIFT:
+                        return seLift;
+                    case (int)STATES.ABILITY_VERTICAL:
+                        return seAbilityVertical;
+                    case (int)STATES.ABILITY_HORIZONTAL:
+                        return seAbilityHorizontal;
+                    default:
+                        return null;
+                }
+            }
+            public bool IsMatchAudioClip(AudioClip clip, int state)
+            {
+                AudioClip audioClip = GetAudioClip(state);
+                return (audioClip != null) && (audioClip == clip);
+            }
+
+            public AudioClip seStart;
+            public AudioClip seIdle;
+            public AudioClip seMove;
+            public AudioClip seGet;
+            public AudioClip seTransform;
+            public AudioClip seJump;
+            public AudioClip seDamage;
+            public AudioClip seDown;
+            public AudioClip seAttack;
+            public AudioClip seGoal;
+            public AudioClip seLift;
+            public AudioClip seAbilityVertical;
+            public AudioClip seAbilityHorizontal;
+        }
     }
 
     /* [SerializeField] */
     [SerializeField] private GroundCheck groundCheck;
     [SerializeField] private WireCheck wireCheck;
     [SerializeField] private StateAnimations[] selectionAnimations;
-    [SerializeField] private AudioClip[] audioClips;
+    [SerializeField] private StateAnimations.StateAudioClips audioClips;
     [SerializeField] private int maxHP;
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
@@ -192,7 +250,7 @@ public class Flower : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_animator = GetComponent<Animator>();
         m_audioSource = GetComponent<AudioSource>();
-       
+
         m_rigidbody.bodyType = RigidbodyType2D.Kinematic;
         SetState(StateAnimations.STATES.IDLE);
         Debug.Log("Awake End:" + m_rigidbody.isKinematic);
@@ -201,7 +259,7 @@ public class Flower : MonoBehaviour
     private void Start()
     {
         Debug.Log("Start:" + m_rigidbody.isKinematic);
-       
+
     }
 
     private void Update()
@@ -328,12 +386,12 @@ public class Flower : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            if (m_selection !=0 )
+            if (m_selection != 0)
             {
 
                 SetState(StateAnimations.STATES.LIFT);
-              
-                 m_currentItem.SetActive(true);
+
+                m_currentItem.SetActive(true);
             }
         }
     }
@@ -592,8 +650,8 @@ public class Flower : MonoBehaviour
         {
             if (m_triggerItem == collision.gameObject.GetComponent<Item>())
             {
-                 m_triggerItem = null;
-               // m_triggerItem.enabled=false;
+                m_triggerItem = null;
+                // m_triggerItem.enabled=false;
             }
         }
         if (collision.gameObject.CompareTag("HealArea"))
@@ -614,41 +672,44 @@ public class Flower : MonoBehaviour
 
     public void PlaySE()
     {
+
         if (m_state != (int)StateAnimations.STATES.MOVE)
         {
-            if (audioClips[(int)StateAnimations.STATES.MOVE] &&
-                m_audioSource.clip == audioClips[(int)StateAnimations.STATES.MOVE])
+            if (audioClips.IsMatchAudioClip(m_audioSource.clip, (int)StateAnimations.STATES.MOVE))
             {
                 m_audioSource.Stop();
             }
         }
+
+        AudioClip currentClip = audioClips.GetAudioClip(m_state);
+
+        if (currentClip == null) return;
+
         switch (m_state)
         {
             case (int)StateAnimations.STATES.MOVE:
                 {
-                    if (audioClips[m_state])
+                    if (!audioClips.IsMatchAudioClip(m_audioSource.clip, m_state) || !m_audioSource.isPlaying)
                     {
-                        if (m_audioSource.clip != audioClips[m_state] || !m_audioSource.isPlaying)
-                        {
-                            m_audioSource.clip = audioClips[m_state];
-                            m_audioSource.loop = true;
-                            m_audioSource.Play();
-                        }
+                        m_audioSource.clip = currentClip;
+                        m_audioSource.loop = true;
+                        m_audioSource.Play();
                     }
                 }
                 break;
             case (int)StateAnimations.STATES.GET:
+            case (int)StateAnimations.STATES.TRANSFORM:
             case (int)StateAnimations.STATES.JUMP:
             case (int)StateAnimations.STATES.DAMAGE:
-            case (int)StateAnimations.STATES.GOAL:
             case (int)StateAnimations.STATES.DOWN:
+            case (int)StateAnimations.STATES.ATTACK:
+            case (int)StateAnimations.STATES.GOAL:
+            case (int)StateAnimations.STATES.ABILITY_VERTICAL:
+            case (int)StateAnimations.STATES.ABILITY_HORIZONTAL:
                 {
-                    if (audioClips[m_state])
-                    {
-                        m_audioSource.clip = audioClips[m_state];
-                        m_audioSource.loop = false;
-                        m_audioSource.Play();
-                    }
+                    m_audioSource.clip = currentClip;
+                    m_audioSource.loop = false;
+                    m_audioSource.Play();
                 }
                 break;
         }
@@ -690,7 +751,7 @@ public class Flower : MonoBehaviour
         }
         else
         {
-           // Debug.Log("anim end:" + m_state);
+            // Debug.Log("anim end:" + m_state);
             bool isAbilityAnim = m_state == (int)StateAnimations.STATES.ABILITY_VERTICAL ||
                 m_state == (int)StateAnimations.STATES.ABILITY_HORIZONTAL;
             SetState(StateAnimations.STATES.IDLE);
@@ -764,7 +825,7 @@ public class Flower : MonoBehaviour
     public bool IsTriggerItem()
     {
         return m_triggerItem != null;
-       // return m_triggerItem != false;
+        // return m_triggerItem != false;
     }
 
     public void Pick()
@@ -776,9 +837,9 @@ public class Flower : MonoBehaviour
         m_currentItem = m_triggerItem.gameObject;
 
         m_triggerItem.gameObject.SetActive(false);
-        
+
         m_triggerItem = null;
-      
+
 
     }
 
