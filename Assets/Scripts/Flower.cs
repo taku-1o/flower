@@ -407,6 +407,7 @@ public class Flower : MonoBehaviour
                 if (m_timeLife < 0)
                 {
                     m_timeLife = 0;
+                    PlaySE();
                 }
             }
             else if (m_timeLife < m_limitLifeTime)
@@ -700,6 +701,7 @@ public class Flower : MonoBehaviour
             case (int)StateAnimations.STATES.GET:
             case (int)StateAnimations.STATES.TRANSFORM:
             case (int)StateAnimations.STATES.JUMP:
+         
             case (int)StateAnimations.STATES.DAMAGE:
             case (int)StateAnimations.STATES.DOWN:
             case (int)StateAnimations.STATES.ATTACK:

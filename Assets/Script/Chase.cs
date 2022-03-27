@@ -239,10 +239,6 @@ public class Chase : MonoBehaviour
                 }
             }
 
-
-
-
-
         }
         else if (Downflg == true)
         {
@@ -264,7 +260,7 @@ public class Chase : MonoBehaviour
 
                 col.enabled = false;
                 Downflg = true;
-
+                //move = 0;
 
                 Destroy(gameObject, 2.5f);
                 Animator animator = GetComponent<Animator>();
