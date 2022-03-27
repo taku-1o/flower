@@ -24,5 +24,17 @@ public class moji : MonoBehaviour
         {
             animator.Play("moji1");
         }
+       //if(seconds<=-5.5)
+       // {
+       //     //animator = GetComponent<Animator>();
+       //     animator.Play("moji2");
+       // }
+       // if (seconds <=-13)
+       // {
+       //    // animator = GetComponent<Animator>();
+       //     animator.Play("moji3");
+       // }
     }
+
+  
 }
