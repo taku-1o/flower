@@ -69,7 +69,7 @@ public class Main : MonoBehaviour
         m_flower.gameObject.name = "Flower";
         m_flower.AddHealEreaEnterEvent(ShowHealEreaTutorial);
         m_flower.AddItemEnterEvent(ShowItemTutorial);
-        if (stage_num == 3) m_flower.ToggleDebugMode();
+        if (stage_num >= stageCount) m_flower.ToggleDebugMode();
 
 
         followCam = Camera.main.GetComponent<FollowCam>();
@@ -119,7 +119,11 @@ public class Main : MonoBehaviour
                 {
                     m_flower.Finish();
                     m_currentStage.m_GoalObject.SetActive(false);
-                    if (stageCount <= stage_num + 1)
+                    if (stage_num >= stageCount)
+                    {
+                        MyFadeManager.Instance.LoadScene("SampleScene", 1.2f, 0.6f, true);
+                    }
+                    else if (stageCount <= stage_num + 1)
                     {
                         MyFadeManager.Instance.LoadScene("GameClear", 1.2f, 0.6f, true);
                     }
